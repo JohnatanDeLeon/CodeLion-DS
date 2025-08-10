@@ -1,0 +1,112 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: pr-${{ github.event.number }}
+  cancel-in-progress: true
+
+jobs:
+  # =====================================
+  # CHANGESET CHECK
+  # =====================================
+  changeset-check:
+    name: Verify Changeset
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Check for changeset
+        run: |
+          if [[ $(git diff --name-only origin/main...HEAD | grep -E '\.(tsx?|css\.ts)$' | wc -l) -gt 0 ]]; then
+            if [[ $(ls .changeset/*.md 2>/dev/null | grep -v README | wc -l) -eq 0 ]]; then
+              echo "❌ No changeset found for code changes"
+              echo "Please run 'npx changeset' to document your changes"
+              exit 1
+            else
+              echo "✅ Changeset found"
+            fi
+          else
+            echo "ℹ️  No code changes detected, changeset not required"
+          fi
+
+  # =====================================
+  # VISUAL REGRESSION TESTS
+  # =====================================
+  visual-tests:
+    name: Visual Regression Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build Storybook
+        run: npm run build-storybook
+        
+      # Opcional: Chromatic para visual testing
+      - name: Run Chromatic
+        uses: chromaui/action@v1
+        if: env.CHROMATIC_PROJECT_TOKEN
+        with:
+          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          buildScriptName: build-storybook
+          exitOnceUploaded: true
+        env:
+          CHROMATIC_PROJECT_TOKEN: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+
+  # =====================================
+  # ACCESSIBILITY AUDIT
+  # =====================================
+  a11y-audit:
+    name: Accessibility Audit
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Build Storybook
+        run: npm run build-storybook
+        
+      - name: Serve Storybook
+        run: |
+          npx http-server storybook-static -p 6006 &
+          sleep 5
+          
+      - name: Run accessibility tests
+        run: |
+          npx @storybook/test-runner --url http://localhost:6006 --config-dir .storybook
