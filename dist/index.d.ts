@@ -1,7 +1,7 @@
 import React$1 from 'react';
 import { ClassValue } from 'clsx';
 
-interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement> {
+interface ButtonProps$1 extends React$1.ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Visual style variant of the button
      */
@@ -44,7 +44,15 @@ interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement> {
  * </Button>
  * ```
  */
-declare const Button: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
+declare const Button: React$1.ForwardRefExoticComponent<ButtonProps$1 & React$1.RefAttributes<HTMLButtonElement>>;
+
+interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'gradient';
+    size?: 'sm' | 'md' | 'lg' | 'xl';
+    loading?: boolean;
+    children: React$1.ReactNode;
+}
+declare const ButtonInline: React$1.ForwardRefExoticComponent<ButtonProps & React$1.RefAttributes<HTMLButtonElement>>;
 
 /**
  * Utility function to merge CSS classes
@@ -518,4 +526,4 @@ type SelectRef = React.Ref<HTMLSelectElement>;
 type DivRef = React.Ref<HTMLDivElement>;
 type SpanRef = React.Ref<HTMLSpanElement>;
 
-export { type BaseComponentProps, Button, type ButtonProps, type ButtonRef, type DSResponsiveValue, type DisabledState, type DivRef, type FormFieldProps, type InputRef, type InteractiveProps, type LoadingState, type PolymorphicProps, type ResponsiveValue, type SelectRef, type Size, type SpanRef, type TextareaRef, type ThemeContextType, type Variant, announce, aria, cn, cnx, contrast, createResponsiveValue, createVariants, focusRing, focusVisible, getMediaQuery, keyboard, mergeStyles, resolveResponsiveValue, responsive, srOnly };
+export { type BaseComponentProps, Button, ButtonInline, type ButtonProps$1 as ButtonProps, type ButtonRef, type DSResponsiveValue, type DisabledState, type DivRef, type FormFieldProps, type InputRef, type InteractiveProps, type LoadingState, type PolymorphicProps, type ResponsiveValue, type SelectRef, type Size, type SpanRef, type TextareaRef, type ThemeContextType, type Variant, announce, aria, cn, cnx, contrast, createResponsiveValue, createVariants, focusRing, focusVisible, getMediaQuery, keyboard, mergeStyles, resolveResponsiveValue, responsive, srOnly };
