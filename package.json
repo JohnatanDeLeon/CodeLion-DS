@@ -1,6 +1,6 @@
 {
   "name": "@johnatandeleon/design-system",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "🦁 CodeLion DS - Powerful React Design System with TypeScript, vanilla-extract, and WCAG 2.1 AA accessibility",
   "license": "MIT",
   "author": "CodeLion Team",
