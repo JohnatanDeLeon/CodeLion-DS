@@ -3,6 +3,7 @@ import { defineConfig } from 'tsup';
 export default defineConfig({
   entry: {
     'index': 'src/index.ts',
+    'safe': 'src/safe.ts',
     'styles': 'src/styles.ts',
     'reset': 'src/reset.ts'
   },

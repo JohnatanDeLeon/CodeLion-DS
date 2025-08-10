@@ -40,6 +40,7 @@
       "types": "./dist/index.d.ts"
     },
     "./styles": "./dist/styles.js",
+    "./safe": "./dist/safe.js",
     "./reset": "./dist/reset.css"
   },
   "files": [

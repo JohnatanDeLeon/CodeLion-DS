@@ -1,5 +1,9 @@
 import React, { forwardRef } from 'react';
-import { cn } from '../../utils';
+
+// Simple cn utility inline to avoid dependencies
+function cn(...inputs: (string | undefined | null | false)[]): string {
+  return inputs.filter(Boolean).join(' ');
+}
 
 // Inline styles for Button variants - funcional guarantee
 const buttonStyles = {
