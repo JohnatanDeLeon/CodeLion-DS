@@ -39,15 +39,15 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./dist/index.css": "./dist/index.css",
-    "./styles": "./dist/index.css",
+    "./styles": "./dist/styles.css",
     "./reset": "./dist/reset.css"
   },
   "files": [
     "dist"
   ],
   "sideEffects": [
-    "**/*.css"
+    "**/*.css",
+    "**/*.css.ts"
   ],
   "scripts": {
     "dev": "storybook dev -p 6006",
