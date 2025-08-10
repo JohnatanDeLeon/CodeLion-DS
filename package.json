@@ -1,16 +1,16 @@
 {
-  "name": "@codelion/design-system",
+  "name": "@johnatandeleon/design-system",
   "version": "1.0.0",
   "description": "🦁 CodeLion DS - Powerful React Design System with TypeScript, vanilla-extract, and WCAG 2.1 AA accessibility",
   "license": "MIT",
   "author": "CodeLion Team",
-  "homepage": "https://github.com/codelion/design-system#readme",
+  "homepage": "https://github.com/JohnatanDeLeon/CodeLion-DS#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/codelion/design-system.git"
+    "url": "https://github.com/JohnatanDeLeon/CodeLion-DS.git"
   },
   "bugs": {
-    "url": "https://github.com/codelion/design-system/issues"
+    "url": "https://github.com/JohnatanDeLeon/CodeLion-DS/issues"
   },
   "keywords": [
     "react",
