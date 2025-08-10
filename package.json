@@ -2,6 +2,29 @@
   "name": "@codelion/design-system",
   "version": "1.0.0",
   "description": "🦁 CodeLion DS - Powerful React Design System with TypeScript, vanilla-extract, and WCAG 2.1 AA accessibility",
+  "license": "MIT",
+  "author": "CodeLion Team",
+  "homepage": "https://github.com/codelion/design-system#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/codelion/design-system.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codelion/design-system/issues"
+  },
+  "keywords": [
+    "react",
+    "typescript", 
+    "design-system",
+    "vanilla-extract",
+    "css-in-js",
+    "accessibility",
+    "wcag",
+    "components",
+    "ui-library",
+    "design-tokens",
+    "storybook"
+  ],
   "private": false,
   "type": "module",
   "main": "./dist/index.js",
