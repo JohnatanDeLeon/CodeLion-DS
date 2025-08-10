@@ -40,7 +40,10 @@
       "types": "./dist/index.d.ts"
     },
     "./styles": "./dist/styles.js",
-    "./safe": "./dist/safe.js",
+    "./safe": {
+      "import": "./dist/safe.js",
+      "types": "./dist/safe.d.ts"
+    },
     "./reset": "./dist/reset.css"
   },
   "files": [
