@@ -11,8 +11,8 @@
  * - WCAG 2.1 AA accessibility compliance
  */
 
-// Import CSS reset - this should be imported by consuming applications
-import './styles/globals/reset.css';
+// CSS reset is available as an optional import:
+// import '@johnatandeleon/design-system/reset'
 
 // Components
 export * from './components';
