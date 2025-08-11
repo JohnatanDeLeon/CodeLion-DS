@@ -1,4 +1,4 @@
-# @codelion/design-system
+# @johnatandeleon/design-system
 
 ## 1.0.0
 
@@ -28,12 +28,12 @@
   ## 🚀 Getting Started
 
   ```bash
-  npm install @codelion/design-system@^1.0.0
+  npm install @johnatandeleon/design-system@^1.0.0
   ```
 
   ```tsx
-  import { Button } from '@codelion/design-system';
-  import '@codelion/design-system/styles';
+  import { Button } from '@johnatandeleon/design-system';
+  import '@johnatandeleon/design-system/styles';
 
   <Button variant="primary" size="md" loading={false}>
     Roar with power! 🦁

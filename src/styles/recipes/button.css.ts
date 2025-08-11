@@ -1,4 +1,5 @@
 import { recipe } from '@vanilla-extract/recipes';
+import { keyframes, style } from '@vanilla-extract/css';
 import { colors, effects, typography, spacing } from '../tokens';
 
 /**
@@ -237,4 +238,13 @@ export const button = recipe({
       },
     },
   ],
+});
+
+// Spinner animation for loading state
+const spin = keyframes({
+  to: { transform: 'rotate(360deg)' },
+});
+
+export const spinner = style({
+  animation: `${spin} 1s linear infinite`,
 });

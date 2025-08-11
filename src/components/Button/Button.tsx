@@ -1,5 +1,5 @@
 import React from 'react';
-import { button } from '../../styles/recipes/button.css';
+import { button, spinner } from '../../styles/recipes/button.css';
 import { cn } from '../../utils';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -68,6 +68,12 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     },
     ref
   ) => {
+    const internalRef = React.useRef<HTMLButtonElement | null>(null);
+    const setRefs = (node: HTMLButtonElement | null) => {
+      internalRef.current = node;
+      if (typeof ref === 'function') ref(node);
+      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+    };
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if (loading || disabled) {
         event.preventDefault();
@@ -78,7 +84,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
     return (
       <button
-        ref={ref}
+        ref={setRefs}
         type={type}
         className={cn(
           button({
@@ -92,11 +98,27 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled || loading}
         aria-disabled={disabled || loading}
         onClick={handleClick}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter') {
+            event.preventDefault();
+            if (!disabled && !loading) internalRef.current?.click();
+          } else if (event.key === ' ') {
+            // Prevent page scroll; actual click will be fired on keyup for Space
+            event.preventDefault();
+          }
+        }}
+        onKeyUp={(event) => {
+          if (event.key === ' ') {
+            event.preventDefault();
+            if (!disabled && !loading) internalRef.current?.click();
+          }
+        }}
         {...props}
       >
         {loading && (
           <svg
-            className="animate-spin"
+            role="img"
+            className={spinner}
             width="16"
             height="16"
             viewBox="0 0 24 24"
@@ -110,7 +132,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               r="10"
               stroke="currentColor"
               strokeWidth="4"
-              className="opacity-25"
+              opacity="0.25"
             />
             <path
               d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"

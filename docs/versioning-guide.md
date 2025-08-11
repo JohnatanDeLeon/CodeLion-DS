@@ -10,7 +10,7 @@ npx changeset
 ```
 
 Responde las preguntas:
-- ¿Qué paquetes han cambiado? → `@company/design-system`
+- ¿Qué paquetes han cambiado? → `@johnatandeleon/design-system`
 - ¿Qué tipo de cambio? → `patch/minor/major`
 - Describe el cambio → Mensaje claro para el changelog
 

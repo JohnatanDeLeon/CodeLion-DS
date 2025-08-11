@@ -35,7 +35,7 @@ export const tokens = {
  * Design system configuration
  */
 export const designSystemConfig = {
-  name: '@company/design-system',
+  name: '@johnatandeleon/design-system',
   version: '0.1.0',
   
   // Theme configuration

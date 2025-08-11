@@ -24,7 +24,7 @@ npm run type-check    # TypeScript
 ```bash
 # 1. Crear changeset
 npx changeset
-# → Seleccionar: @company/design-system
+# → Seleccionar: @johnatandeleon/design-system
 # → Tipo: patch/minor/major  
 # → Descripción: "Add loading state to Button"
 
@@ -69,24 +69,24 @@ npm pack --dry-run
 npm publish --registry=https://npm.pkg.github.com
 
 # 4. Verificar
-npm view @company/design-system --registry=https://npm.pkg.github.com
+npm view @johnatandeleon/design-system --registry=https://npm.pkg.github.com
 ```
 
 ## 📥 Consumo en Proyectos
 
 ```bash
 # 1. Configurar .npmrc
-echo "@company:registry=https://npm.pkg.github.com" >> .npmrc
+echo "@johnatandeleon:registry=https://npm.pkg.github.com" >> .npmrc
 echo "//npm.pkg.github.com/:_authToken=\${NPM_TOKEN}" >> .npmrc
 
 # 2. Instalar
-npm install @company/design-system@^1.2.0
+npm install @johnatandeleon/design-system@^1.0.0
 
 # 3. Importar estilos (en app entry point)
-import '@company/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 
 # 4. Usar componentes
-import { Button, Input } from '@company/design-system';
+import { Button } from '@johnatandeleon/design-system';
 ```
 
 ## 🔧 Comandos Útiles
@@ -114,7 +114,7 @@ npx changeset publish     # Publish packages
 
 # GitHub Packages
 npm whoami --registry=https://npm.pkg.github.com
-npm view @company/design-system versions --json
+npm view @johnatandeleon/design-system versions --json
 ```
 
 ## 🎯 Rangos de Versiones
@@ -123,13 +123,13 @@ npm view @company/design-system versions --json
 {
   "dependencies": {
     // ✅ Recomendado: minor updates automáticos
-    "@company/design-system": "^1.2.0",
+    "@johnatandeleon/design-system": "^1.0.0",
     
     // 🔒 Conservador: solo patches  
-    "@company/design-system": "~1.2.0",
+    "@johnatandeleon/design-system": "~1.0.0",
     
     // 📌 Fixed: versión exacta
-    "@company/design-system": "1.2.0"
+    "@johnatandeleon/design-system": "1.0.0"
   }
 }
 ```
@@ -142,11 +142,11 @@ npm whoami --registry=https://npm.pkg.github.com
 # Si falla: verificar NPM_TOKEN en .env
 
 # Module resolution
-npm ls @company/design-system
+npm ls @johnatandeleon/design-system
 # Verificar versión instalada
 
 # CSS no se aplica  
-# Asegurar: import '@company/design-system/styles'; 
+# Asegurar: import '@johnatandeleon/design-system/styles'; 
 
 # Bundle size issues
 npm run build -- --analyze
@@ -160,7 +160,7 @@ npm run build -- --analyze
 
 ```bash
 # Package metrics
-npm view @company/design-system
+npm view @johnatandeleon/design-system
 npm audit
 
 # Bundle analysis  

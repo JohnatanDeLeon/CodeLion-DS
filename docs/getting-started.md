@@ -1,15 +1,15 @@
 # Getting Started
 
-Welcome to the @company/design-system! This comprehensive React design system provides a complete set of components, design tokens, and utilities for building consistent, accessible applications.
+Welcome to the @johnatandeleon/design-system! This comprehensive React design system provides a complete set of components, design tokens, and utilities for building consistent, accessible applications.
 
 ## Installation
 
 ```bash
-npm install @company/design-system
+npm install @johnatandeleon/design-system
 # or
-yarn add @company/design-system
+yarn add @johnatandeleon/design-system
 # or
-pnpm add @company/design-system
+pnpm add @johnatandeleon/design-system
 ```
 
 ## Peer Dependencies
@@ -27,7 +27,7 @@ npm install react react-dom
 First, import the CSS reset in your application's root file (e.g., `main.tsx` or `App.tsx`):
 
 ```tsx
-import '@company/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 ```
 
 ### 2. Use Components
@@ -35,7 +35,7 @@ import '@company/design-system/styles';
 Import and use components as needed:
 
 ```tsx
-import { Button } from '@company/design-system';
+import { Button } from '@johnatandeleon/design-system';
 
 function App() {
   return (
@@ -53,7 +53,7 @@ function App() {
 Access design tokens for custom components:
 
 ```tsx
-import { colors, spacing, typography } from '@company/design-system';
+import { colors, spacing, typography } from '@johnatandeleon/design-system/styles';
 
 // Use in your custom styles
 const customStyles = {
@@ -68,7 +68,7 @@ const customStyles = {
 The design system is built with TypeScript and provides full type safety:
 
 ```tsx
-import { Button, ButtonProps } from '@company/design-system';
+import { Button, ButtonProps } from '@johnatandeleon/design-system';
 
 // All props are fully typed
 const MyButton: React.FC<ButtonProps> = (props) => {
@@ -92,10 +92,10 @@ The design system is optimized for tree shaking. Only import what you use:
 
 ```tsx
 // ✅ Good - only imports Button
-import { Button } from '@company/design-system';
+import { Button } from '@johnatandeleon/design-system';
 
 // ❌ Avoid - imports everything
-import * as DesignSystem from '@company/design-system';
+import * as DesignSystem from '@johnatandeleon/design-system';
 ```
 
 ## Customization
@@ -103,7 +103,7 @@ import * as DesignSystem from '@company/design-system';
 ### Using Design Tokens
 
 ```tsx
-import { tokens, createVariants } from '@company/design-system';
+import { tokens, createVariants } from '@johnatandeleon/design-system/styles';
 
 // Create custom variants using design tokens
 const myButton = createVariants('my-button', {
@@ -116,7 +116,7 @@ const myButton = createVariants('my-button', {
 ### Extending Components
 
 ```tsx
-import { Button, ButtonProps } from '@company/design-system';
+import { Button, ButtonProps } from '@johnatandeleon/design-system';
 
 interface CustomButtonProps extends ButtonProps {
   icon?: React.ReactNode;

@@ -88,7 +88,7 @@ fontFamily: {
 ### Package Naming
 ```json
 {
-  "name": "@codelion/design-system",
+  "name": "@johnatandeleon/design-system",
   "description": "🦁 Powerful React Design System with TypeScript and vanilla-extract"
 }
 ```

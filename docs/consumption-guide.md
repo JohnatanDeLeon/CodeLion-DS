@@ -6,7 +6,7 @@
 
 ```bash
 # En el proyecto consumidor, crear .npmrc
-echo "@company:registry=https://npm.pkg.github.com" >> .npmrc
+echo "@johnatandeleon:registry=https://npm.pkg.github.com" >> .npmrc
 echo "//npm.pkg.github.com/:_authToken=\${NPM_TOKEN}" >> .npmrc
 ```
 
@@ -21,10 +21,10 @@ NPM_TOKEN=ghp_your_personal_access_token_here
 
 ```bash
 # Instalar la librería
-npm install @company/design-system
+npm install @johnatandeleon/design-system
 
 # O con versión específica
-npm install @company/design-system@^1.2.0
+npm install @johnatandeleon/design-system@^1.0.0
 ```
 
 ## 2. Configuración en Aplicación
@@ -33,7 +33,7 @@ npm install @company/design-system@^1.2.0
 
 ```tsx
 // pages/_app.tsx o app/layout.tsx
-import '@company/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 
 export default function App({ Component, pageProps }) {
   return <Component {...pageProps} />;
@@ -44,7 +44,7 @@ export default function App({ Component, pageProps }) {
 
 ```tsx
 // main.tsx
-import '@company/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
@@ -62,7 +62,7 @@ createRoot(document.getElementById('root')!).render(
 // vite.config.js
 export default defineConfig({
   optimizeDeps: {
-    include: ['@company/design-system']
+    include: ['@johnatandeleon/design-system']
   }
 });
 
@@ -70,9 +70,9 @@ export default defineConfig({
 module.exports = {
   resolve: {
     alias: {
-      '@company/design-system': path.resolve(
+      '@johnatandeleon/design-system': path.resolve(
         __dirname, 
-        'node_modules/@company/design-system'
+        'node_modules/@johnatandeleon/design-system'
       )
     }
   }
@@ -84,7 +84,7 @@ module.exports = {
 ### 3.1 Importación básica
 
 ```tsx
-import { Button, Input, Card } from '@company/design-system';
+import { Button } from '@johnatandeleon/design-system';
 
 function MyComponent() {
   return (
@@ -99,7 +99,7 @@ function MyComponent() {
 ### 3.2 Uso de tokens
 
 ```tsx
-import { tokens, colors, spacing } from '@company/design-system';
+import { tokens, colors, spacing } from '@johnatandeleon/design-system/styles';
 
 // En styled-components
 const CustomComponent = styled.div`
@@ -118,7 +118,7 @@ const CustomComponent = styled.div`
 ### 3.3 TypeScript Support
 
 ```tsx
-import type { ButtonProps } from '@company/design-system';
+import type { ButtonProps } from '@johnatandeleon/design-system';
 
 interface CustomButtonProps extends ButtonProps {
   icon?: React.ReactNode;
@@ -144,16 +144,16 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 {
   "dependencies": {
     // ✅ RECOMENDADO: Minor updates automáticos
-    "@company/design-system": "^1.2.0",
+    "@johnatandeleon/design-system": "^1.0.0",
     
     // ✅ CONSERVADOR: Solo patches automáticos  
-    "@company/design-system": "~1.2.0",
+    "@johnatandeleon/design-system": "~1.0.0",
     
     // ❌ EVITAR: Versión exacta (no recibe fixes)
-    "@company/design-system": "1.2.0",
+    "@johnatandeleon/design-system": "1.0.0",
     
     // ❌ PELIGROSO: Major updates automáticos
-    "@company/design-system": "*"
+    "@johnatandeleon/design-system": "*"
   }
 }
 ```
@@ -163,17 +163,17 @@ const CustomButton: React.FC<CustomButtonProps> = ({
 ```json
 // Proyectos en desarrollo activo
 {
-  "@company/design-system": "^1.2.0"
+  "@johnatandeleon/design-system": "^1.0.0"
 }
 
 // Proyectos en producción crítica
 {
-  "@company/design-system": "~1.2.0"
+  "@johnatandeleon/design-system": "~1.0.0"
 }
 
 // Proyectos legacy
 {
-  "@company/design-system": "1.2.0"
+  "@johnatandeleon/design-system": "1.0.0"
 }
 ```
 
@@ -185,7 +185,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   "extends": ["config:base"],
   "packageRules": [
     {
-      "matchPackageNames": ["@company/design-system"],
+"matchPackageNames": ["@johnatandeleon/design-system"],
       "minor": {
         "automerge": true
       },
@@ -212,18 +212,18 @@ npm whoami --registry=https://npm.pkg.github.com
 
 # Error: Module not found
 # Solución: Verificar imports
-npm ls @company/design-system
+npm ls @johnatandeleon/design-system
 
 # Error: CSS no se aplica
 # Solución: Importar estilos
-import '@company/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 ```
 
 ### 5.2 Debug de bundling
 
 ```bash
 # Verificar resolución de módulos
-npm ls @company/design-system
+npm ls @johnatandeleon/design-system
 
 # Verificar tamaño del bundle
 npm run build -- --analyze

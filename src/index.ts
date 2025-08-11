@@ -1,6 +1,6 @@
 /**
  * CodeLion Design System
- * @codelion/design-system
+ * @johnatandeleon/design-system
  * 
  * A comprehensive React design system built with:
  * - TypeScript for type safety

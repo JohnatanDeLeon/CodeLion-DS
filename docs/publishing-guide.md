@@ -73,8 +73,8 @@ git push --tags
 
 ```bash
 # Ver paquetes publicados
-npm view @company/design-system --registry=https://npm.pkg.github.com
+npm view @johnatandeleon/design-system --registry=https://npm.pkg.github.com
 
 # Ver todas las versiones
-npm view @company/design-system versions --json
+npm view @johnatandeleon/design-system versions --json
 ```

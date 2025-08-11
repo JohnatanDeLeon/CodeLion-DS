@@ -26,17 +26,17 @@ echo "@codelion:registry=https://npm.pkg.github.com" >> .npmrc
 echo "//npm.pkg.github.com/:_authToken=\${NPM_TOKEN}" >> .npmrc
 
 # Instalar CodeLion DS
-npm install @codelion/design-system@^1.0.0
+npm install @johnatandeleon/design-system@^1.0.0
 ```
 
 ### 2. Setup en aplicación
 
 ```tsx
 // main.tsx o _app.tsx
-import '@codelion/design-system/styles';
+import '@johnatandeleon/design-system/styles';
 
 // Tu componente
-import { Button, Input, Card } from '@codelion/design-system';
+import { Button } from '@johnatandeleon/design-system';
 
 function MyApp() {
   return (
@@ -53,7 +53,7 @@ function MyApp() {
 ### 3. Usando tokens
 
 ```tsx
-import { colors, spacing, typography } from '@codelion/design-system';
+import { colors, spacing, typography } from '@johnatandeleon/design-system/styles';
 
 const CustomComponent = {
   color: colors.primary[600],

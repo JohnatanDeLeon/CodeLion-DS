@@ -1,9 +1,9 @@
 import { defineConfig } from 'tsup';
+import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 
 export default defineConfig({
   entry: {
     'index': 'src/index.ts',
-    'safe': 'src/safe.ts',
     'styles': 'src/styles.ts',
     'reset': 'src/reset.ts'
   },
@@ -16,6 +16,7 @@ export default defineConfig({
   splitting: false,
   treeshake: true,
   external: ['react', 'react-dom'],
+  esbuildPlugins: [vanillaExtractPlugin()],
   define: {
     'process.env.NODE_ENV': '"production"',
     'process.argv': '[]',
@@ -23,9 +24,8 @@ export default defineConfig({
     'process.env': '{}',
   },
   esbuildOptions: (options) => {
-    options.banner = {
-      js: '"use client"',
-    };
+    // No banner directives to avoid warnings in output
+    options.banner = {} as any;
     // Define process for browser compatibility
     options.define = {
       ...options.define,
@@ -36,4 +36,5 @@ export default defineConfig({
       }),
     };
   },
+
 });

@@ -1,9 +1,11 @@
 import { expect, afterEach, vi } from 'vitest';
 import { cleanup } from '@testing-library/react';
 import * as matchers from '@testing-library/jest-dom/matchers';
+import { toHaveNoViolations } from 'jest-axe';
 
 // Add custom matchers
 expect.extend(matchers);
+expect.extend({ toHaveNoViolations } as any);
 
 // Cleanup after each test
 afterEach(() => {
@@ -42,11 +44,7 @@ Object.defineProperty(window, 'matchMedia', {
 // Mock HTMLElement.scrollIntoView
 HTMLElement.prototype.scrollIntoView = vi.fn();
 
-// Mock HTMLElement.focus
-HTMLElement.prototype.focus = vi.fn();
-
-// Mock HTMLElement.blur
-HTMLElement.prototype.blur = vi.fn();
+// Allow jsdom to manage focus/blur natively for accurate keyboard/focus tests
 
 // Mock CSS.supports
 if (!CSS.supports) {

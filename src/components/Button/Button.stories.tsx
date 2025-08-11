@@ -25,7 +25,7 @@ The Button component is a versatile, accessible button with multiple variants an
 Import the Button component and use it with the desired props:
 
 \`\`\`tsx
-import { Button } from '@company/design-system';
+import { Button } from '@johnatandeleon/design-system';
 
 function MyComponent() {
   return (
@@ -122,7 +122,9 @@ export const Gradient: Story = {
 
 // Size stories
 export const Sizes: Story = {
-  args: {},
+  args: {
+    children: 'Button',
+  },
   render: () => (
     <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
       <Button size="sm">Small</Button>
@@ -142,7 +144,9 @@ export const Sizes: Story = {
 
 // All variants showcase
 export const AllVariants: Story = {
-  args: {},
+  args: {
+    children: 'Button',
+  },
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
       <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
@@ -238,7 +242,9 @@ export const IconButton: Story = {
 
 // Interactive example
 export const Interactive: Story = {
-  args: {},
+  args: {
+    children: '+',
+  },
   render: () => {
     const [count, setCount] = React.useState(0);
     

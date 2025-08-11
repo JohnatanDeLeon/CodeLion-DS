@@ -5,4 +5,3 @@
 
 // Basic Components
 export * from './Button';
-export { ButtonInline } from './Button/Button.inline';

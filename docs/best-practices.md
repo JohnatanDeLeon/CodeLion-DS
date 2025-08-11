@@ -212,7 +212,7 @@ bundlesize:
     channel: '#design-system'
     text: |
       🎉 New design system release: ${{ github.ref }}
-      📦 Package: @company/design-system@${{ steps.version.outputs.version }}
+      📦 Package: @johnatandeleon/design-system@${{ steps.version.outputs.version }}
       📋 Changelog: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref }}
 ```
 
@@ -223,11 +223,11 @@ bundlesize:
 ```bash
 # Script de backup
 #!/bin/bash
-VERSIONS=$(npm view @company/design-system versions --json)
+VERSIONS=$(npm view @johnatandeleon/design-system versions --json)
 mkdir -p backups/packages
 
 for version in $(echo $VERSIONS | jq -r '.[]'); do
-  npm pack @company/design-system@$version
+  npm pack @johnatandeleon/design-system@$version
   mv *.tgz backups/packages/
 done
 ```
