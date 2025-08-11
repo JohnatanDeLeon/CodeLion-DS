@@ -39,7 +39,7 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./styles": "./dist/styles.js",
+    "./styles": "./dist/styles.css",
     "./reset": "./dist/reset.css"
   },
   "files": [
