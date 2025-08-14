@@ -7,7 +7,7 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
+    'plugin:@typescript-eslint/recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:jsx-a11y/recommended',
@@ -21,6 +21,8 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
+    project: ['./tsconfig.json'],
+    tsconfigRootDir: __dirname,
   },
   plugins: [
     '@typescript-eslint',
@@ -35,7 +37,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-const': 'error',
     '@typescript-eslint/no-unnecessary-type-assertion': 'error',
     
     // React specific rules
@@ -116,6 +117,8 @@ module.exports = {
       rules: {
         'no-console': 'off',
         '@typescript-eslint/no-explicit-any': 'off',
+        'react-hooks/rules-of-hooks': 'off',
+        'react-hooks/exhaustive-deps': 'off',
       },
     },
     {
@@ -126,6 +129,13 @@ module.exports = {
       rules: {
         '@typescript-eslint/no-explicit-any': 'off',
         'jsx-a11y/no-autofocus': 'off',
+        '@typescript-eslint/no-unused-vars': 'off',
+      },
+    },
+    {
+      files: ['**/*.d.ts'],
+      rules: {
+        '@typescript-eslint/no-unused-vars': 'off',
       },
     },
     {

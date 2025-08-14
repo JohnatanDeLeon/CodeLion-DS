@@ -1,5 +1,5 @@
-declare module 'jest-axe' {
-  import type { AxeResults } from 'axe-core';
+declare module "jest-axe" {
+  import type { AxeResults } from "axe-core";
 
   export const axe: (container: HTMLElement) => Promise<AxeResults>;
   export const toHaveNoViolations: () => {
@@ -8,8 +8,8 @@ declare module 'jest-axe' {
   };
 }
 
-declare module 'vitest' {
-  interface Assertion<T = any> {
+declare module "vitest" {
+  interface Assertion<T = unknown> {
     toHaveNoViolations(): void;
   }
   interface AsymmetricMatchersContaining {
@@ -18,4 +18,3 @@ declare module 'vitest' {
 }
 
 export {};
-

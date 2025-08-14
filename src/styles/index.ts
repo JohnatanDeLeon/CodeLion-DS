@@ -4,7 +4,7 @@
  */
 
 // Design tokens
-export * from './tokens';
+export * from "./tokens";
 
 // Recipes
-export { button } from './recipes/button.css';
+export { button } from "./recipes/button.css";

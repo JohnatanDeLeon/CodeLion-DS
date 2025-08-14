@@ -1,38 +1,39 @@
-import React from 'react';
-import { button, spinner } from '../../styles/recipes/button.css';
-import { cn } from '../../utils';
+import React from "react";
+import { button, spinner } from "../../styles/recipes/button.css";
+import { cn } from "../../utils";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   /**
    * Visual style variant of the button
    */
-  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'gradient';
-  
+  variant?: "primary" | "secondary" | "ghost" | "destructive" | "gradient";
+
   /**
    * Size of the button
    */
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
-  
+  size?: "sm" | "md" | "lg" | "xl" | "icon";
+
   /**
    * Whether the button should take full width of its container
    */
   fullWidth?: boolean;
-  
+
   /**
    * Loading state - shows loading indicator and disables interaction
    */
   loading?: boolean;
-  
+
   /**
    * Content to render inside the button
    */
   children: React.ReactNode;
-  
+
   /**
    * Additional CSS classes
    */
   className?: string;
-  
+
   /**
    * Click handler
    */
@@ -41,10 +42,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 
 /**
  * Button Component
- * 
+ *
  * Versatile button component with multiple variants, sizes, and states.
  * Follows WCAG 2.1 AA accessibility guidelines.
- * 
+ *
  * @example
  * ```tsx
  * <Button variant="primary" size="md" onClick={handleClick}>
@@ -55,24 +56,26 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
-      variant = 'primary',
-      size = 'md',
+      variant = "primary",
+      size = "md",
       fullWidth = false,
       loading = false,
       disabled,
       className,
       children,
       onClick,
-      type = 'button',
+      type = "button",
       ...props
     },
-    ref
+    ref,
   ) => {
     const internalRef = React.useRef<HTMLButtonElement | null>(null);
     const setRefs = (node: HTMLButtonElement | null) => {
       internalRef.current = node;
-      if (typeof ref === 'function') ref(node);
-      else if (ref) (ref as React.MutableRefObject<HTMLButtonElement | null>).current = node;
+      if (typeof ref === "function") ref(node);
+      else if (ref)
+        (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
+          node;
     };
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if (loading || disabled) {
@@ -93,22 +96,22 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             fullWidth,
             loading,
           }),
-          className
+          className,
         )}
         disabled={disabled || loading}
         aria-disabled={disabled || loading}
         onClick={handleClick}
         onKeyDown={(event) => {
-          if (event.key === 'Enter') {
+          if (event.key === "Enter") {
             event.preventDefault();
             if (!disabled && !loading) internalRef.current?.click();
-          } else if (event.key === ' ') {
+          } else if (event.key === " ") {
             // Prevent page scroll; actual click will be fired on keyup for Space
             event.preventDefault();
           }
         }}
         onKeyUp={(event) => {
-          if (event.key === ' ') {
+          if (event.key === " ") {
             event.preventDefault();
             if (!disabled && !loading) internalRef.current?.click();
           }
@@ -143,7 +146,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 
-Button.displayName = 'Button';
+Button.displayName = "Button";

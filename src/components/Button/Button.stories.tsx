@@ -1,12 +1,12 @@
-import React from 'react';
-import type { Meta, StoryObj } from '@storybook/react-vite';
-import { Button } from './Button';
+import React from "react";
+import type { Meta, StoryObj } from "@storybook/react-vite";
+import { Button } from "./Button";
 
 const meta = {
-  title: 'Components/Basic/Button',
+  title: "Components/Basic/Button",
   component: Button,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -39,37 +39,37 @@ function MyComponent() {
       },
     },
   },
-  tags: ['autodocs'],
+  tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'destructive', 'gradient'],
-      description: 'Visual style variant of the button',
+      control: "select",
+      options: ["primary", "secondary", "ghost", "destructive", "gradient"],
+      description: "Visual style variant of the button",
     },
     size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg', 'xl', 'icon'],
-      description: 'Size of the button',
+      control: "select",
+      options: ["sm", "md", "lg", "xl", "icon"],
+      description: "Size of the button",
     },
     fullWidth: {
-      control: 'boolean',
-      description: 'Whether the button should take full width',
+      control: "boolean",
+      description: "Whether the button should take full width",
     },
     loading: {
-      control: 'boolean',
-      description: 'Shows loading spinner and disables interaction',
+      control: "boolean",
+      description: "Shows loading spinner and disables interaction",
     },
     disabled: {
-      control: 'boolean',
-      description: 'Disables the button',
+      control: "boolean",
+      description: "Disables the button",
     },
     children: {
-      control: 'text',
-      description: 'Button content',
+      control: "text",
+      description: "Button content",
     },
     onClick: {
-      action: 'clicked',
-      description: 'Click event handler',
+      action: "clicked",
+      description: "Click event handler",
     },
   },
 } satisfies Meta<typeof Button>;
@@ -80,53 +80,60 @@ type Story = StoryObj<typeof meta>;
 // Default story
 export const Default: Story = {
   args: {
-    children: 'Button',
+    children: "Button",
   },
 };
 
 // Variant stories
 export const Primary: Story = {
   args: {
-    variant: 'primary',
-    children: 'Primary Button',
+    variant: "primary",
+    children: "Primary Button",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    variant: 'secondary',
-    children: 'Secondary Button',
+    variant: "secondary",
+    children: "Secondary Button",
   },
 };
 
 export const Ghost: Story = {
   args: {
-    variant: 'ghost',
-    children: 'Ghost Button',
+    variant: "ghost",
+    children: "Ghost Button",
   },
 };
 
 export const Destructive: Story = {
   args: {
-    variant: 'destructive',
-    children: 'Delete Item',
+    variant: "destructive",
+    children: "Delete Item",
   },
 };
 
 export const Gradient: Story = {
   args: {
-    variant: 'gradient',
-    children: 'Gradient Button',
+    variant: "gradient",
+    children: "Gradient Button",
   },
 };
 
 // Size stories
 export const Sizes: Story = {
   args: {
-    children: 'Button',
+    children: "Button",
   },
   render: () => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+    <div
+      style={{
+        display: "flex",
+        alignItems: "center",
+        gap: "1rem",
+        flexWrap: "wrap",
+      }}
+    >
       <Button size="sm">Small</Button>
       <Button size="md">Medium</Button>
       <Button size="lg">Large</Button>
@@ -136,7 +143,7 @@ export const Sizes: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Different button sizes available in the design system.',
+        story: "Different button sizes available in the design system.",
       },
     },
   },
@@ -145,11 +152,18 @@ export const Sizes: Story = {
 // All variants showcase
 export const AllVariants: Story = {
   args: {
-    children: 'Button',
+    children: "Button",
   },
   render: () => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'flex-start' }}>
-      <div style={{ display: 'flex', gap: '1rem', flexWrap: 'wrap' }}>
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "column",
+        gap: "1rem",
+        alignItems: "flex-start",
+      }}
+    >
+      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         <Button variant="primary">Primary</Button>
         <Button variant="secondary">Secondary</Button>
         <Button variant="ghost">Ghost</Button>
@@ -161,7 +175,7 @@ export const AllVariants: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'All available button variants side by side.',
+        story: "All available button variants side by side.",
       },
     },
   },
@@ -171,12 +185,12 @@ export const AllVariants: Story = {
 export const Loading: Story = {
   args: {
     loading: true,
-    children: 'Loading...',
+    children: "Loading...",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Button in loading state with spinner animation.',
+        story: "Button in loading state with spinner animation.",
       },
     },
   },
@@ -185,12 +199,12 @@ export const Loading: Story = {
 export const Disabled: Story = {
   args: {
     disabled: true,
-    children: 'Disabled Button',
+    children: "Disabled Button",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Disabled button state.',
+        story: "Disabled button state.",
       },
     },
   },
@@ -199,12 +213,12 @@ export const Disabled: Story = {
 export const FullWidth: Story = {
   args: {
     fullWidth: true,
-    children: 'Full Width Button',
+    children: "Full Width Button",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Button that takes the full width of its container.',
+        story: "Button that takes the full width of its container.",
       },
     },
   },
@@ -213,8 +227,8 @@ export const FullWidth: Story = {
 // Icon button
 export const IconButton: Story = {
   args: {
-    size: 'icon',
-    variant: 'ghost',
+    size: "icon",
+    variant: "ghost",
     children: (
       <svg
         width="16"
@@ -229,12 +243,13 @@ export const IconButton: Story = {
         <path d="M6 18L18 6M6 6l12 12" />
       </svg>
     ),
-    'aria-label': 'Close',
+    "aria-label": "Close",
   },
   parameters: {
     docs: {
       description: {
-        story: 'Icon-only button. Remember to provide aria-label for accessibility.',
+        story:
+          "Icon-only button. Remember to provide aria-label for accessibility.",
       },
     },
   },
@@ -243,15 +258,22 @@ export const IconButton: Story = {
 // Interactive example
 export const Interactive: Story = {
   args: {
-    children: '+',
+    children: "+",
   },
   render: () => {
     const [count, setCount] = React.useState(0);
-    
+
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', alignItems: 'center' }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "center",
+        }}
+      >
         <div>Count: {count}</div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div style={{ display: "flex", gap: "0.5rem" }}>
           <Button variant="secondary" onClick={() => setCount(count - 1)}>
             -
           </Button>
@@ -268,7 +290,7 @@ export const Interactive: Story = {
   parameters: {
     docs: {
       description: {
-        story: 'Interactive example showing button click handlers.',
+        story: "Interactive example showing button click handlers.",
       },
     },
   },

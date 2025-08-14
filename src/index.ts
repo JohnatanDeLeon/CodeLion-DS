@@ -1,11 +1,11 @@
 /**
  * CodeLion Design System
  * @johnatandeleon/design-system
- * 
+ *
  * A comprehensive React design system built with:
  * - TypeScript for type safety
  * - vanilla-extract for CSS-in-JS
- * - Tailwind CSS for utilities  
+ * - Tailwind CSS for utilities
  * - Storybook for documentation
  * - Vitest for testing
  * - WCAG 2.1 AA accessibility compliance
@@ -15,13 +15,13 @@
 // import '@johnatandeleon/design-system/reset'
 
 // Components
-export * from './components';
+export * from "./components";
 
 // Design tokens and styles
-export * from './styles';
+export * from "./styles";
 
 // Utilities
-export * from './utils';
+export * from "./utils";
 
 // Types
-export * from './types';
+export * from "./types";

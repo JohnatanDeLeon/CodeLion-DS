@@ -8,15 +8,15 @@
  * Hides content visually but keeps it accessible to screen readers
  */
 export const srOnly = {
-  position: 'absolute',
-  width: '1px',
-  height: '1px',
-  padding: '0',
-  margin: '-1px',
-  overflow: 'hidden',
-  clip: 'rect(0, 0, 0, 0)',
-  whiteSpace: 'nowrap',
-  borderWidth: '0',
+  position: "absolute",
+  width: "1px",
+  height: "1px",
+  padding: "0",
+  margin: "-1px",
+  overflow: "hidden",
+  clip: "rect(0, 0, 0, 0)",
+  whiteSpace: "nowrap",
+  borderWidth: "0",
 } as const;
 
 /**
@@ -24,11 +24,11 @@ export const srOnly = {
  * Provides consistent focus indicators across components
  */
 export const focusVisible = {
-  outline: '2px solid transparent',
-  outlineOffset: '2px',
-  ':focus-visible': {
-    outline: '2px solid currentColor',
-    outlineOffset: '2px',
+  outline: "2px solid transparent",
+  outlineOffset: "2px",
+  ":focus-visible": {
+    outline: "2px solid currentColor",
+    outlineOffset: "2px",
   },
 } as const;
 
@@ -36,14 +36,14 @@ export const focusVisible = {
  * Focus ring styles using box-shadow
  * Alternative to outline for better control
  */
-export const focusRing = (color = 'rgb(59 130 246)', opacity = 0.5) => ({
-  ':focus': {
-    outline: '2px solid transparent',
-    outlineOffset: '2px',
+export const focusRing = (color = "rgb(59 130 246)", opacity = 0.5) => ({
+  ":focus": {
+    outline: "2px solid transparent",
+    outlineOffset: "2px",
   },
-  ':focus-visible': {
-    outline: '2px solid transparent',
-    outlineOffset: '2px',
+  ":focus-visible": {
+    outline: "2px solid transparent",
+    outlineOffset: "2px",
     boxShadow: `0 0 0 2px ${color}${Math.round(opacity * 255).toString(16)}`,
   },
 });
@@ -62,22 +62,23 @@ export const aria = {
     describedBy?: string;
     labelledBy?: string;
   }) => {
-    const attributes: Record<string, string | boolean | undefined> = {
-      role: 'button',
+    const attributes: Record<string, string | number | boolean | undefined> = {
+      role: "button",
     };
-    
+
     // Handle tabIndex separately as it can be a number
     if (props.disabled) {
-      (attributes as any).tabIndex = -1;
+      attributes.tabIndex = -1;
     } else {
-      (attributes as any).tabIndex = 0;
+      attributes.tabIndex = 0;
     }
 
-    if (props.pressed !== undefined) attributes['aria-pressed'] = props.pressed;
-    if (props.expanded !== undefined) attributes['aria-expanded'] = props.expanded;
-    if (props.disabled) attributes['aria-disabled'] = true;
-    if (props.describedBy) attributes['aria-describedby'] = props.describedBy;
-    if (props.labelledBy) attributes['aria-labelledby'] = props.labelledBy;
+    if (props.pressed !== undefined) attributes["aria-pressed"] = props.pressed;
+    if (props.expanded !== undefined)
+      attributes["aria-expanded"] = props.expanded;
+    if (props.disabled) attributes["aria-disabled"] = true;
+    if (props.describedBy) attributes["aria-describedby"] = props.describedBy;
+    if (props.labelledBy) attributes["aria-labelledby"] = props.labelledBy;
 
     return attributes;
   },
@@ -94,10 +95,10 @@ export const aria = {
   }) => {
     const attributes: Record<string, string | boolean | undefined> = {};
 
-    if (props.required) attributes['aria-required'] = true;
-    if (props.invalid) attributes['aria-invalid'] = true;
-    if (props.describedBy) attributes['aria-describedby'] = props.describedBy;
-    if (props.labelledBy) attributes['aria-labelledby'] = props.labelledBy;
+    if (props.required) attributes["aria-required"] = true;
+    if (props.invalid) attributes["aria-invalid"] = true;
+    if (props.describedBy) attributes["aria-describedby"] = props.describedBy;
+    if (props.labelledBy) attributes["aria-labelledby"] = props.labelledBy;
 
     return attributes;
   },
@@ -112,13 +113,15 @@ export const aria = {
     activeDescendant?: string;
   }) => {
     const attributes: Record<string, string | boolean | undefined> = {
-      role: 'menu',
+      role: "menu",
     };
 
-    if (props.expanded !== undefined) attributes['aria-expanded'] = props.expanded;
-    if (props.hasPopup) attributes['aria-haspopup'] = true;
-    if (props.controls) attributes['aria-controls'] = props.controls;
-    if (props.activeDescendant) attributes['aria-activedescendant'] = props.activeDescendant;
+    if (props.expanded !== undefined)
+      attributes["aria-expanded"] = props.expanded;
+    if (props.hasPopup) attributes["aria-haspopup"] = true;
+    if (props.controls) attributes["aria-controls"] = props.controls;
+    if (props.activeDescendant)
+      attributes["aria-activedescendant"] = props.activeDescendant;
 
     return attributes;
   },
@@ -132,12 +135,12 @@ export const aria = {
     modal?: boolean;
   }) => {
     const attributes: Record<string, string | boolean | undefined> = {
-      role: 'dialog',
+      role: "dialog",
     };
 
-    if (props.labelledBy) attributes['aria-labelledby'] = props.labelledBy;
-    if (props.describedBy) attributes['aria-describedby'] = props.describedBy;
-    if (props.modal) attributes['aria-modal'] = true;
+    if (props.labelledBy) attributes["aria-labelledby"] = props.labelledBy;
+    if (props.describedBy) attributes["aria-describedby"] = props.describedBy;
+    if (props.modal) attributes["aria-modal"] = true;
 
     return attributes;
   },
@@ -153,7 +156,7 @@ export const contrast = {
    * Used for contrast ratio calculations
    */
   getLuminance: (r: number, g: number, b: number): number => {
-    const [rs, gs, bs] = [r, g, b].map(c => {
+    const [rs, gs, bs] = [r, g, b].map((c) => {
       c = c / 255;
       return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4);
     });
@@ -164,7 +167,10 @@ export const contrast = {
    * Calculate contrast ratio between two colors
    * Returns ratio that should be >= 4.5 for AA compliance
    */
-  getContrastRatio: (color1: [number, number, number], color2: [number, number, number]): number => {
+  getContrastRatio: (
+    color1: [number, number, number],
+    color2: [number, number, number],
+  ): number => {
     const lum1 = contrast.getLuminance(...color1);
     const lum2 = contrast.getLuminance(...color2);
     const lighter = Math.max(lum1, lum2);
@@ -175,14 +181,20 @@ export const contrast = {
   /**
    * Check if color combination meets WCAG AA standards
    */
-  meetsAA: (color1: [number, number, number], color2: [number, number, number]): boolean => {
+  meetsAA: (
+    color1: [number, number, number],
+    color2: [number, number, number],
+  ): boolean => {
     return contrast.getContrastRatio(color1, color2) >= 4.5;
   },
 
   /**
    * Check if color combination meets WCAG AAA standards
    */
-  meetsAAA: (color1: [number, number, number], color2: [number, number, number]): boolean => {
+  meetsAAA: (
+    color1: [number, number, number],
+    color2: [number, number, number],
+  ): boolean => {
     return contrast.getContrastRatio(color1, color2) >= 7;
   },
 };
@@ -196,44 +208,46 @@ export const keyboard = {
    */
   handlers: {
     onEnterOrSpace: (callback: () => void) => (event: KeyboardEvent) => {
-      if (event.key === 'Enter' || event.key === ' ') {
+      if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         callback();
       }
     },
 
     onEscape: (callback: () => void) => (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
+      if (event.key === "Escape") {
         event.preventDefault();
         callback();
       }
     },
 
-    onArrowKeys: (callbacks: {
-      up?: () => void;
-      down?: () => void;
-      left?: () => void;
-      right?: () => void;
-    }) => (event: KeyboardEvent) => {
-      switch (event.key) {
-        case 'ArrowUp':
-          event.preventDefault();
-          callbacks.up?.();
-          break;
-        case 'ArrowDown':
-          event.preventDefault();
-          callbacks.down?.();
-          break;
-        case 'ArrowLeft':
-          event.preventDefault();
-          callbacks.left?.();
-          break;
-        case 'ArrowRight':
-          event.preventDefault();
-          callbacks.right?.();
-          break;
-      }
-    },
+    onArrowKeys:
+      (callbacks: {
+        up?: () => void;
+        down?: () => void;
+        left?: () => void;
+        right?: () => void;
+      }) =>
+      (event: KeyboardEvent) => {
+        switch (event.key) {
+          case "ArrowUp":
+            event.preventDefault();
+            callbacks.up?.();
+            break;
+          case "ArrowDown":
+            event.preventDefault();
+            callbacks.down?.();
+            break;
+          case "ArrowLeft":
+            event.preventDefault();
+            callbacks.left?.();
+            break;
+          case "ArrowRight":
+            event.preventDefault();
+            callbacks.right?.();
+            break;
+        }
+      },
   },
 
   /**
@@ -245,14 +259,14 @@ export const keyboard = {
      */
     getFocusableElements: (container: HTMLElement): HTMLElement[] => {
       const focusableSelectors = [
-        'button:not([disabled])',
-        'input:not([disabled])',
-        'select:not([disabled])',
-        'textarea:not([disabled])',
-        'a[href]',
+        "button:not([disabled])",
+        "input:not([disabled])",
+        "select:not([disabled])",
+        "textarea:not([disabled])",
+        "a[href]",
         '[tabindex]:not([tabindex="-1"])',
         '[contenteditable="true"]',
-      ].join(', ');
+      ].join(", ");
 
       return Array.from(container.querySelectorAll(focusableSelectors));
     },
@@ -266,7 +280,7 @@ export const keyboard = {
       const lastElement = focusableElements[focusableElements.length - 1];
 
       const handleTabKey = (event: KeyboardEvent) => {
-        if (event.key !== 'Tab') return;
+        if (event.key !== "Tab") return;
 
         if (event.shiftKey) {
           if (document.activeElement === firstElement) {
@@ -281,10 +295,10 @@ export const keyboard = {
         }
       };
 
-      container.addEventListener('keydown', handleTabKey);
+      container.addEventListener("keydown", handleTabKey);
 
       return () => {
-        container.removeEventListener('keydown', handleTabKey);
+        container.removeEventListener("keydown", handleTabKey);
       };
     },
   },
@@ -297,14 +311,17 @@ export const announce = {
   /**
    * Create a live region for screen reader announcements
    */
-  createLiveRegion: (level: 'polite' | 'assertive' = 'polite'): HTMLElement => {
-    const liveRegion = document.createElement('div');
-    liveRegion.setAttribute('aria-live', level);
-    liveRegion.setAttribute('aria-atomic', 'true');
+  createLiveRegion: (level: "polite" | "assertive" = "polite"): HTMLElement => {
+    const liveRegion = document.createElement("div");
+    liveRegion.setAttribute("aria-live", level);
+    liveRegion.setAttribute("aria-atomic", "true");
     liveRegion.style.cssText = Object.entries(srOnly)
-      .map(([key, value]) => `${key.replace(/([A-Z])/g, '-$1').toLowerCase()}: ${value}`)
-      .join('; ');
-    
+      .map(
+        ([key, value]) =>
+          `${key.replace(/([A-Z])/g, "-$1").toLowerCase()}: ${value}`,
+      )
+      .join("; ");
+
     document.body.appendChild(liveRegion);
     return liveRegion;
   },
@@ -312,10 +329,13 @@ export const announce = {
   /**
    * Announce message to screen readers
    */
-  message: (message: string, level: 'polite' | 'assertive' = 'polite'): void => {
+  message: (
+    message: string,
+    level: "polite" | "assertive" = "polite",
+  ): void => {
     const liveRegion = announce.createLiveRegion(level);
     liveRegion.textContent = message;
-    
+
     // Clean up after announcement
     setTimeout(() => {
       document.body.removeChild(liveRegion);

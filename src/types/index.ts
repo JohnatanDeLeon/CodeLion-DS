@@ -11,12 +11,12 @@ export interface BaseComponentProps {
    * Additional CSS classes
    */
   className?: string;
-  
+
   /**
    * Custom data attributes
    */
   [key: `data-${string}`]: string | number | boolean | undefined;
-  
+
   /**
    * ARIA attributes for accessibility
    */
@@ -26,7 +26,7 @@ export interface BaseComponentProps {
 /**
  * Props for components that can be polymorphic
  */
-export interface PolymorphicProps<T extends React.ElementType = 'div'> {
+export interface PolymorphicProps<T extends React.ElementType = "div"> {
   /**
    * The underlying HTML element or React component to render
    */
@@ -36,12 +36,18 @@ export interface PolymorphicProps<T extends React.ElementType = 'div'> {
 /**
  * Standard size variants used across components
  */
-export type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+export type Size = "xs" | "sm" | "md" | "lg" | "xl";
 
 /**
  * Standard color variants for semantic components
  */
-export type Variant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+export type Variant =
+  | "primary"
+  | "secondary"
+  | "success"
+  | "warning"
+  | "error"
+  | "info";
 
 /**
  * Loading state interface
@@ -51,7 +57,7 @@ export interface LoadingState {
    * Whether the component is in a loading state
    */
   loading?: boolean;
-  
+
   /**
    * Optional loading text for screen readers
    */
@@ -76,12 +82,12 @@ export interface InteractiveProps extends LoadingState, DisabledState {
    * Click handler
    */
   onClick?: (event: React.MouseEvent) => void;
-  
+
   /**
    * Focus handler
    */
   onFocus?: (event: React.FocusEvent) => void;
-  
+
   /**
    * Blur handler
    */
@@ -96,27 +102,27 @@ export interface FormFieldProps {
    * Field name for form submission
    */
   name?: string;
-  
+
   /**
    * Whether the field is required
    */
   required?: boolean;
-  
+
   /**
    * Error message to display
    */
   error?: string;
-  
+
   /**
    * Help text to display
    */
   helpText?: string;
-  
+
   /**
    * Field label
    */
   label?: string;
-  
+
   /**
    * Placeholder text
    */
@@ -130,30 +136,32 @@ export interface ThemeContextType {
   /**
    * Current theme name
    */
-  theme: 'light' | 'dark';
-  
+  theme: "light" | "dark";
+
   /**
    * Function to toggle theme
    */
   toggleTheme: () => void;
-  
+
   /**
    * Function to set specific theme
    */
-  setTheme: (theme: 'light' | 'dark') => void;
+  setTheme: (theme: "light" | "dark") => void;
 }
 
 /**
  * Design system responsive value type
  */
-export type DSResponsiveValue<T> = T | {
-  xs?: T;
-  sm?: T;
-  md?: T;
-  lg?: T;
-  xl?: T;
-  '2xl'?: T;
-};
+export type DSResponsiveValue<T> =
+  | T
+  | {
+      xs?: T;
+      sm?: T;
+      md?: T;
+      lg?: T;
+      xl?: T;
+      "2xl"?: T;
+    };
 
 /**
  * Component ref types for common HTML elements
