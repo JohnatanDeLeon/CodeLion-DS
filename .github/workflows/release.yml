@@ -1,0 +1,10 @@
+name: dummy-to-be-removed
+on:
+  workflow_dispatch:
+jobs:
+  noop:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "This placeholder workflow will be removed in the PR."
+
+
