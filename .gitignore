@@ -19,6 +19,13 @@
 
 # production
 /build
+/dist
+/storybook-static
+
+# testing
+/playwright-report/
+/test-results/
+/playwright/.cache/
 
 # misc
 .DS_Store
