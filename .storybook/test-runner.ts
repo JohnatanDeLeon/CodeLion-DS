@@ -2,10 +2,10 @@ import type { TestRunnerConfig } from '@storybook/test-runner';
 import { injectAxe, checkA11y } from 'axe-playwright';
 
 const config: TestRunnerConfig = {
-  async preRender(page, story) {
+  async preVisit(page, story) {
     await injectAxe(page);
   },
-  async postRender(page, story) {
+  async postVisit(page, story) {
     // Run accessibility tests on every story
     await checkA11y(page, '#storybook-root', {
       detailedReport: true,
