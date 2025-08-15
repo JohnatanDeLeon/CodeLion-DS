@@ -5,11 +5,11 @@ interface ButtonProps extends React$1.ButtonHTMLAttributes<HTMLButtonElement> {
     /**
      * Visual style variant of the button
      */
-    variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'gradient';
+    variant?: "primary" | "secondary" | "ghost" | "destructive" | "gradient";
     /**
      * Size of the button
      */
-    size?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
+    size?: "sm" | "md" | "lg" | "xl" | "icon";
     /**
      * Whether the button should take full width of its container
      */
@@ -140,7 +140,7 @@ declare const designSystemConfig: {
         readonly md: "768px";
         readonly lg: "1024px";
         readonly xl: "1280px";
-        readonly '2xl': "1536px";
+        readonly "2xl": "1536px";
     };
     readonly zIndex: {
         readonly hide: -1;
@@ -243,7 +243,7 @@ declare const srOnly: {
 declare const focusVisible: {
     readonly outline: "2px solid transparent";
     readonly outlineOffset: "2px";
-    readonly ':focus-visible': {
+    readonly ":focus-visible": {
         readonly outline: "2px solid currentColor";
         readonly outlineOffset: "2px";
     };
@@ -253,11 +253,11 @@ declare const focusVisible: {
  * Alternative to outline for better control
  */
 declare const focusRing: (color?: string, opacity?: number) => {
-    ':focus': {
+    ":focus": {
         outline: string;
         outlineOffset: string;
     };
-    ':focus-visible': {
+    ":focus-visible": {
         outline: string;
         outlineOffset: string;
         boxShadow: string;
@@ -276,7 +276,7 @@ declare const aria: {
         disabled?: boolean;
         describedBy?: string;
         labelledBy?: string;
-    }) => Record<string, string | boolean | undefined>;
+    }) => Record<string, string | number | boolean | undefined>;
     /**
      * Input ARIA attributes
      */
@@ -398,7 +398,7 @@ interface BaseComponentProps {
 /**
  * Props for components that can be polymorphic
  */
-interface PolymorphicProps<T extends React.ElementType = 'div'> {
+interface PolymorphicProps<T extends React.ElementType = "div"> {
     /**
      * The underlying HTML element or React component to render
      */
@@ -407,11 +407,11 @@ interface PolymorphicProps<T extends React.ElementType = 'div'> {
 /**
  * Standard size variants used across components
  */
-type Size = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+type Size = "xs" | "sm" | "md" | "lg" | "xl";
 /**
  * Standard color variants for semantic components
  */
-type Variant = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info';
+type Variant = "primary" | "secondary" | "success" | "warning" | "error" | "info";
 /**
  * Loading state interface
  */
@@ -487,7 +487,7 @@ interface ThemeContextType {
     /**
      * Current theme name
      */
-    theme: 'light' | 'dark';
+    theme: "light" | "dark";
     /**
      * Function to toggle theme
      */
@@ -495,7 +495,7 @@ interface ThemeContextType {
     /**
      * Function to set specific theme
      */
-    setTheme: (theme: 'light' | 'dark') => void;
+    setTheme: (theme: "light" | "dark") => void;
 }
 /**
  * Design system responsive value type
@@ -506,7 +506,7 @@ type DSResponsiveValue<T> = T | {
     md?: T;
     lg?: T;
     xl?: T;
-    '2xl'?: T;
+    "2xl"?: T;
 };
 /**
  * Component ref types for common HTML elements
