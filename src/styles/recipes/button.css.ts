@@ -58,18 +58,18 @@ export const button = recipe({
     variant: {
       primary: [
         {
-          backgroundColor: colors.primary[600],
+          backgroundColor: colors.primary[700],
           color: colors.white,
           boxShadow: effects.shadow.sm,
         },
         {
           selectors: {
             "&:hover:not(:disabled)": {
-              backgroundColor: colors.primary[700],
+              backgroundColor: colors.primary[800],
               boxShadow: effects.shadow.md,
             },
             "&:active:not(:disabled)": {
-              backgroundColor: colors.primary[800],
+              backgroundColor: colors.primary[900],
             },
             "&:focus-visible": {
               boxShadow: `0 0 0 2px ${colors.primary[500]}40`,
@@ -147,18 +147,18 @@ export const button = recipe({
 
       gradient: [
         {
-          background: `linear-gradient(135deg, ${colors.primary[500]} 0%, ${colors.primary[600]} 100%)`,
+          background: `linear-gradient(135deg, ${colors.primary[600]} 0%, ${colors.primary[700]} 100%)`,
           color: colors.white,
           boxShadow: effects.shadow.md,
         },
         {
           selectors: {
             "&:hover:not(:disabled)": {
-              background: `linear-gradient(135deg, ${colors.primary[600]} 0%, ${colors.primary[700]} 100%)`,
+              background: `linear-gradient(135deg, ${colors.primary[700]} 0%, ${colors.primary[800]} 100%)`,
               boxShadow: effects.shadow.lg,
             },
             "&:active:not(:disabled)": {
-              background: `linear-gradient(135deg, ${colors.primary[700]} 0%, ${colors.primary[800]} 100%)`,
+              background: `linear-gradient(135deg, ${colors.primary[800]} 0%, ${colors.primary[900]} 100%)`,
             },
             "&:focus-visible": {
               boxShadow: `0 0 0 2px ${colors.primary[500]}40, 0 0 20px ${colors.primary[500]}20`,
