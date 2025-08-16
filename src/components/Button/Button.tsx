@@ -1,6 +1,12 @@
 import React from "react";
-import { button, spinner } from "../../styles/recipes/button.css";
+import {
+  button,
+  spinner,
+  gradientCustomClass,
+} from "../../styles/recipes/button.css";
 import { cn } from "../../utils";
+import { useGradient } from "../../hooks/useGradient";
+import type { GradientProps } from "../../types/gradient";
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -35,6 +41,25 @@ export interface ButtonProps
   className?: string;
 
   /**
+   * Gradient configuration (only applies when variant="gradient")
+   * Can be a simple object with startColor/endColor or advanced configuration
+   *
+   * @example
+   * // Simple gradient
+   * gradient={{ startColor: "#ff6b6b", endColor: "#ee5a52" }}
+   *
+   * @example
+   * // Advanced gradient with full control
+   * gradient={{
+   *   gradient: {
+   *     default: { direction: 135, stops: [{ color: "#ff6b6b", position: 0 }] },
+   *     hover: { direction: 135, stops: [{ color: "#ee5a52", position: 0 }] }
+   *   }
+   * }}
+   */
+  gradient?: GradientProps;
+
+  /**
    * Click handler
    */
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
@@ -63,6 +88,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       disabled,
       className,
       children,
+      gradient,
       onClick,
       type = "button",
       ...props
@@ -70,6 +96,16 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const internalRef = React.useRef<HTMLButtonElement | null>(null);
+
+    // Use gradient hook for custom gradient functionality
+    const gradientStyles = useGradient(
+      variant === "gradient" ? gradient : undefined,
+      {
+        cssPropertyPrefix: "gradient",
+        generateCustomProperties: true,
+      },
+    );
+
     const setRefs = (node: HTMLButtonElement | null) => {
       internalRef.current = node;
       if (typeof ref === "function") ref(node);
@@ -77,6 +113,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         (ref as React.MutableRefObject<HTMLButtonElement | null>).current =
           node;
     };
+
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
       if (loading || disabled) {
         event.preventDefault();
@@ -84,6 +121,19 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       }
       onClick?.(event);
     };
+
+    // Combine custom gradient styles with any user-provided styles
+    const combinedStyle = React.useMemo(() => {
+      const baseStyle = props.style || {};
+      const gradientStyle = gradientStyles
+        ? {
+            background: gradientStyles.background,
+            ...gradientStyles.customProperties,
+          }
+        : {};
+
+      return { ...baseStyle, ...gradientStyle };
+    }, [props.style, gradientStyles]);
 
     return (
       <button
@@ -96,8 +146,11 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             fullWidth,
             loading,
           }),
+          // Add gradient custom class when using custom gradients
+          gradientStyles?.className && gradientCustomClass,
           className,
         )}
+        style={combinedStyle}
         disabled={disabled || loading}
         aria-disabled={disabled || loading}
         onClick={handleClick}

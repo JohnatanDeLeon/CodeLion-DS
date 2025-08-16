@@ -1,6 +1,13 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { keyframes, style } from "@vanilla-extract/css";
+import { keyframes, style, globalStyle, createVar } from "@vanilla-extract/css";
 import { colors, effects, typography, spacing } from "../tokens";
+
+/**
+ * CSS Custom Properties for Dynamic Gradients
+ */
+export const gradientHoverVar = createVar();
+export const gradientActiveVar = createVar();
+export const gradientFocusVar = createVar();
 
 /**
  * Button Recipe
@@ -248,3 +255,65 @@ const spin = keyframes({
 export const spinner = style({
   animation: `${spin} 1s linear infinite`,
 });
+
+/**
+ * Dynamic Gradient System
+ * Scalable CSS custom properties for gradient customization
+ */
+export const gradientCustomClass = style({
+  // Set up CSS custom properties with fallbacks
+  vars: {
+    [gradientHoverVar]: "var(--gradient-hover, inherit)",
+    [gradientActiveVar]: "var(--gradient-active, inherit)",
+    [gradientFocusVar]: "var(--gradient-focus, inherit)",
+  },
+});
+
+// Hover state with CSS custom property
+globalStyle(`.${gradientCustomClass}:hover:not(:disabled)`, {
+  background: `${gradientHoverVar} !important`,
+  boxShadow: effects.shadow.lg,
+  transform: "translateY(-1px)",
+});
+
+// Active state with CSS custom property
+globalStyle(`.${gradientCustomClass}:active:not(:disabled)`, {
+  background: `${gradientActiveVar} !important`,
+  transform: "translateY(0)",
+});
+
+// Focus state with CSS custom property or fallback
+globalStyle(`.${gradientCustomClass}:focus-visible`, {
+  background: gradientFocusVar,
+  boxShadow:
+    "0 0 0 2px rgba(59, 130, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.2)",
+});
+
+/**
+ * Utility Classes for Common Gradient Patterns
+ */
+export const gradientUtilities = {
+  // Diagonal gradient (most common)
+  diagonal: style({
+    background:
+      "linear-gradient(135deg, var(--gradient-start, transparent), var(--gradient-end, transparent))",
+  }),
+
+  // Vertical gradient
+  vertical: style({
+    background:
+      "linear-gradient(to bottom, var(--gradient-start, transparent), var(--gradient-end, transparent))",
+  }),
+
+  // Horizontal gradient
+  horizontal: style({
+    background:
+      "linear-gradient(to right, var(--gradient-start, transparent), var(--gradient-end, transparent))",
+  }),
+
+  // Radial gradient
+  radial: style({
+    background:
+      "radial-gradient(circle, var(--gradient-start, transparent), var(--gradient-end, transparent))",
+  }),
+};

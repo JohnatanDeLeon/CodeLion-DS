@@ -172,3 +172,6 @@ export type TextareaRef = React.Ref<HTMLTextAreaElement>;
 export type SelectRef = React.Ref<HTMLSelectElement>;
 export type DivRef = React.Ref<HTMLDivElement>;
 export type SpanRef = React.Ref<HTMLSpanElement>;
+
+// Gradient system types
+export * from "./gradient";

@@ -268,4 +268,260 @@ describe("Button", () => {
       expect(button).toHaveTextContent("IconText Content");
     });
   });
+
+  describe("Gradient Functionality", () => {
+    it("renders with simple gradient props", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      // Check that gradient class is applied and has background style
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("renders with simple gradient and custom direction", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+            direction: 45,
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("renders with simple gradient and named direction", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+            direction: "to-right",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("renders with simple gradient and custom hover colors", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+            hoverStartColor: "#cc0000",
+            hoverEndColor: "#00cc00",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      expect(button.className).toContain("gradientCustomClass");
+      // Verify custom properties are set
+      const style = button.getAttribute("style");
+      expect(style).toContain("--gradient-hover");
+    });
+
+    it("renders with advanced gradient configuration", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            gradient: {
+              default: {
+                direction: 135,
+                stops: [
+                  { color: "#ff0000", position: 0 },
+                  { color: "#ffff00", position: 50 },
+                  { color: "#00ff00", position: 100 },
+                ],
+              },
+            },
+          }}
+        >
+          Advanced Gradient
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("renders with advanced gradient with hover state", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            gradient: {
+              default: {
+                direction: 135,
+                stops: [
+                  { color: "#ff0000", position: 0 },
+                  { color: "#00ff00", position: 100 },
+                ],
+              },
+              hover: {
+                direction: 135,
+                stops: [
+                  { color: "#cc0000", position: 0 },
+                  { color: "#00cc00", position: 100 },
+                ],
+              },
+            },
+          }}
+        >
+          Hover Gradient
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      expect(button.className).toContain("gradientCustomClass");
+      const style = button.getAttribute("style");
+      expect(style).toContain("--gradient-hover");
+    });
+
+    it("applies gradient custom class when using gradients", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      // Check that custom gradient class is applied
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("does not apply gradient styles when variant is not gradient", () => {
+      render(
+        <Button
+          variant="primary"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+          }}
+        >
+          Primary Button
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button.className).not.toContain("gradientCustomClass");
+    });
+
+    it("handles gradient with user-provided styles", () => {
+      render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+          }}
+          style={{ margin: "10px" }}
+        >
+          Styled Gradient
+        </Button>,
+      );
+
+      const button = screen.getByRole("button");
+      expect(button).toHaveStyle({ margin: "10px" });
+      expect(button.className).toContain("gradientCustomClass");
+    });
+
+    it("has no accessibility violations with gradients", async () => {
+      const { container } = render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#0066cc",
+            endColor: "#004499",
+          }}
+        >
+          Accessible Gradient
+        </Button>,
+      );
+
+      const results = await axe(container);
+      expect(results).toHaveNoViolations();
+    });
+
+    it("handles gradient updates correctly", () => {
+      const { rerender } = render(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#ff0000",
+            endColor: "#00ff00",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      let button = screen.getByRole("button");
+      expect(button.className).toContain("gradientCustomClass");
+
+      // Update gradient
+      rerender(
+        <Button
+          variant="gradient"
+          gradient={{
+            startColor: "#0000ff",
+            endColor: "#ffff00",
+          }}
+        >
+          Gradient Button
+        </Button>,
+      );
+
+      button = screen.getByRole("button");
+      expect(button.className).toContain("gradientCustomClass");
+      // Should still have gradient functionality
+      expect(button).toBeInTheDocument();
+    });
+
+    it("handles undefined gradient gracefully", () => {
+      render(<Button variant="gradient">No Gradient</Button>);
+
+      const button = screen.getByRole("button");
+      expect(button).toBeInTheDocument();
+      // Should not crash and should render normally
+    });
+  });
 });

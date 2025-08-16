@@ -12,3 +12,4 @@ export {
 } from "./responsive";
 export type { ResponsiveValue } from "./responsive";
 export * from "./a11y";
+export * from "./color";
