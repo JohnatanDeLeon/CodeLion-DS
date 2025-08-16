@@ -131,11 +131,15 @@ jobs:
         id: changesets
         run: |
           echo "🚀 Processing changesets..."
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           npx changeset version
           git add .
           git commit -m "chore: version bump [skip ci]" || echo "No changes to commit"
           git push origin main || echo "No changes to push"
           echo "📦 Publishing packages..."
+          echo "Registry: https://npm.pkg.github.com/"
+          echo "Token configured: ${NODE_AUTH_TOKEN:0:10}..."
           npx changeset publish
           echo "published=true" >> $GITHUB_OUTPUT
         env:
