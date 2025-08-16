@@ -1,48 +1,336 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+# ========================================
+# CodeLion Design System - .gitignore
+# ========================================
+# Optimized for React + TypeScript + Storybook + Testing
 
-# dependencies
-/node_modules
+# ========================================
+# NODE.JS & PACKAGE MANAGERS
+# ========================================
+
+# Dependencies
+node_modules/
 /.pnp
 .pnp.*
+
+# npm 
+npm-debug.log*
+.npm
+
+# Yarn
 .yarn/*
 !.yarn/patches
 !.yarn/plugins
 !.yarn/releases
 !.yarn/versions
+yarn-debug.log*
+yarn-error.log*
 
-# testing
-/coverage
+# pnpm
+.pnpm-debug.log*
+pnpm-debug.log*
 
-# next.js
-/.next/
-/out/
+# Package lock conflicts
+package-lock.json.orig
 
-# production
+# ========================================
+# BUILD OUTPUTS & DISTRIBUTIONS
+# ========================================
+
+# Distribution bundles
 /build
 /dist
+/lib
+/es
+/cjs
+
+# TypeScript build cache
+*.tsbuildinfo
+.tsbuildinfo
+
+# Build artifacts
+.cache/
+.temp/
+.tmp/
+
+# ========================================
+# STORYBOOK
+# ========================================
+
+# Storybook build outputs
 /storybook-static
+storybook-static/
+.out/
 
-# testing
-/playwright-report/
+# Storybook cache
+.sb-cache/
+
+# Chromatic snapshots
+/chromatic-snapshots/
+
+# ========================================
+# TESTING & COVERAGE
+# ========================================
+
+# Test coverage reports
+/coverage
+coverage/
+.coverage/
+.lcov
+
+# Test outputs
 /test-results/
+test-results/
+/test-outputs/
+test-outputs/
+
+# Playwright specific
+/playwright-report/
+playwright-report/
 /playwright/.cache/
+playwright/.cache/
 
-# misc
+# Jest cache
+.jest/
+
+# Vitest cache
+.vitest/
+
+# Test artifacts
+*.junit.xml
+junit.xml
+test-report.xml
+
+# ========================================
+# TYPESCRIPT
+# ========================================
+
+# TypeScript build info
+*.tsbuildinfo
+.tsbuildinfo
+
+# TypeScript cache
+.tscache/
+
+# Generated type declarations (if auto-generated)
+# types/generated.d.ts
+
+# ========================================
+# CSS & STYLING
+# ========================================
+
+# vanilla-extract generated files
+*.css.ts.vanilla.css
+.vanilla-extract/
+
+# PostCSS cache
+.postcss-cache/
+
+# CSS build outputs
+*.css.map
+
+# ========================================
+# DEVELOPMENT TOOLS
+# ========================================
+
+# Editor directories and files
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ESLint cache
+.eslintcache
+
+# Prettier cache
+.prettiercache
+
+# Stylelint cache
+.stylelintcache
+
+# ========================================
+# ENVIRONMENT & CONFIGURATION
+# ========================================
+
+# Environment variables
+.env
+.env.*
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Local configuration
+.local
+local.config.*
+
+# ========================================
+# OPERATING SYSTEM
+# ========================================
+
+# macOS
 .DS_Store
-*.pem
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
-# debug
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+
+# ========================================
+# LOGS & TEMPORARY FILES
+# ========================================
+
+# Log files
+logs
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+lerna-debug.log*
 .pnpm-debug.log*
 
-# env files (can opt-in for committing if needed)
-.env*
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
 
-# vercel
+# Temporary files
+*.tmp
+*.temp
+temp_*
+.temp*
+temp/
+
+# Swap files
+*.swp
+*.swo
+
+# ========================================
+# DEPLOYMENT & CLOUD
+# ========================================
+
+# Vercel
 .vercel
+.vercel.json
 
-# typescript
-*.tsbuildinfo
-next-env.d.ts
+# Netlify
+.netlify/
+
+# AWS
+.aws-sam/
+
+# Docker
+Dockerfile.dev
+docker-compose.override.yml
+
+# Serverless
+.serverless/
+
+# ========================================
+# SECURITY & CERTIFICATES
+# ========================================
+
+# Certificate files
+*.pem
+*.key
+*.crt
+*.csr
+
+# SSH keys
+*.pub
+id_rsa*
+
+# GPG keys
+*.gpg
+*.asc
+
+# ========================================
+# MISCELLANEOUS
+# ========================================
+
+# Optional npm cache directory
+.npm
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Bundle analyzer reports
+bundle-analyzer-report.html
+
+# Webpack Bundle Analyzer
+.webpack-bundle-analyzer/
+
+# Zero-installs
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+
+# ========================================
+# PROJECT SPECIFIC
+# ========================================
+
+# Design system specific temporary files
+temp_trigger.txt
+*.backup
+*.bak
+
+# Documentation builds (if auto-generated)
+# docs/build/
+
+# Benchmark results
+/benchmarks/results/
+
+# Visual regression test screenshots
+__screenshots__/
+__image_snapshots__/
+
+# Component analysis outputs
+component-stats.json
+bundle-size-report.json
+
+# ========================================
+# GITHUB & VERSION CONTROL
+# ========================================
+
+# GitHub specific
+.github/
+!.github/workflows/
+!.github/ISSUE_TEMPLATE/
+!.github/PULL_REQUEST_TEMPLATE.md
+!.github/CONTRIBUTING.md
+
+# Git hooks
+.git/hooks/pre-commit.local
+.git/hooks/pre-push.local
+
+# Merge artifacts
+*.orig
+*.rej
+
+# ========================================
+# END OF GITIGNORE
+# ========================================
