@@ -127,15 +127,17 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
 
-      - name: Create Release Pull Request or Publish
+      - name: Version and Publish
         id: changesets
-        uses: changesets/action@v1
-        with:
-          publish: npx changeset publish
-          version: npx changeset version
-          commit: 'chore: version bump'
-          title: 'chore: version bump'
-          createGithubReleases: true
+        run: |
+          echo "🚀 Processing changesets..."
+          npx changeset version
+          git add .
+          git commit -m "chore: version bump [skip ci]" || echo "No changes to commit"
+          git push origin main || echo "No changes to push"
+          echo "📦 Publishing packages..."
+          npx changeset publish
+          echo "published=true" >> $GITHUB_OUTPUT
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
