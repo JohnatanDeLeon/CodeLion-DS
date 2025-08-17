@@ -148,13 +148,18 @@ export interface GradientHookOptions {
 export const isSimpleGradient = (
   props: GradientProps,
 ): props is SimpleGradientProps => {
-  return "startColor" in props && "endColor" in props;
+  return (
+    props != null &&
+    typeof props === "object" &&
+    "startColor" in props &&
+    "endColor" in props
+  );
 };
 
 export const isAdvancedGradient = (
   props: GradientProps,
 ): props is AdvancedGradientProps => {
-  return "gradient" in props;
+  return props != null && typeof props === "object" && "gradient" in props;
 };
 
 // Utility types for component props
