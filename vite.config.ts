@@ -49,13 +49,55 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
       exclude: [
+        // Dependencies and build output
         'node_modules/',
-        'tests/',
-        '**/*.stories.tsx',
-        '**/*.config.*',
         'dist/',
+        'storybook-static/',
         '.storybook/',
+        
+        // Test files
+        'tests/',
+        '**/*.test.{ts,tsx}',
+        '**/*.stories.{ts,tsx}',
+        
+        // Configuration files
+        '**/*.config.*',
+        '.eslintrc.*',
+        '.prettierrc.*',
+        'playwright.config.ts',
+        
+        // Style-only files (no business logic)
+        'src/reset.ts',
+        'src/styles.ts',
+        'src/styles/index.ts',
+        '**/*.css.ts',
+        
+        // Type definition files
+        '**/*.d.ts',
+        
+        // Index files (only re-exports)
+        'src/index.ts',
+        'src/components/index.ts',
+        'src/hooks/index.ts',
+        'src/utils/index.ts',
+        'src/types/index.ts',
+        'src/styles/tokens/index.ts',
       ],
+      
+      // Include only source files with business logic
+      include: [
+        'src/**/*.{ts,tsx}',
+      ],
+      
+      // Coverage thresholds for quality assurance
+      thresholds: {
+        global: {
+          branches: 80,
+          functions: 80,
+          lines: 80,
+          statements: 80,
+        },
+      },
     },
   },
 });
