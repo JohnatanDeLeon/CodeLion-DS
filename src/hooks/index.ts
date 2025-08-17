@@ -9,10 +9,3 @@ export {
   useGradientAnimation,
 } from "./useGradient";
 export type { GradientHookOptions } from "../types/gradient";
-
-// Formatting hooks
-export { useInputFormat, useSimpleFormat } from "./useInputFormat";
-export type { 
-  UseInputFormatResult, 
-  UseInputFormatOptions 
-} from "../types/formatting";

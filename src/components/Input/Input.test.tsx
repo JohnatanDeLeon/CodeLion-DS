@@ -85,7 +85,10 @@ describe("Input", () => {
       const input = screen.getByRole("textbox");
 
       expect(helperText).toBeInTheDocument();
-      expect(input).toHaveAttribute("aria-describedby", expect.stringContaining("helper"));
+      expect(input).toHaveAttribute(
+        "aria-describedby",
+        expect.stringContaining("helper"),
+      );
     });
 
     it("renders with error message", () => {
@@ -104,16 +107,14 @@ describe("Input", () => {
       expect(errorMessage).toBeInTheDocument();
       expect(errorMessage).toHaveAttribute("role", "alert");
       expect(input).toHaveAttribute("aria-invalid", "true");
-      expect(input).toHaveAttribute("aria-describedby", expect.stringContaining("helper"));
+      expect(input).toHaveAttribute(
+        "aria-describedby",
+        expect.stringContaining("helper"),
+      );
     });
 
     it("renders with success message", () => {
-      render(
-        <Input
-          state="success"
-          successMessage="Valid email format"
-        />,
-      );
+      render(<Input state="success" successMessage="Valid email format" />);
 
       const successMessage = screen.getByText("Valid email format");
       expect(successMessage).toBeInTheDocument();
@@ -127,7 +128,9 @@ describe("Input", () => {
         />,
       );
 
-      const warningMessage = screen.getByText("This email domain is not commonly used");
+      const warningMessage = screen.getByText(
+        "This email domain is not commonly used",
+      );
       expect(warningMessage).toBeInTheDocument();
     });
   });
@@ -299,61 +302,15 @@ describe("Input", () => {
   describe("🔴 EXPECTED FAILURES - HTML Attributes", () => {
     it("handles different input types", () => {
       const types = ["text", "email", "password", "number", "tel", "url"];
-      
+
       types.forEach((type) => {
         const { rerender } = render(<Input type={type} />);
-        const input = screen.getByRole(type === "password" ? "textbox" : "textbox");
+        const input = screen.getByRole(
+          type === "password" ? "textbox" : "textbox",
+        );
         expect(input).toHaveAttribute("type", type);
         rerender(<></>); // Clean up for next iteration
       });
-    });
-  });
-
-  describe("✅ Basic Formatting", () => {
-    it("should format currency input correctly", async () => {
-      const user = userEvent.setup();
-      
-      render(
-        <Input 
-          format={{ type: "currency" }} 
-          data-testid="currency-input" 
-        />
-      );
-      
-      const input = screen.getByTestId("currency-input");
-      
-      // Type a simple number
-      await user.type(input, "123");
-      
-      // Should format as currency
-      expect(input).toHaveValue("$123.00");
-    });
-
-    it("should format currency step by step", async () => {
-      const user = userEvent.setup();
-      
-      render(
-        <Input 
-          format={{ type: "currency" }} 
-          data-testid="currency-input" 
-        />
-      );
-      
-      const input = screen.getByTestId("currency-input");
-      
-      // Type first character
-      await user.type(input, "1");
-      expect(input).toHaveValue("$1.00");
-      
-      // Clear and type second character
-      await user.clear(input);
-      await user.type(input, "12");
-      expect(input).toHaveValue("$12.00");
-      
-      // Clear and type third character
-      await user.clear(input);
-      await user.type(input, "123");
-      expect(input).toHaveValue("$123.00");
     });
   });
 
@@ -413,7 +370,10 @@ describe("Input", () => {
 
       const input = screen.getByRole("textbox");
       expect(input).toHaveAttribute("aria-invalid", "true");
-      expect(input).toHaveAttribute("aria-describedby", expect.stringContaining("helper"));
+      expect(input).toHaveAttribute(
+        "aria-describedby",
+        expect.stringContaining("helper"),
+      );
     });
 
     it("properly associates label with input", () => {
@@ -548,10 +508,7 @@ describe("Input", () => {
 
     it("handles helperClassName correctly", () => {
       render(
-        <Input
-          helperText="Custom helper"
-          helperClassName="custom-helper"
-        />,
+        <Input helperText="Custom helper" helperClassName="custom-helper" />,
       );
 
       const helperText = screen.getByText("Custom helper");

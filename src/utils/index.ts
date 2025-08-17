@@ -13,6 +13,3 @@ export {
 export type { ResponsiveValue } from "./responsive";
 export * from "./a11y";
 export * from "./color";
-
-// Formatting utilities
-export * from "./formatting";

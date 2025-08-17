@@ -8,7 +8,7 @@ export * from "./tokens";
 
 // Recipes
 export { button } from "./recipes/button.css";
-export { 
+export {
   inputContainer,
   inputWrapper,
   inputField,
@@ -35,5 +35,5 @@ export {
   inputErrorIcon,
   inputSuccessIcon,
   inputWarningIcon,
-  inputSpinner
+  inputSpinner,
 } from "./recipes/input.css";

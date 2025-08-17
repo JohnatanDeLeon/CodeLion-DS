@@ -1,4 +1,4 @@
-import { style, globalStyle } from "@vanilla-extract/css";
+import { style, globalStyle, keyframes } from "@vanilla-extract/css";
 import { colors, effects, typography, spacing, animation } from "../tokens";
 
 /**
@@ -38,11 +38,11 @@ export const inputLeftIcon = style({
   transform: "translateY(-50%)",
   zIndex: 10,
   pointerEvents: "none", // Importante: evita interferir con clics
-  
+
   // Estado base - Más visible pero "apagado"
   color: colors.neutral[500], // Más contraste que neutral[400]
   transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
-  
+
   // Asegurar tamaño consistente del ícono
   width: "1rem", // 16px
   height: "1rem", // 16px
@@ -50,7 +50,7 @@ export const inputLeftIcon = style({
   alignItems: "center",
   justifyContent: "center",
   flexShrink: 0,
-  
+
   // Sutil efecto de profundidad en estado base
   filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
 });
@@ -62,11 +62,11 @@ export const inputRightIcon = style({
   transform: "translateY(-50%)",
   zIndex: 10,
   pointerEvents: "none", // Importante: evita interferir con clics
-  
+
   // Estado base - Más visible pero "apagado"
   color: colors.neutral[500], // Más contraste que neutral[400]
   transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
-  
+
   // Asegurar tamaño consistente del ícono
   width: "1rem", // 16px
   height: "1rem", // 16px
@@ -74,7 +74,7 @@ export const inputRightIcon = style({
   alignItems: "center",
   justifyContent: "center",
   flexShrink: 0,
-  
+
   // Sutil efecto de profundidad en estado base
   filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
 });
@@ -86,7 +86,7 @@ export const inputRightIcon = style({
 export const inputField = style({
   width: "100%",
   padding: `${spacing[3]} ${spacing[4]}`, // 12px vertical, 16px horizontal
-  
+
   // ESTADO BASE (IDLE) MEJORADO - "Apagado" pero perceptible
   border: `1px solid ${colors.neutral[300]}`, // Más visible que neutral[200]
   borderRadius: effects.borderRadius.xl, // 12px
@@ -94,19 +94,19 @@ export const inputField = style({
   fontSize: typography.fontSize.sm, // 14px
   fontWeight: typography.fontWeight.semibold, // 600
   fontFamily: typography.fontFamily.sans,
-  
+
   // Transición suave para efecto "encendido/apagado"
   transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
-  
+
   // Sombra sutil que sugiere interactividad
   boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.neutral[200]}25`, // Sombra interior sutil
-  
+
   // Placeholder styles - Más contraste en estado base
   "::placeholder": {
     color: colors.neutral[500], // Más visible que neutral[400]
     fontWeight: typography.fontWeight.medium, // 500
   },
-  
+
   // HOVER STATE - Transición intermedia hacia "encendido"
   ":hover": {
     borderColor: colors.neutral[400], // Progresión gradual
@@ -114,24 +114,24 @@ export const inputField = style({
     backgroundColor: colors.white, // Se aclara al pasar mouse
     transform: "translateY(-1px)", // Sutil elevación como en Button
   },
-  
+
   // FOCUS STATE - "ENCENDIDO" dramático
   ":focus": {
     outline: "none",
     borderColor: colors.primary[600], // Más intenso que [500]
     backgroundColor: colors.white, // Completamente blanco cuando activo
-    
+
     // Efecto de "encendido" con glow más prominente
     boxShadow: [
       `0 0 0 3px ${colors.primary[500]}30`, // Ring más visible
       `0 0 30px ${colors.primary[500]}15`, // Glow effect extendido
       `${effects.shadow.md}`, // Sombra más pronunciada
-      `inset 0 1px 0 ${colors.white}` // Highlight interior
+      `inset 0 1px 0 ${colors.white}`, // Highlight interior
     ].join(", "),
-    
+
     transform: "translateY(-2px)", // Elevación más pronunciada que hover
   },
-  
+
   // DISABLED STATE - Claramente "apagado"
   ":disabled": {
     cursor: "not-allowed",
@@ -141,7 +141,7 @@ export const inputField = style({
     transform: "none", // Sin elevación
     boxShadow: "none", // Sin efectos de luz
   },
-  
+
   // Responsive design
   "@media": {
     "(max-width: 640px)": {
@@ -178,9 +178,9 @@ export const inputFieldWithErrorAndRightIcon = style({
 export const inputFieldError = style({
   // Estado base error - "Apagado" pero con indicación de error
   borderColor: colors.error[400], // Más visible que [300]
-  backgroundColor: colors.error[25],
+  backgroundColor: colors.error[50],
   boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.error[200]}25`,
-  
+
   // Hover error - Transición hacia "encendido"
   ":hover": {
     borderColor: colors.error[500],
@@ -188,7 +188,7 @@ export const inputFieldError = style({
     boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.error[400]}40`,
     transform: "translateY(-1px)",
   },
-  
+
   // Focus error - "Encendido" con error prominente
   ":focus": {
     borderColor: colors.error[600],
@@ -197,7 +197,7 @@ export const inputFieldError = style({
       `0 0 0 3px ${colors.error[500]}30`,
       `0 0 30px ${colors.error[500]}15`,
       `${effects.shadow.md}`,
-      `inset 0 1px 0 ${colors.white}`
+      `inset 0 1px 0 ${colors.white}`,
     ].join(", "),
     transform: "translateY(-2px)",
   },
@@ -206,9 +206,9 @@ export const inputFieldError = style({
 export const inputFieldSuccess = style({
   // Estado base success - "Apagado" pero con indicación de éxito
   borderColor: colors.success[400], // Más visible que [300]
-  backgroundColor: colors.success[25],
+  backgroundColor: colors.success[50],
   boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.success[200]}25`,
-  
+
   // Hover success - Transición hacia "encendido"
   ":hover": {
     borderColor: colors.success[500],
@@ -216,7 +216,7 @@ export const inputFieldSuccess = style({
     boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.success[400]}40`,
     transform: "translateY(-1px)",
   },
-  
+
   // Focus success - "Encendido" con éxito prominente
   ":focus": {
     borderColor: colors.success[600],
@@ -225,7 +225,7 @@ export const inputFieldSuccess = style({
       `0 0 0 3px ${colors.success[500]}30`,
       `0 0 30px ${colors.success[500]}15`,
       `${effects.shadow.md}`,
-      `inset 0 1px 0 ${colors.white}`
+      `inset 0 1px 0 ${colors.white}`,
     ].join(", "),
     transform: "translateY(-2px)",
   },
@@ -234,9 +234,9 @@ export const inputFieldSuccess = style({
 export const inputFieldWarning = style({
   // Estado base warning - "Apagado" pero con indicación de advertencia
   borderColor: colors.warning[400], // Más visible que [300]
-  backgroundColor: colors.warning[25],
+  backgroundColor: colors.warning[50],
   boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.warning[200]}25`,
-  
+
   // Hover warning - Transición hacia "encendido"
   ":hover": {
     borderColor: colors.warning[500],
@@ -244,7 +244,7 @@ export const inputFieldWarning = style({
     boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.warning[400]}40`,
     transform: "translateY(-1px)",
   },
-  
+
   // Focus warning - "Encendido" con advertencia prominente
   ":focus": {
     borderColor: colors.warning[600],
@@ -253,7 +253,7 @@ export const inputFieldWarning = style({
       `0 0 0 3px ${colors.warning[500]}30`,
       `0 0 30px ${colors.warning[500]}15`,
       `${effects.shadow.md}`,
-      `inset 0 1px 0 ${colors.white}`
+      `inset 0 1px 0 ${colors.white}`,
     ].join(", "),
     transform: "translateY(-2px)",
   },
@@ -283,7 +283,7 @@ globalStyle(`${inputWrapper}:focus-within ${inputLeftIcon}`, {
   color: colors.primary[600], // Más intenso que [500]
   filter: [
     "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
-    `drop-shadow(0 0 8px ${colors.primary[500]}40)` // Glow effect
+    `drop-shadow(0 0 8px ${colors.primary[500]}40)`, // Glow effect
   ].join(" "),
   transform: "translateY(-50%) scale(1.1)", // Más prominente
 });
@@ -292,7 +292,7 @@ globalStyle(`${inputWrapper}:focus-within ${inputRightIcon}`, {
   color: colors.primary[600], // Más intenso que [500]
   filter: [
     "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
-    `drop-shadow(0 0 8px ${colors.primary[500]}40)` // Glow effect
+    `drop-shadow(0 0 8px ${colors.primary[500]}40)`, // Glow effect
   ].join(" "),
   transform: "translateY(-50%) scale(1.1)", // Más prominente
 });
@@ -321,16 +321,16 @@ export const inputLabel = style({
   display: "block",
   fontSize: typography.fontSize.sm, // 14px
   fontWeight: typography.fontWeight.semibold, // 600
-  
+
   // Estado base - Mejor contraste y presencia visual
   color: colors.neutral[800], // Más contraste que neutral[700]
   letterSpacing: typography.letterSpacing.tight,
   fontFamily: typography.fontFamily.sans,
   marginBottom: spacing[1.5],
-  
+
   // Sutil efecto de profundidad
   textShadow: "0 1px 1px rgba(0, 0, 0, 0.05)",
-  
+
   // Transición suave para cambios de estado
   transition: `color ${animation.duration.normal} ${animation.easing.easeInOut}`,
 });
@@ -426,14 +426,13 @@ export const inputWarningIcon = style({
  * LOADING SPINNER
  * ============================================================================ */
 
-export const inputSpinner = style({
-  animation: "spin 1s linear infinite",
-  color: colors.primary[500],
+const spin = keyframes({
+  to: { transform: "rotate(360deg)" },
 });
 
-// Animación de spinner
-globalStyle("@keyframes spin", {
-  to: { transform: "rotate(360deg)" },
+export const inputSpinner = style({
+  animation: `${spin} 1s linear infinite`,
+  color: colors.primary[500],
 });
 
 /* ============================================================================

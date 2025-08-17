@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities, no-alert */
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "./Input";
@@ -152,14 +153,15 @@ export const Required: Story = {
 export const CorporateEmail: Story = {
   args: {
     label: "Email Corporativo",
-    type: "email", 
+    type: "email",
     placeholder: "tu@empresa.com",
     helperText: "Usaremos tu email para enviarte actualizaciones importantes",
   },
   parameters: {
     docs: {
       description: {
-        story: "Corporate email input example matching the design from the provided image.",
+        story:
+          "Corporate email input example matching the design from the provided image.",
       },
     },
   },
@@ -202,25 +204,38 @@ export const ImprovedIdleState: Story = {
         }}
       >
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ margin: "0 0 0.5rem 0", color: "#059669", fontSize: "1.25rem" }}>
+          <h3
+            style={{
+              margin: "0 0 0.5rem 0",
+              color: "#059669",
+              fontSize: "1.25rem",
+            }}
+          >
             🔦 IDLE STATE DRAMATICALLY IMPROVED
           </h3>
           <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem" }}>
-            Better visual hierarchy: "OFF" → Hover → "ON" states with clear transitions
+            Better visual hierarchy: "OFF" → Hover → "ON" states with clear
+            transitions
           </p>
         </div>
 
         {/* Estado Base Mejorado */}
-        <div style={{ 
-          padding: "1.5rem", 
-          backgroundColor: "#f8fafc", 
-          borderRadius: "8px", 
-          border: "1px solid #cbd5e1" 
-        }}>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1e293b" }}>
+        <div
+          style={{
+            padding: "1.5rem",
+            backgroundColor: "#f8fafc",
+            borderRadius: "8px",
+            border: "1px solid #cbd5e1",
+          }}
+        >
+          <h4
+            style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1e293b" }}
+          >
             📱 Estado Base (IDLE) - Ahora Más Perceptible
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
             <Input
               label="Email Address"
               type="email"
@@ -235,34 +250,45 @@ export const ImprovedIdleState: Story = {
               helperText="✅ Subtle shadows and improved typography contrast"
             />
           </div>
-          <div style={{ 
-            fontSize: "0.75rem", 
-            color: "#475569", 
-            marginTop: "1rem",
-            padding: "0.75rem",
-            backgroundColor: "#e2e8f0",
-            borderRadius: "4px",
-            fontFamily: "monospace"
-          }}>
-            <strong>CHANGES:</strong><br />
-            • Border: neutral[200] → neutral[300] (more visible)<br />
-            • Background: white → neutral[25] (subtle tint)<br />
-            • Icons: neutral[400] → neutral[500] (better contrast)<br />
-            • Labels: neutral[700] → neutral[800] (stronger hierarchy)
+          <div
+            style={{
+              fontSize: "0.75rem",
+              color: "#475569",
+              marginTop: "1rem",
+              padding: "0.75rem",
+              backgroundColor: "#e2e8f0",
+              borderRadius: "4px",
+              fontFamily: "monospace",
+            }}
+          >
+            <strong>CHANGES:</strong>
+            <br />
+            • Border: neutral[200] → neutral[300] (more visible)
+            <br />
+            • Background: white → neutral[25] (subtle tint)
+            <br />
+            • Icons: neutral[400] → neutral[500] (better contrast)
+            <br />• Labels: neutral[700] → neutral[800] (stronger hierarchy)
           </div>
         </div>
 
         {/* Demostración de Estados Interactivos */}
-        <div style={{ 
-          padding: "1.5rem", 
-          backgroundColor: "#eff6ff", 
-          borderRadius: "8px", 
-          border: "1px solid #bfdbfe" 
-        }}>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1e40af" }}>
+        <div
+          style={{
+            padding: "1.5rem",
+            backgroundColor: "#eff6ff",
+            borderRadius: "8px",
+            border: "1px solid #bfdbfe",
+          }}
+        >
+          <h4
+            style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#1e40af" }}
+          >
             ⚡ Interactive States - "OFF" to "ON" Effect
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
             <Input
               label="Try hovering and focusing these inputs"
               placeholder="Hover me to see intermediate state"
@@ -276,34 +302,45 @@ export const ImprovedIdleState: Story = {
               helperText="✨ Focus creates dramatic lighting effect with glow and shadow"
             />
           </div>
-          <div style={{ 
-            fontSize: "0.75rem", 
-            color: "#1e40af", 
-            marginTop: "1rem",
-            padding: "0.75rem",
-            backgroundColor: "#dbeafe",
-            borderRadius: "4px",
-            fontFamily: "monospace"
-          }}>
-            <strong>FOCUS EFFECTS:</strong><br />
-            • Border: primary[600] (more intense)<br />
-            • Glow: 30px spread + multiple shadows<br />
-            • Transform: translateY(-2px) elevation<br />
-            • Icons: scale(1.1) + glow effect
+          <div
+            style={{
+              fontSize: "0.75rem",
+              color: "#1e40af",
+              marginTop: "1rem",
+              padding: "0.75rem",
+              backgroundColor: "#dbeafe",
+              borderRadius: "4px",
+              fontFamily: "monospace",
+            }}
+          >
+            <strong>FOCUS EFFECTS:</strong>
+            <br />
+            • Border: primary[600] (more intense)
+            <br />
+            • Glow: 30px spread + multiple shadows
+            <br />
+            • Transform: translateY(-2px) elevation
+            <br />• Icons: scale(1.1) + glow effect
           </div>
         </div>
 
         {/* Estados de Validación Mejorados */}
-        <div style={{ 
-          padding: "1.5rem", 
-          backgroundColor: "#fef2f2", 
-          borderRadius: "8px", 
-          border: "1px solid #fecaca" 
-        }}>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#dc2626" }}>
+        <div
+          style={{
+            padding: "1.5rem",
+            backgroundColor: "#fef2f2",
+            borderRadius: "8px",
+            border: "1px solid #fecaca",
+          }}
+        >
+          <h4
+            style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#dc2626" }}
+          >
             🎨 Validation States - Consistent "OFF/ON" Pattern
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
             <Input
               label="Error State"
               placeholder="Error state with improved contrast"
@@ -342,26 +379,32 @@ export const ImprovedIdleState: Story = {
         >
           <div style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>🎉</div>
           <strong>IDLE STATE PROBLEM SOLVED</strong>
-          <div style={{ 
-            fontSize: "0.75rem", 
-            marginTop: "1rem", 
-            fontWeight: "normal",
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "1rem",
-            textAlign: "left"
-          }}>
+          <div
+            style={{
+              fontSize: "0.75rem",
+              marginTop: "1rem",
+              fontWeight: "normal",
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "1rem",
+              textAlign: "left",
+            }}
+          >
             <div>
-              <strong>❌ Before:</strong><br />
-              • Barely visible in idle state<br />
-              • Poor visual hierarchy<br />
-              • Hard to identify as interactive
+              <strong>❌ Before:</strong>
+              <br />
+              • Barely visible in idle state
+              <br />
+              • Poor visual hierarchy
+              <br />• Hard to identify as interactive
             </div>
             <div>
-              <strong>✅ After:</strong><br />
-              • Clear "OFF" state with contrast<br />
-              • Smooth "OFF → ON" transitions<br />
-              • Obvious interactive element
+              <strong>✅ After:</strong>
+              <br />
+              • Clear "OFF" state with contrast
+              <br />
+              • Smooth "OFF → ON" transitions
+              <br />• Obvious interactive element
             </div>
           </div>
         </div>
@@ -371,7 +414,8 @@ export const ImprovedIdleState: Story = {
   parameters: {
     docs: {
       description: {
-        story: "DRAMATIC IMPROVEMENT: Demonstrates the enhanced idle state that makes inputs clearly perceivable as interactive elements, with smooth transitions from 'OFF' to 'ON' states.",
+        story:
+          "DRAMATIC IMPROVEMENT: Demonstrates the enhanced idle state that makes inputs clearly perceivable as interactive elements, with smooth transitions from 'OFF' to 'ON' states.",
       },
     },
   },
@@ -428,21 +472,36 @@ export const IconSpacingFixed: Story = {
         }}
       >
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ margin: "0 0 0.5rem 0", color: "#059669", fontSize: "1.125rem" }}>
+          <h3
+            style={{
+              margin: "0 0 0.5rem 0",
+              color: "#059669",
+              fontSize: "1.125rem",
+            }}
+          >
             ✅ PROBLEM DEFINITIVELY SOLVED
           </h3>
           <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem" }}>
-            CSS directo implementado: .has-left-icon → padding-left: 2.75rem (44px)
+            CSS directo implementado: .has-left-icon → padding-left: 2.75rem
+            (44px)
           </p>
         </div>
-        
-        <div style={{ 
-          padding: "1rem", 
-          backgroundColor: "#ecfdf5", 
-          borderRadius: "6px", 
-          border: "1px solid #a7f3d0" 
-        }}>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "0.875rem", color: "#047857" }}>
+
+        <div
+          style={{
+            padding: "1rem",
+            backgroundColor: "#ecfdf5",
+            borderRadius: "6px",
+            border: "1px solid #a7f3d0",
+          }}
+        >
+          <h4
+            style={{
+              margin: "0 0 1rem 0",
+              fontSize: "0.875rem",
+              color: "#047857",
+            }}
+          >
             📧 Email con Ícono Izquierdo - SIN SOLAPAMIENTO
           </h4>
           <Input
@@ -453,23 +512,33 @@ export const IconSpacingFixed: Story = {
             iconPosition="left"
             helperText="✅ Ícono a 16px del borde, placeholder inicia a 44px"
           />
-          <div style={{ 
-            fontSize: "0.75rem", 
-            color: "#047857", 
-            marginTop: "0.5rem",
-            fontFamily: "monospace"
-          }}>
+          <div
+            style={{
+              fontSize: "0.75rem",
+              color: "#047857",
+              marginTop: "0.5rem",
+              fontFamily: "monospace",
+            }}
+          >
             left: 1rem (16px) + width: 1rem (16px) + gap: 12px = 44px total
           </div>
         </div>
 
-        <div style={{ 
-          padding: "1rem", 
-          backgroundColor: "#eff6ff", 
-          borderRadius: "6px", 
-          border: "1px solid #bfdbfe" 
-        }}>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "0.875rem", color: "#1d4ed8" }}>
+        <div
+          style={{
+            padding: "1rem",
+            backgroundColor: "#eff6ff",
+            borderRadius: "6px",
+            border: "1px solid #bfdbfe",
+          }}
+        >
+          <h4
+            style={{
+              margin: "0 0 1rem 0",
+              fontSize: "0.875rem",
+              color: "#1d4ed8",
+            }}
+          >
             👤 Username con Ícono Izquierdo - ESPACIADO PERFECTO
           </h4>
           <Input
@@ -482,12 +551,26 @@ export const IconSpacingFixed: Story = {
         </div>
 
         <div>
-          <h4 style={{ margin: "0 0 1rem 0", fontSize: "0.875rem", color: "#7c2d12" }}>
+          <h4
+            style={{
+              margin: "0 0 1rem 0",
+              fontSize: "0.875rem",
+              color: "#7c2d12",
+            }}
+          >
             📏 Todos los Tamaños - Responsive Spacing
           </h4>
-          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
+          >
             <div>
-              <div style={{ fontSize: "0.75rem", color: "#a16207", marginBottom: "0.25rem" }}>
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#a16207",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Small: padding-left: 2.5rem (40px)
               </div>
               <Input
@@ -498,18 +581,30 @@ export const IconSpacingFixed: Story = {
               />
             </div>
             <div>
-              <div style={{ fontSize: "0.75rem", color: "#a16207", marginBottom: "0.25rem" }}>
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#a16207",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Medium: padding-left: 2.75rem (44px)
               </div>
               <Input
                 size="md"
-                placeholder="Medium input with icon - perfect spacing" 
+                placeholder="Medium input with icon - perfect spacing"
                 icon={MailIcon}
                 iconPosition="left"
               />
             </div>
             <div>
-              <div style={{ fontSize: "0.75rem", color: "#a16207", marginBottom: "0.25rem" }}>
+              <div
+                style={{
+                  fontSize: "0.75rem",
+                  color: "#a16207",
+                  marginBottom: "0.25rem",
+                }}
+              >
                 Large: padding-left: 3rem (48px)
               </div>
               <Input
@@ -536,8 +631,15 @@ export const IconSpacingFixed: Story = {
         >
           <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🎉</div>
           <strong>SOLAPAMIENTO COMPLETAMENTE ELIMINADO</strong>
-          <div style={{ fontSize: "0.75rem", marginTop: "0.5rem", fontWeight: "normal" }}>
-            Implementación CSS directa siguiendo especificaciones exactas del usuario
+          <div
+            style={{
+              fontSize: "0.75rem",
+              marginTop: "0.5rem",
+              fontWeight: "normal",
+            }}
+          >
+            Implementación CSS directa siguiendo especificaciones exactas del
+            usuario
           </div>
         </div>
       </div>
@@ -546,7 +648,8 @@ export const IconSpacingFixed: Story = {
   parameters: {
     docs: {
       description: {
-        story: "DEFINITIVE SOLUTION: Demonstrates the completely fixed icon and placeholder spacing using direct CSS classes that eliminate overlap issues entirely.",
+        story:
+          "DEFINITIVE SOLUTION: Demonstrates the completely fixed icon and placeholder spacing using direct CSS classes that eliminate overlap issues entirely.",
       },
     },
   },
@@ -576,7 +679,8 @@ export const SearchInput: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Search input with icon matching the design from the provided image.",
+        story:
+          "Search input with icon matching the design from the provided image.",
       },
     },
   },
@@ -587,12 +691,14 @@ export const ValidationError: Story = {
     label: "Campo con Validación Mejorada",
     placeholder: "Introduce un valor válido",
     state: "error",
-    errorMessage: "Este campo es requerido y debe contener al menos 8 caracteres con una mayúscula",
+    errorMessage:
+      "Este campo es requerido y debe contener al menos 8 caracteres con una mayúscula",
   },
   parameters: {
     docs: {
       description: {
-        story: "Input with validation error matching the design from the provided image.",
+        story:
+          "Input with validation error matching the design from the provided image.",
       },
     },
   },
@@ -815,36 +921,12 @@ export const InputTypes: Story = {
         minWidth: "400px",
       }}
     >
-      <Input
-        label="Text"
-        type="text"
-        placeholder="Enter text"
-      />
-      <Input
-        label="Email"
-        type="email"
-        placeholder="user@example.com"
-      />
-      <Input
-        label="Password"
-        type="password"
-        placeholder="Enter password"
-      />
-      <Input
-        label="Search"
-        type="search"
-        placeholder="Search..."
-      />
-      <Input
-        label="Telephone"
-        type="tel"
-        placeholder="+1 (555) 123-4567"
-      />
-      <Input
-        label="URL"
-        type="url"
-        placeholder="https://example.com"
-      />
+      <Input label="Text" type="text" placeholder="Enter text" />
+      <Input label="Email" type="email" placeholder="user@example.com" />
+      <Input label="Password" type="password" placeholder="Enter password" />
+      <Input label="Search" type="search" placeholder="Search..." />
+      <Input label="Telephone" type="tel" placeholder="+1 (555) 123-4567" />
+      <Input label="URL" type="url" placeholder="https://example.com" />
       <Input
         label="Number"
         type="number"
@@ -881,15 +963,16 @@ export const InteractiveForm: Story = {
       return emailRegex.test(email);
     };
 
-    const handleChange = (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      const value = event.target.value;
-      setFormData(prev => ({ ...prev, [field]: value }));
+    const handleChange =
+      (field: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = event.target.value;
+        setFormData((prev) => ({ ...prev, [field]: value }));
 
-      // Clear error when user starts typing
-      if (errors[field]) {
-        setErrors(prev => ({ ...prev, [field]: "" }));
-      }
-    };
+        // Clear error when user starts typing
+        if (errors[field]) {
+          setErrors((prev) => ({ ...prev, [field]: "" }));
+        }
+      };
 
     const handleSubmit = (event: React.FormEvent) => {
       event.preventDefault();
@@ -929,7 +1012,7 @@ export const InteractiveForm: Story = {
         <h3 style={{ margin: "0 0 1rem 0", color: "#334155" }}>
           📝 Contact Form
         </h3>
-        
+
         <Input
           label="Full Name"
           placeholder="Enter your full name"
@@ -946,9 +1029,19 @@ export const InteractiveForm: Story = {
           placeholder="you@example.com"
           value={formData.email}
           onChange={handleChange("email")}
-          state={errors.email ? "error" : formData.email && validateEmail(formData.email) ? "success" : "default"}
+          state={
+            errors.email
+              ? "error"
+              : formData.email && validateEmail(formData.email)
+                ? "success"
+                : "default"
+          }
           errorMessage={errors.email}
-          successMessage={formData.email && validateEmail(formData.email) ? "Valid email format" : undefined}
+          successMessage={
+            formData.email && validateEmail(formData.email)
+              ? "Valid email format"
+              : undefined
+          }
           icon={
             <svg
               width="16"
@@ -1007,7 +1100,8 @@ export const InteractiveForm: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Interactive example showing real-time validation and form handling.",
+        story:
+          "Interactive example showing real-time validation and form handling.",
       },
     },
   },
@@ -1030,7 +1124,8 @@ export const AdvancedValidation: Story = {
       const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pwd);
 
       return {
-        isValid: hasLength && hasUppercase && hasLowercase && hasNumber && hasSpecial,
+        isValid:
+          hasLength && hasUppercase && hasLowercase && hasNumber && hasSpecial,
         requirements: [
           { met: hasLength, text: "At least 8 characters" },
           { met: hasUppercase, text: "One uppercase letter" },
@@ -1042,7 +1137,8 @@ export const AdvancedValidation: Story = {
     };
 
     const passwordValidation = validatePassword(password);
-    const passwordsMatch = password && confirmPassword && password === confirmPassword;
+    const passwordsMatch =
+      password && confirmPassword && password === confirmPassword;
 
     return (
       <div
@@ -1071,8 +1167,8 @@ export const AdvancedValidation: Story = {
             !password
               ? "default"
               : passwordValidation.isValid
-              ? "success"
-              : "error"
+                ? "success"
+                : "error"
           }
           errorMessage={
             password && !passwordValidation.isValid
@@ -1080,9 +1176,7 @@ export const AdvancedValidation: Story = {
               : undefined
           }
           successMessage={
-            passwordValidation.isValid
-              ? "Strong password!"
-              : undefined
+            passwordValidation.isValid ? "Strong password!" : undefined
           }
         />
 
@@ -1096,7 +1190,13 @@ export const AdvancedValidation: Story = {
               fontSize: "0.75rem",
             }}
           >
-            <div style={{ fontWeight: "600", marginBottom: "0.5rem", color: "#374151" }}>
+            <div
+              style={{
+                fontWeight: "600",
+                marginBottom: "0.5rem",
+                color: "#374151",
+              }}
+            >
               Password Requirements:
             </div>
             {passwordValidation.requirements.map((req, index) => (
@@ -1124,22 +1224,14 @@ export const AdvancedValidation: Story = {
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
           state={
-            !confirmPassword
-              ? "default"
-              : passwordsMatch
-              ? "success"
-              : "error"
+            !confirmPassword ? "default" : passwordsMatch ? "success" : "error"
           }
           errorMessage={
             confirmPassword && !passwordsMatch
               ? "Passwords do not match"
               : undefined
           }
-          successMessage={
-            passwordsMatch
-              ? "Passwords match!"
-              : undefined
-          }
+          successMessage={passwordsMatch ? "Passwords match!" : undefined}
         />
       </div>
     );
@@ -1147,223 +1239,11 @@ export const AdvancedValidation: Story = {
   parameters: {
     docs: {
       description: {
-        story: "Advanced validation example with real-time password strength checking.",
+        story:
+          "Advanced validation example with real-time password strength checking.",
       },
     },
   },
 };
 
-// ============================================================================
-// 🚀 NEW: FORMATTED INPUTS - REVOLUTIONARY FUNCTIONALITY
-// ============================================================================
-
-export const FormattedInputs: Story = {
-  name: "🎯 FORMATTED INPUTS - Auto-Formatting",
-  render: () => (
-    <div className="space-y-8">
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-primary-600">📱 Teléfonos</h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            label="Teléfono US"
-            format={{
-              type: "phone",
-              showFormatInPlaceholder: true,
-              onValueChange: (raw, formatted) => {
-                console.log("Phone changed:", { raw, formatted });
-              },
-              onFormatComplete: (raw, formatted) => {
-                console.log("Phone completed:", { raw, formatted });
-              }
-            }}
-            showFormatIndicator={true}
-            formatIndicatorStyle="subtle"
-            helperText="Formato automático: (555) 123-4567"
-          />
-          <Input
-            label="Teléfono Internacional"
-            format={{
-              type: "phone-international",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            formatIndicatorStyle="prominent"
-            helperText="Incluye código de país"
-          />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-primary-600">💳 Tarjetas de Crédito</h3>
-        <div className="grid gap-4 md:grid-cols-3">
-          <Input
-            label="Número de Tarjeta"
-            format={{
-              type: "credit-card",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="16 dígitos con espacios automáticos"
-          />
-          <Input
-            label="Vencimiento"
-            format={{
-              type: "credit-card-expiry",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="MM/AA"
-          />
-          <Input
-            label="CVV"
-            format={{
-              type: "credit-card-cvv",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="3 dígitos"
-          />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-primary-600">💰 Moneda</h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            label="Precio con Centavos"
-            format={{
-              type: "currency",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            formatIndicatorStyle="prominent"
-            helperText="Formato automático: $1,234.56"
-          />
-          <Input
-            label="Precio Sin Centavos"
-            format={{
-              type: "currency-no-cents",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="Solo números enteros: $1,234"
-          />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-primary-600">📅 Fechas y Códigos</h3>
-        <div className="grid gap-4 md:grid-cols-3">
-          <Input
-            label="Fecha"
-            format={{
-              type: "date",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="DD/MM/AAAA"
-          />
-          <Input
-            label="Hora 24h"
-            format={{
-              type: "time-24h",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="HH:MM"
-          />
-          <Input
-            label="Código Postal"
-            format={{
-              type: "postal-code-us",
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="5 dígitos"
-          />
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "🚀 **REVOLUTIONARY FORMATTING SYSTEM**: Demonstrates automatic input formatting with predefined patterns. Features real-time formatting, input validation, visual indicators, and comprehensive accessibility support. Perfect for phones, credit cards, currency, dates, and more!",
-      },
-    },
-  },
-};
-
-export const CustomPatterns: Story = {
-  name: "🛠️ CUSTOM PATTERNS - Extensible System",
-  render: () => (
-    <div className="space-y-6">
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-primary-600">🎨 Patrones Personalizados</h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          <Input
-            label="Código Personalizado"
-            format={{
-              pattern: {
-                pattern: "ABC-###-XYZ",
-                allowedChars: /[A-Z0-9]/,
-                placeholder: "ABC-123-XYZ",
-                description: "Código con formato ABC-123-XYZ",
-                maxLength: 9,
-                transform: (value) => value.toUpperCase(),
-                validate: (value) => value.length === 9
-              },
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            helperText="Automáticamente convierte a mayúsculas"
-          />
-          <Input
-            label="Serial Number"
-            format={{
-              pattern: {
-                pattern: "####-####-####",
-                allowedChars: /[0-9A-F]/,
-                placeholder: "1A2B-3C4D-5E6F",
-                description: "Número serial hexadecimal",
-                maxLength: 12,
-                transform: (value) => value.toUpperCase(),
-                validate: (value) => /^[0-9A-F]{12}$/.test(value)
-              },
-              showFormatInPlaceholder: true
-            }}
-            showFormatIndicator={true}
-            formatIndicatorStyle="prominent"
-            helperText="Solo dígitos y letras A-F"
-          />
-        </div>
-      </div>
-
-      <div>
-        <h3 className="mb-4 text-xl font-bold text-success-600">✨ Características Avanzadas</h3>
-        <div className="grid gap-4">
-          <div className="rounded-lg border border-neutral-200 bg-neutral-50 p-4">
-            <h4 className="mb-2 font-semibold text-neutral-800">🎯 Funcionalidades Implementadas:</h4>
-            <ul className="space-y-1 text-sm text-neutral-600">
-              <li>✅ <strong>15+ patrones predefinidos</strong> listos para usar</li>
-              <li>✅ <strong>Sistema extensible</strong> para patrones personalizados</li>
-              <li>✅ <strong>Formateo en tiempo real</strong> mientras escribes</li>
-              <li>✅ <strong>Validación automática</strong> con feedback visual</li>
-              <li>✅ <strong>Navegación inteligente</strong> (backspace, arrows, paste)</li>
-              <li>✅ <strong>Indicadores visuales</strong> de progreso y estado</li>
-              <li>✅ <strong>Accesibilidad completa</strong> con screen reader support</li>
-              <li>✅ <strong>TypeScript estricto</strong> con type safety</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  ),
-  parameters: {
-    docs: {
-      description: {
-        story: "🛠️ **EXTENSIBLE CUSTOM PATTERNS**: Demonstrates how to create custom formatting patterns for specific business needs. The system is fully extensible - you can define any pattern with custom validation, transformation, and formatting rules.",
-      },
-    },
-  },
-};
+// End of stories
