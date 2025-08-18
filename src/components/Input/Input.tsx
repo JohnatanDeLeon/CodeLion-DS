@@ -183,19 +183,18 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           strokeWidth="2"
           opacity="0.25"
         />
-        <path
-          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-          fill="currentColor"
+        <input
+          id={fieldId}
+          ref={ref}
+          className={styles.inputField}
+          placeholder={placeholder}
+          type={type}
+          value={value}
+          onChange={onChange}
+          onFocus={onFocus}
+          onBlur={onBlur}
+          {...rest}
         />
-      </svg>
-    );
-
-    const renderIcon = () => (loading ? renderLoadingSpinner() : icon);
-
-    const renderStateIcon = () => {
-      if (state === "error") {
-        return (
-          <div className={inputErrorIcon}>
             <svg
               width="12"
               height="12"

@@ -1065,11 +1065,11 @@ export const InteractiveForm: Story = {
           required
         />
 
-        <button
+    <button
           type="submit"
           style={{
             padding: "0.75rem 1.5rem",
-            backgroundColor: "#0ea5e9",
+      backgroundColor: "#0284c7",
             color: "white",
             border: "none",
             borderRadius: "6px",
@@ -1079,10 +1079,10 @@ export const InteractiveForm: Story = {
             transition: "background-color 200ms ease",
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = "#0284c7";
+      e.currentTarget.style.backgroundColor = "#0369a1";
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = "#0ea5e9";
+      e.currentTarget.style.backgroundColor = "#0284c7";
           }}
         >
           Submit Form
