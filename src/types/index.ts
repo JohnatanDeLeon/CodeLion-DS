@@ -175,3 +175,5 @@ export type SpanRef = React.Ref<HTMLSpanElement>;
 
 // Gradient system types
 export * from "./gradient";
+
+// Note: formatting types were removed as the formatting/mask system was deprecated.
