@@ -354,7 +354,7 @@ export const inputLabelError = style({
 
 export const inputHint = style({
   fontSize: typography.fontSize.sm, // 14px
-  color: colors.neutral[500],
+  color: colors.neutral[700],
   fontWeight: typography.fontWeight.medium, // 500
   fontFamily: typography.fontFamily.sans,
   marginTop: spacing[1.5],
@@ -362,7 +362,7 @@ export const inputHint = style({
 
 export const inputErrorMessage = style({
   fontSize: typography.fontSize.sm, // 14px
-  color: colors.error[600],
+  color: colors.error[700],
   fontWeight: typography.fontWeight.semibold, // 600
   fontFamily: typography.fontFamily.sans,
   display: "flex",

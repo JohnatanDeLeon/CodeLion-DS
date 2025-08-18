@@ -213,7 +213,7 @@ export const ImprovedIdleState: Story = {
           >
             🔦 IDLE STATE DRAMATICALLY IMPROVED
           </h3>
-          <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem" }}>
+          <p style={{ margin: 0, color: "#475569", fontSize: "0.875rem" }}>
             Better visual hierarchy: "OFF" → Hover → "ON" states with clear
             transitions
           </p>
@@ -481,7 +481,7 @@ export const IconSpacingFixed: Story = {
           >
             ✅ PROBLEM DEFINITIVELY SOLVED
           </h3>
-          <p style={{ margin: 0, color: "#64748b", fontSize: "0.875rem" }}>
+          <p style={{ margin: 0, color: "#475569", fontSize: "0.875rem" }}>
             CSS directo implementado: .has-left-icon → padding-left: 2.75rem
             (44px)
           </p>
@@ -1087,7 +1087,7 @@ export const InteractiveForm: Story = {
         <div
           style={{
             fontSize: "0.75rem",
-            color: "#64748b",
+            color: "#475569",
             textAlign: "center",
             marginTop: "0.5rem",
           }}
