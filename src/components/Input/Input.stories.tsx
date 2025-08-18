@@ -371,7 +371,7 @@ export const ImprovedIdleState: Story = {
         <div
           style={{
             fontSize: "0.875rem",
-            color: "#059669",
+            color: "#064e3b",
             textAlign: "center",
             padding: "1.5rem",
             backgroundColor: "#d1fae5",
@@ -478,7 +478,7 @@ export const IconSpacingFixed: Story = {
           <h3
             style={{
               margin: "0 0 0.5rem 0",
-              color: "#059669",
+              color: "#064e3b",
               fontSize: "1.125rem",
             }}
           >
@@ -499,11 +499,11 @@ export const IconSpacingFixed: Story = {
           }}
         >
           <h4
-            style={{
-              margin: "0 0 1rem 0",
-              fontSize: "0.875rem",
-              color: "#047857",
-            }}
+              style={{
+                margin: "0 0 1rem 0",
+                fontSize: "0.875rem",
+                color: "#047857",
+              }}
           >
             📧 Email con Ícono Izquierdo - SIN SOLAPAMIENTO
           </h4>
@@ -1209,7 +1209,7 @@ export const AdvancedValidation: Story = {
                   display: "flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  color: req.met ? "#059669" : "#dc2626",
+                  color: req.met ? "#064e3b" : "#dc2626",
                   marginBottom: "0.25rem",
                 }}
               >
