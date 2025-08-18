@@ -208,7 +208,7 @@ export const ImprovedIdleState: Story = {
           <h3
             style={{
               margin: "0 0 0.5rem 0",
-                color: "#064e3b",
+              color: "#064e3b",
               fontSize: "1.25rem",
             }}
           >
@@ -499,11 +499,11 @@ export const IconSpacingFixed: Story = {
           }}
         >
           <h4
-              style={{
-                margin: "0 0 1rem 0",
-                fontSize: "0.875rem",
-                color: "#047857",
-              }}
+            style={{
+              margin: "0 0 1rem 0",
+              fontSize: "0.875rem",
+              color: "#047857",
+            }}
           >
             📧 Email con Ícono Izquierdo - SIN SOLAPAMIENTO
           </h4>
@@ -633,7 +633,9 @@ export const IconSpacingFixed: Story = {
           }}
         >
           <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🎉</div>
-          <strong style={{ color: "#0f172a" }}>SOLAPAMIENTO COMPLETAMENTE ELIMINADO</strong>
+          <strong style={{ color: "#0f172a" }}>
+            SOLAPAMIENTO COMPLETAMENTE ELIMINADO
+          </strong>
           <div
             style={{
               fontSize: "0.75rem",
@@ -1065,11 +1067,11 @@ export const InteractiveForm: Story = {
           required
         />
 
-    <button
+        <button
           type="submit"
           style={{
             padding: "0.75rem 1.5rem",
-      backgroundColor: "#0284c7",
+            backgroundColor: "#0369a1",
             color: "white",
             border: "none",
             borderRadius: "6px",
@@ -1079,10 +1081,10 @@ export const InteractiveForm: Story = {
             transition: "background-color 200ms ease",
           }}
           onMouseEnter={(e) => {
-      e.currentTarget.style.backgroundColor = "#0369a1";
+            e.currentTarget.style.backgroundColor = "#014f86";
           }}
           onMouseLeave={(e) => {
-      e.currentTarget.style.backgroundColor = "#0284c7";
+            e.currentTarget.style.backgroundColor = "#0369a1";
           }}
         >
           Submit Form
