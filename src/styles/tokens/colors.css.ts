@@ -13,7 +13,7 @@ export const colors = createGlobalTheme(":root", {
     300: "#7dd3fc",
     400: "#38bdf8",
     500: "#0ea5e9",
-    600: "#0284c7",
+    600: "#0369a1",
     700: "#0369a1",
     800: "#075985",
     900: "#0c4a6e",
@@ -104,7 +104,7 @@ export const colors = createGlobalTheme(":root", {
  * Color gradients for enhanced visual appeal
  */
 export const gradients = {
-  primary: "linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%)",
+  primary: "linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%)",
   success: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
   error: "linear-gradient(135deg, #ef4444 0%, #dc2626 100%)",
   warning: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",

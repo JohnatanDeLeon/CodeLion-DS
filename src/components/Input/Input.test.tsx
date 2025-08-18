@@ -304,10 +304,9 @@ describe("Input", () => {
       const types = ["text", "email", "password", "number", "tel", "url"];
 
       types.forEach((type) => {
-        const { rerender } = render(<Input type={type} />);
-        const input = screen.getByRole(
-          type === "password" ? "textbox" : "textbox",
-        );
+        const { container, rerender } = render(<Input type={type} />);
+        const input = container.querySelector("input");
+        expect(input).toBeTruthy();
         expect(input).toHaveAttribute("type", type);
         rerender(<></>); // Clean up for next iteration
       });

@@ -74,6 +74,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       className,
       disabled,
       type = "text",
+      onChange,
+      onFocus,
+      onBlur,
       ...props
     },
     ref,
@@ -114,17 +117,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       if (disabled || loading) return;
-      props.onChange?.(event as any);
+      onChange?.(event);
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
       if (disabled || loading) return;
-      props.onFocus?.(event as any);
+      onFocus?.(event);
     };
 
     const handleBlur = (event: React.FocusEvent<HTMLInputElement>) => {
       if (disabled || loading) return;
-      props.onBlur?.(event as any);
+      onBlur?.(event);
     };
 
     const getInputFieldClasses = () => {
@@ -166,9 +169,21 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
+        role="img"
       >
-        <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" opacity={0.25} />
-        <path d="M22 12a10 10 0 0 1-10 10" stroke="currentColor" strokeWidth="2" />
+        <circle
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          strokeWidth="2"
+          opacity={0.25}
+        />
+        <path
+          d="M22 12a10 10 0 0 1-10 10"
+          stroke="currentColor"
+          strokeWidth="2"
+        />
       </svg>
     );
 
@@ -182,7 +197,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (state === "error") {
         return (
           <div className={inputErrorIcon} aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="8" x2="12" y2="12" />
               <circle cx="12" cy="16" r="1" />
@@ -194,7 +219,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (state === "success") {
         return (
           <div className={inputSuccessIcon} aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <polyline points="20 6 9 17 4 12" />
             </svg>
           </div>
@@ -204,7 +239,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       if (state === "warning") {
         return (
           <div className={inputWarningIcon} aria-hidden="true">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
               <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94A2 2 0 0 0 22.18 18L13.71 3.86a2 2 0 0 0-3.42 0z" />
               <line x1="12" y1="9" x2="12" y2="13" />
               <line x1="12" y1="17" x2="12" y2="17" />
@@ -244,7 +289,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             type={type}
             disabled={disabled || loading}
             className={getInputFieldClasses()}
-            {...(props as any)}
+            {...props}
             {...inputAriaAttributes}
             onChange={handleChange}
             onFocus={handleFocus}
