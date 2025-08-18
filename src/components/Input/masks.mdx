@@ -1,0 +1,70 @@
+import { Meta, Canvas, Story } from "@storybook/addon-docs/blocks";
+import { PhoneMaskDemo, CurrencyMaskDemo } from "./masksExamples";
+
+<Meta title="Components/Forms/Input/Masks" />
+
+# Input: Masks
+
+Input masking enables formatting and raw-value extraction while keeping accessibility and predictable behavior.
+
+This page documents the `mask` prop and the provided demo mask handlers shipped with the design system.
+
+## Quick summary
+
+- `mask?: { id: string; options?: unknown }` — opt-in mask configuration passed to the Input component.
+- `onValueChange?: ({ raw, formatted, meta? }) => void` — callback invoked when the mask is applied; receives both `raw` and `formatted` values.
+
+When the library is imported the included handlers are automatically registered into the default mask registry. The design system ships the following default handlers:
+
+- `serial` — sample serial-number formatter (AAA-0000)
+- `phone` — US-centric phone formatter `(123) 456-7890`
+- `currency` — simple cents-based currency formatter (two decimal places)
+
+> Note: Handlers are pluggable — you can register custom handlers using the `defaultRegistry.register(handler)` API or pass your own `registry` into `useInputMask` if you need isolated registries.
+
+## Examples
+
+### Phone
+
+<Canvas>
+  <Story of={PhoneMaskDemo} />
+</Canvas>
+
+### Currency
+
+<Canvas>
+  <Story of={CurrencyMaskDemo} />
+</Canvas>
+
+## API
+
+### `mask` prop
+
+- Type: `{ id: string; options?: unknown } | undefined`
+- Description: If provided, Input will apply the mask identified by `id`. Handlers are responsible for formatting, parsing and (optionally) validating and reporting caret positions.
+
+### `onValueChange` callback
+
+- Signature: `(v: { raw: string; formatted: string; meta?: Record<string, unknown> }) => void`
+- Description: Called whenever the mask is applied — useful for storing raw values for submission while showing a formatted string to users.
+
+### Handler contract
+
+Handlers follow this minimal contract (TypeScript types available in `src/masking/types.ts`):
+
+- `id: string`
+- `apply(input: string, caret?: number | null, options?: any) => { raw: string; formatted: string; caret?: number | null; meta?: Record<string, unknown> }`
+- `parse?(formatted: string, options?: any) => string`
+- `validate?(raw: string, options?: any) => boolean`
+
+Handler authors should:
+
+- Keep the `apply` function idempotent for the same input.
+- Return `caret` when possible to help preserve cursor position during edits.
+- Provide `parse` to map formatted strings back to raw values.
+
+## Advanced
+
+If you need localized or complex masks (IBANs, international phones, currency with locales), implement a handler that encapsulates the logic and register it via `defaultRegistry.register(yourHandler)`.
+
+Happy masking! 🎯
