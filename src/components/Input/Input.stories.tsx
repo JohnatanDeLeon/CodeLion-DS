@@ -623,7 +623,7 @@ export const IconSpacingFixed: Story = {
         <div
           style={{
             fontSize: "0.875rem",
-            color: "#059669",
+            color: "#064e3b",
             textAlign: "center",
             padding: "1rem",
             backgroundColor: "#d1fae5",
@@ -633,12 +633,13 @@ export const IconSpacingFixed: Story = {
           }}
         >
           <div style={{ fontSize: "1.5rem", marginBottom: "0.5rem" }}>🎉</div>
-          <strong>SOLAPAMIENTO COMPLETAMENTE ELIMINADO</strong>
+          <strong style={{ color: "#0f172a" }}>SOLAPAMIENTO COMPLETAMENTE ELIMINADO</strong>
           <div
             style={{
               fontSize: "0.75rem",
               marginTop: "0.5rem",
               fontWeight: "normal",
+              color: "#0f172a",
             }}
           >
             Implementación CSS directa siguiendo especificaciones exactas del
