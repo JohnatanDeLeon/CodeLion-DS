@@ -201,6 +201,7 @@ export const ImprovedIdleState: Story = {
           backgroundColor: "#fafafa",
           borderRadius: "8px",
           border: "1px solid #e2e8f0",
+          color: "#0f172a", // stronger base text color to meet contrast
         }}
       >
         <div style={{ textAlign: "center" }}>
@@ -279,6 +280,7 @@ export const ImprovedIdleState: Story = {
             backgroundColor: "#eff6ff",
             borderRadius: "8px",
             border: "1px solid #bfdbfe",
+            color: "#0f172a",
           }}
         >
           <h4
@@ -331,10 +333,11 @@ export const ImprovedIdleState: Story = {
             backgroundColor: "#fef2f2",
             borderRadius: "8px",
             border: "1px solid #fecaca",
+            color: "#0f172a",
           }}
         >
           <h4
-            style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#dc2626" }}
+            style={{ margin: "0 0 1rem 0", fontSize: "1rem", color: "#b91c1c" }}
           >
             🎨 Validation States - Consistent "OFF/ON" Pattern
           </h4>
