@@ -208,7 +208,7 @@ export const ImprovedIdleState: Story = {
           <h3
             style={{
               margin: "0 0 0.5rem 0",
-              color: "#059669",
+                color: "#064e3b",
               fontSize: "1.25rem",
             }}
           >
