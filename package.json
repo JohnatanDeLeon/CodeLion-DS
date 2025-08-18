@@ -1,6 +1,6 @@
 {
   "name": "@johnatandeleon/design-system",
-  "version": "2.0.3",
+  "version": "3.0.0",
   "description": "🦁 CodeLion DS - Powerful React Design System with TypeScript, vanilla-extract, and WCAG 2.1 AA accessibility",
   "license": "MIT",
   "author": "CodeLion Team",
@@ -57,7 +57,6 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    
     "test:a11y": "npx @storybook/test-runner",
     "lint": "eslint src --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint src --ext .ts,.tsx --fix",
