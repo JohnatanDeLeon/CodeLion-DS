@@ -4,6 +4,7 @@
 
 ### 1.1 Tipos de tokens
 
+{% raw %}
 ```bash
 # Personal Access Token (desarrollo)
 # - Permisos: read:packages, write:packages
@@ -15,6 +16,7 @@
 # - Permisos: definidos en workflow
 # - Sin expiración manual
 ```
+{% endraw %}
 
 ### 1.2 Rotación de tokens
 
@@ -203,6 +205,7 @@ bundlesize:
 
 ### 5.2 Alertas automáticas
 
+{% raw %}
 ```yaml
 # Slack notifications
 - name: Notify Slack on Release
@@ -215,6 +218,7 @@ bundlesize:
       📦 Package: @johnatandeleon/design-system@${{ steps.version.outputs.version }}
       📋 Changelog: ${{ github.server_url }}/${{ github.repository }}/releases/tag/${{ github.ref }}
 ```
+{% endraw %}
 
 ## 6. Backup y Disaster Recovery
 

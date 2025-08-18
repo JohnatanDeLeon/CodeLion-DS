@@ -20,16 +20,18 @@ This document outlines the comprehensive refactor of the Button component's grad
 
 ## 🏗️ Architecture Overview
 
+{% raw %}
+```tsx
+// Advanced API for complex scenarios
+<Button gradient={{
+  gradient: {
+    default: { direction: 135, stops: [...] },
+    hover: { direction: 135, stops: [...] },
+    active: { direction: 135, stops: [...] }
+  }
+}} />
 ```
-src/
-├── components/
-│   └── Button/
-│       ├── Button.tsx          # Refactored component using hooks
-│       └── Button.stories.tsx  # Updated stories with new patterns
-├── hooks/
-│   ├── useGradient.ts         # Core gradient logic
-│   └── index.ts               # Hook exports
-├── types/
+{% endraw %}
 │   ├── gradient.ts            # Comprehensive gradient types
 │   └── index.ts               # Type exports
 ├── utils/
