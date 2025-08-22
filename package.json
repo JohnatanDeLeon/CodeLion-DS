@@ -75,6 +75,7 @@
     "@axe-core/react": "^4.10.2",
     "@changesets/changelog-github": "^0.5.1",
     "@changesets/cli": "^2.27.1",
+    "@playwright/test": "^1.55.0",
     "@storybook/addon-a11y": "^9.1.0",
     "@storybook/addon-docs": "^9.1.0",
     "@storybook/addon-links": "^9.1.0",
