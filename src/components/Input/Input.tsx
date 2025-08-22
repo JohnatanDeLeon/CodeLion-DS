@@ -30,6 +30,8 @@ import {
 } from "../../styles/recipes/input.css";
 import { cn } from "../../utils";
 import { aria } from "../../utils/a11y";
+import { useInputMask } from "../../masking/useInputMask";
+import { defaultRegistry } from "../../masking/registry";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -51,9 +53,27 @@ export interface InputProps
   helperClassName?: string;
   id?: string;
   name?: string;
+  /** Optional mask configuration */
+  mask?: { id: string; options?: unknown };
+  /** Notified when the mask produces raw/formatted values */
+  onValueChange?: (v: {
+    raw: string;
+    formatted: string;
+    meta?: Record<string, unknown>;
+  }) => void;
 }
 
-export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+export const Input = React.forwardRef<
+  HTMLInputElement,
+  InputProps & {
+    mask?: { id: string; options?: unknown };
+    onValueChange?: (v: {
+      raw: string;
+      formatted: string;
+      meta?: Record<string, unknown>;
+    }) => void;
+  }
+>(
   (
     {
       size = "md",
@@ -67,6 +87,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       icon,
       iconPosition = "right",
       loading = false,
+      fullWidth: _fullWidth = false,
       containerClassName,
       labelClassName,
       helperClassName,
@@ -77,6 +98,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onChange,
       onFocus,
       onBlur,
+      mask,
+      onValueChange,
+      value: valueProp,
+      defaultValue: defaultValueProp,
       ...props
     },
     ref,
@@ -84,6 +109,19 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const generatedId = React.useId();
     const id = idProp ?? generatedId;
     const helperTextId = `${id}-helper`;
+
+    // initialize mask hook (mask may be undefined) - hook handles pass-through
+    const maskHook = useInputMask({
+      mask,
+      registry: defaultRegistry,
+      value: valueProp as string | undefined,
+      defaultValue: defaultValueProp as string | undefined,
+      onChange,
+      onValueChange,
+      inputRef: ref as React.Ref<HTMLInputElement> | undefined,
+    });
+
+    const maskedInputProps = maskHook.inputProps;
 
     const hasLeftIcon = iconPosition === "left" && (icon || loading);
     const hasRightIcon = iconPosition === "right" && (icon || loading);
@@ -115,9 +153,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       "aria-describedby": displayMessage ? helperTextId : undefined,
     } as const;
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // change handling delegated to mask hook (maskedInputProps) or native onChange passed via props
+
+    // wrap masked onChange to respect disabled/loading states (previous behavior)
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       if (disabled || loading) return;
-      onChange?.(event);
+      maskedInputProps.onChange?.(e);
     };
 
     const handleFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -284,14 +325,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
 
           <input
-            ref={ref}
+            /* ref/value/onChange may be provided by maskedInputProps */
             id={id}
             type={type}
             disabled={disabled || loading}
             className={getInputFieldClasses()}
             {...props}
+            {...maskedInputProps}
+            onChange={handleInputChange}
             {...inputAriaAttributes}
-            onChange={handleChange}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />

@@ -1,9 +1,8 @@
 import type { StorybookConfig } from '@storybook/react-vite';
 
 const config: StorybookConfig = {
-  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx|mdx)'],
+  stories: ['../src/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    '@storybook/addon-docs',
     '@storybook/addon-links',
     '@storybook/addon-a11y',
   ],
@@ -12,10 +11,10 @@ const config: StorybookConfig = {
     options: {},
   },
   docs: {
-    defaultName: 'Documentation',
+    autodocs: true,
   },
   typescript: {
-    reactDocgen: 'react-docgen-typescript',
+    reactDocgen: false,
   },
   viteFinal: async (config) => {
     // Ensure vanilla-extract works in Storybook
