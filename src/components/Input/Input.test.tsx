@@ -180,6 +180,14 @@ describe("Input", () => {
       const input = screen.getByRole("textbox");
       expect(input).toBeInTheDocument();
     });
+
+    it("does not pass fullWidth to the DOM as an attribute", () => {
+      render(<Input fullWidth data-testid="fw-input" />);
+      const input = screen.getByTestId("fw-input");
+      // React should not pass the arbitrary `fullWidth` prop to the DOM
+      expect(input).not.toHaveAttribute("fullwidth");
+      expect(input).not.toHaveAttribute("data-fullwidth");
+    });
   });
 
   describe("Icons", () => {
@@ -264,6 +272,34 @@ describe("Input", () => {
       await user.tab();
 
       expect(handleBlur).toHaveBeenCalledTimes(1);
+    });
+
+    it("does not call masked onChange when disabled or loading (mask present)", async () => {
+      // register a simple noop mask for this test
+      const noopHandler = {
+        id: "noop",
+        apply: (input: string) => ({ raw: input, formatted: input }),
+        parse: (s: string) => s,
+        validate: (_: string) => true,
+      } as any;
+
+  const { defaultRegistry } = await import("../../masking/registry");
+      // register & cleanup
+      defaultRegistry.register(noopHandler);
+
+      const handleChange = vi.fn();
+      render(<Input mask={{ id: "noop" }} onChange={handleChange} disabled />);
+      const input = screen.getByRole("textbox");
+      fireEvent.change(input, { target: { value: "abc" } });
+      expect(handleChange).not.toHaveBeenCalled();
+
+      // loading case
+      render(<Input mask={{ id: "noop" }} onChange={handleChange} loading />);
+      const input2 = screen.getAllByRole("textbox")[1];
+      fireEvent.change(input2, { target: { value: "def" } });
+      expect(handleChange).not.toHaveBeenCalled();
+
+      defaultRegistry.unregister("noop");
     });
   });
 

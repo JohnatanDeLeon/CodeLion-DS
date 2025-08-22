@@ -28,3 +28,6 @@ export * from "./hooks";
 
 // Types
 export * from "./types";
+
+// Ensure masking handlers are registered when the lib is imported
+import "./masking/handlers";

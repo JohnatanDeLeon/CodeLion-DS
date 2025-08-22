@@ -2,6 +2,8 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
 import { Input } from "./Input";
+// use the masks MDX as the docs page for the Input component
+import MasksMDX from "./masks.mdx";
 
 const meta = {
   title: "Components/Forms/Input",
@@ -9,40 +11,7 @@ const meta = {
   parameters: {
     layout: "centered",
     docs: {
-      description: {
-        component: `
-The Input component is a versatile, accessible input field with multiple variants, states, and validation support.
-
-## Features
-- Multiple visual variants (default, search, email)
-- Various sizes (sm, md, lg)
-- Validation states with visual feedback (error, success, warning)
-- Icon support with flexible positioning
-- Loading states with spinner
-- Full accessibility support (WCAG 2.1 AA)
-- Labels, helper text, and error messages
-- TypeScript support with comprehensive prop types
-
-## Usage
-Import the Input component and use it with the desired props:
-
-\`\`\`tsx
-import { Input } from '@johnatandeleon/design-system';
-
-function MyForm() {
-  return (
-    <Input
-      label="Email Address"
-      type="email"
-      placeholder="tu@empresa.com"
-      required
-      helperText="We'll use this to send you important updates"
-    />
-  );
-}
-\`\`\`
-        `,
-      },
+      page: MasksMDX,
     },
   },
   tags: ["autodocs"],
@@ -72,6 +41,7 @@ function MyForm() {
     },
     disabled: {
       control: "boolean",
+
       description: "Disables the input",
     },
     required: {
@@ -163,6 +133,15 @@ export const CorporateEmail: Story = {
         story:
           "Corporate email input example matching the design from the provided image.",
       },
+    },
+  },
+};
+
+// Provide a visible story entry that renders the MDX docs for masks
+export const Masks: Story = {
+  parameters: {
+    docs: {
+      page: MasksMDX,
     },
   },
 };
