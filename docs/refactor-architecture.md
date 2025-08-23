@@ -156,9 +156,32 @@ export const gradientHoverVar = createVar();
 export const gradientActiveVar = createVar();
 
 // Type-safe style generation
-globalStyle(`.${gradientCustomClass}:hover:not(:disabled)`, {
-  background: `${gradientHoverVar} !important`,
+// Prefer local selectors within the generated class instead of a globalStyle call:
+
+```typescript
+// Example: define the custom class with CSS custom properties and self-targeting selectors
+import { style } from '@vanilla-extract/css';
+import { gradientHoverVar, gradientActiveVar, gradientFocusVar } from '../src/styles/recipes/button.css';
+
+export const gradientCustomClass = style({
+  vars: {
+    [gradientHoverVar]: 'var(--gradient-hover, inherit)',
+    [gradientActiveVar]: 'var(--gradient-active, inherit)',
+    [gradientFocusVar]: 'var(--gradient-focus, inherit)',
+  },
+  selectors: {
+    '&:hover:not(:disabled)': {
+      background: `${gradientHoverVar} !important`,
+    },
+    '&:active:not(:disabled)': {
+      background: `${gradientActiveVar} !important`,
+    },
+    '&:focus-visible': {
+      background: gradientFocusVar,
+    },
+  },
 });
+```
 ```
 
 ## 🎨 Design Patterns Implemented

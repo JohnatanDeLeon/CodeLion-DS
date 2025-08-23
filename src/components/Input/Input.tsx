@@ -3,19 +3,6 @@ import {
   inputContainer,
   inputWrapper,
   inputField,
-  inputFieldWithLeftIcon,
-  inputFieldWithRightIcon,
-  inputFieldWithBothIcons,
-  inputFieldWithErrorAndRightIcon,
-  inputFieldError,
-  inputFieldSuccess,
-  inputFieldWarning,
-  inputFieldSmall,
-  inputFieldLarge,
-  inputFieldSmallWithLeftIcon,
-  inputFieldSmallWithRightIcon,
-  inputFieldLargeWithLeftIcon,
-  inputFieldLargeWithRightIcon,
   inputLeftIcon,
   inputRightIcon,
   inputLabel,
@@ -27,6 +14,9 @@ import {
   inputSuccessIcon,
   inputWarningIcon,
   inputSpinner,
+  inputFullWidth,
+  inputRecipe,
+  inputWrapperRecipe,
 } from "../../styles/recipes/input.css";
 import { cn } from "../../utils";
 import { aria } from "../../utils/a11y";
@@ -56,20 +46,16 @@ export interface InputProps
   /** Optional mask configuration */
   mask?: { id: string; options?: unknown };
   /** Notified when the mask produces raw/formatted values */
-  onValueChange?: (
-    v: {
-      raw: string;
-      formatted: string;
-      meta?: Record<string, unknown>;
-    }
-  ) => void;
+  onValueChange?: (v: {
+    raw: string;
+    formatted: string;
+    meta?: Record<string, unknown>;
+  }) => void;
 }
 
-export const Input = React.forwardRef<
-  HTMLInputElement,
-  InputProps & { mask?: { id: string; options?: unknown }; onValueChange?: (v: { raw: string; formatted: string; meta?: Record<string, unknown> }) => void }
->(
-  ({
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  (
+    {
       size = "md",
       state = "default",
       label: labelText,
@@ -80,8 +66,8 @@ export const Input = React.forwardRef<
       required = false,
       icon,
       iconPosition = "right",
-  loading = false,
-  fullWidth: _fullWidth = false,
+      loading = false,
+      fullWidth = false,
       containerClassName,
       labelClassName,
       helperClassName,
@@ -117,8 +103,8 @@ export const Input = React.forwardRef<
 
     const maskedInputProps = maskHook.inputProps;
 
-    const hasLeftIcon = iconPosition === "left" && (icon || loading);
-    const hasRightIcon = iconPosition === "right" && (icon || loading);
+    const hasLeftIcon = !!(iconPosition === "left" && (icon || loading));
+    const hasRightIcon = !!(iconPosition === "right" && (icon || loading));
     const hasError = state === "error";
     const hasStateIcon =
       state === "error" || state === "success" || state === "warning";
@@ -166,31 +152,25 @@ export const Input = React.forwardRef<
     };
 
     const getInputFieldClasses = () => {
-      const classes = [inputField];
-      if (size === "sm") classes.push(inputFieldSmall);
-      if (size === "lg") classes.push(inputFieldLarge);
-
-      if (state === "error") classes.push(inputFieldError);
-      else if (state === "success") classes.push(inputFieldSuccess);
-      else if (state === "warning") classes.push(inputFieldWarning);
-
-      if (hasLeftIcon && hasRightIcon) {
-        classes.push(inputFieldWithBothIcons);
-      } else if (hasLeftIcon) {
-        if (size === "sm") classes.push(inputFieldSmallWithLeftIcon);
-        else if (size === "lg") classes.push(inputFieldLargeWithLeftIcon);
-        else classes.push(inputFieldWithLeftIcon);
-      } else if (hasRightIcon || hasStateIcon) {
-        if (hasError && hasRightIcon) {
-          classes.push(inputFieldWithErrorAndRightIcon);
-        } else if (size === "sm") {
-          classes.push(inputFieldSmallWithRightIcon);
-        } else if (size === "lg") {
-          classes.push(inputFieldLargeWithRightIcon);
-        } else {
-          classes.push(inputFieldWithRightIcon);
-        }
-      }
+      // Use transitional recipe that maps to existing class names.
+      const iconVariant =
+        hasLeftIcon && hasRightIcon
+          ? "both"
+          : hasLeftIcon
+            ? "left"
+            : hasRightIcon
+              ? "right"
+              : "none";
+      const classes = [
+        inputField,
+        inputRecipe({
+          size,
+          state,
+          icons: iconVariant as any,
+          errorRight: Boolean(hasError && hasRightIcon),
+          fullWidth: Boolean(fullWidth),
+        }),
+      ];
 
       return cn(...classes, className);
     };
@@ -304,14 +284,20 @@ export const Input = React.forwardRef<
     };
 
     return (
-      <div className={cn(inputContainer, containerClassName)}>
+      <div
+        className={cn(
+          inputContainer,
+          fullWidth && inputFullWidth,
+          containerClassName,
+        )}
+      >
         {labelText && (
           <label htmlFor={id} className={getLabelClasses()}>
             {labelText}
           </label>
         )}
 
-        <div className={inputWrapper}>
+        <div className={cn(inputWrapper, inputWrapperRecipe)}>
           {hasLeftIcon && (
             <div className={inputLeftIcon} aria-hidden="true">
               {renderIcon()}

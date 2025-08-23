@@ -1,5 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { keyframes, style, globalStyle, createVar } from "@vanilla-extract/css";
+import { keyframes, style, createVar } from "@vanilla-extract/css";
 import { colors, effects, typography, spacing } from "../tokens";
 
 /**
@@ -267,26 +267,22 @@ export const gradientCustomClass = style({
     [gradientActiveVar]: "var(--gradient-active, inherit)",
     [gradientFocusVar]: "var(--gradient-focus, inherit)",
   },
-});
-
-// Hover state with CSS custom property
-globalStyle(`.${gradientCustomClass}:hover:not(:disabled)`, {
-  background: `${gradientHoverVar} !important`,
-  boxShadow: effects.shadow.lg,
-  transform: "translateY(-1px)",
-});
-
-// Active state with CSS custom property
-globalStyle(`.${gradientCustomClass}:active:not(:disabled)`, {
-  background: `${gradientActiveVar} !important`,
-  transform: "translateY(0)",
-});
-
-// Focus state with CSS custom property or fallback
-globalStyle(`.${gradientCustomClass}:focus-visible`, {
-  background: gradientFocusVar,
-  boxShadow:
-    "0 0 0 2px rgba(59, 130, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.2)",
+  selectors: {
+    "&:hover:not(:disabled)": {
+      background: `${gradientHoverVar} !important`,
+      boxShadow: effects.shadow.lg,
+      transform: "translateY(-1px)",
+    },
+    "&:active:not(:disabled)": {
+      background: `${gradientActiveVar} !important`,
+      transform: "translateY(0)",
+    },
+    "&:focus-visible": {
+      background: gradientFocusVar,
+      boxShadow:
+        "0 0 0 2px rgba(59, 130, 246, 0.4), 0 0 20px rgba(59, 130, 246, 0.2)",
+    },
+  },
 });
 
 /**

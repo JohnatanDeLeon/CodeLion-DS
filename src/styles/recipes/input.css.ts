@@ -1,4 +1,5 @@
-import { style, globalStyle, keyframes } from "@vanilla-extract/css";
+import { style, keyframes } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 import { colors, effects, typography, spacing, animation } from "../tokens";
 
 /**
@@ -30,55 +31,6 @@ export const inputWrapper = style({
 /* ============================================================================
  * ÍCONOS - Posicionamiento absoluto con tamaños fijos
  * ============================================================================ */
-
-export const inputLeftIcon = style({
-  position: "absolute",
-  left: "1rem", // 16px desde el borde izquierdo
-  top: "50%",
-  transform: "translateY(-50%)",
-  zIndex: 10,
-  pointerEvents: "none", // Importante: evita interferir con clics
-
-  // Estado base - Más visible pero "apagado"
-  color: colors.neutral[500], // Más contraste que neutral[400]
-  transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
-
-  // Asegurar tamaño consistente del ícono
-  width: "1rem", // 16px
-  height: "1rem", // 16px
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flexShrink: 0,
-
-  // Sutil efecto de profundidad en estado base
-  filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
-});
-
-export const inputRightIcon = style({
-  position: "absolute",
-  right: "1rem", // 16px desde el borde derecho
-  top: "50%",
-  transform: "translateY(-50%)",
-  zIndex: 10,
-  pointerEvents: "none", // Importante: evita interferir con clics
-
-  // Estado base - Más visible pero "apagado"
-  color: colors.neutral[500], // Más contraste que neutral[400]
-  transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
-
-  // Asegurar tamaño consistente del ícono
-  width: "1rem", // 16px
-  height: "1rem", // 16px
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-  flexShrink: 0,
-
-  // Sutil efecto de profundidad en estado base
-  filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
-});
-
 /* ============================================================================
  * CAMPO INPUT BASE
  * ============================================================================ */
@@ -142,10 +94,18 @@ export const inputField = style({
     boxShadow: "none", // Sin efectos de luz
   },
 
-  // Responsive design
+  // Responsive design & dark mode combined
   "@media": {
     "(max-width: 640px)": {
       fontSize: typography.fontSize.base, // 16px - prevents zoom on iOS
+    },
+    "(prefers-color-scheme: dark)": {
+      backgroundColor: colors.neutral[800],
+      borderColor: colors.neutral[600],
+      color: colors.white,
+      "::placeholder": {
+        color: colors.neutral[400],
+      },
     },
   },
 });
@@ -260,58 +220,120 @@ export const inputFieldWarning = style({
 });
 
 /* ============================================================================
+ * ÍCONOS - Posicionamiento absoluto con tamaños fijos
+ * ============================================================================ */
+
+export const inputLeftIcon = style({
+  position: "absolute",
+  left: "1rem", // 16px desde el borde izquierdo
+  top: "50%",
+  transform: "translateY(-50%)",
+  zIndex: 10,
+  pointerEvents: "none", // Importante: evita interferir con clics
+
+  // Estado base - Más visible pero "apagado"
+  color: colors.neutral[500], // Más contraste que neutral[400]
+  transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
+
+  // Asegurar tamaño consistente del ícono
+  width: "1rem", // 16px
+  height: "1rem", // 16px
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexShrink: 0,
+
+  // Sutil efecto de profundidad en estado base
+  filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
+  selectors: {
+    // When wrapper is hovered/focused, style the icon
+    [`${inputWrapper}:hover &`]: {
+      color: colors.neutral[600],
+      filter: "drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))",
+      transform: "translateY(-50%) scale(1.05)",
+    },
+    [`${inputWrapper}:focus-within &`]: {
+      color: colors.primary[600],
+      filter: [
+        "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
+        `drop-shadow(0 0 8px ${colors.primary[500]}40)`,
+      ].join(" "),
+      transform: "translateY(-50%) scale(1.1)",
+    },
+    // When input is disabled or in error, affect the icon
+    [`${inputField}:disabled ~ &`]: {
+      color: colors.neutral[400],
+      opacity: 0.6,
+    },
+    [`${inputFieldError} ~ &`]: {
+      color: colors.error[500],
+    },
+  },
+});
+
+// Hover/focus interaction styles scoped to parent wrapper using `${parent} &`
+
+export const inputRightIcon = style({
+  position: "absolute",
+  right: "1rem", // 16px desde el borde derecho
+  top: "50%",
+  transform: "translateY(-50%)",
+  zIndex: 10,
+  pointerEvents: "none", // Importante: evita interferir con clics
+
+  // Estado base - Más visible pero "apagado"
+  color: colors.neutral[500], // Más contraste que neutral[400]
+  transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
+
+  // Asegurar tamaño consistente del ícono
+  width: "1rem", // 16px
+  height: "1rem", // 16px
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexShrink: 0,
+
+  // Sutil efecto de profundidad en estado base
+  filter: "drop-shadow(0 1px 1px rgba(0, 0, 0, 0.05))",
+  selectors: {
+    [`${inputWrapper}:hover &`]: {
+      color: colors.neutral[600],
+      filter: "drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))",
+      transform: "translateY(-50%) scale(1.05)",
+    },
+    [`${inputWrapper}:focus-within &`]: {
+      color: colors.primary[600],
+      filter: [
+        "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
+        `drop-shadow(0 0 8px ${colors.primary[500]}40)`,
+      ].join(" "),
+      transform: "translateY(-50%) scale(1.1)",
+    },
+    [`${inputField}:disabled ~ &`]: {
+      color: colors.neutral[400],
+      opacity: 0.6,
+    },
+  },
+});
+
+/* ============================================================================
+ * CLASES PARA INPUTS CON ÍCONOS - Padding específico para evitar solapamiento
+ * ============================================================================ */
+
+/* ============================================================================
+ * WRAPPER RECIPE (moved here after icon/state declarations to avoid forward refs)
+ * Encapsulates hover/focus/disabled/error icon interactions in a scoped recipe.
+ * This reduces reliance on globalStyle and improves encapsulation.
+ * ============================================================================ */
+// Move interactive icon rules to the icon definitions using `${parent} &`
+
+/* ============================================================================
  * ESTILOS DE ÍCONOS EN DIFERENTES ESTADOS
  * ============================================================================ */
 
 // ESTADOS INTERACTIVOS DE ÍCONOS - "Encendido/Apagado"
 
-// Hover - Transición intermedia
-globalStyle(`${inputWrapper}:hover ${inputLeftIcon}`, {
-  color: colors.neutral[600],
-  filter: "drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))",
-  transform: "translateY(-50%) scale(1.05)", // Sutil aumento
-});
-
-globalStyle(`${inputWrapper}:hover ${inputRightIcon}`, {
-  color: colors.neutral[600],
-  filter: "drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1))",
-  transform: "translateY(-50%) scale(1.05)", // Sutil aumento
-});
-
-// Focus - "ENCENDIDO" dramático
-globalStyle(`${inputWrapper}:focus-within ${inputLeftIcon}`, {
-  color: colors.primary[600], // Más intenso que [500]
-  filter: [
-    "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
-    `drop-shadow(0 0 8px ${colors.primary[500]}40)`, // Glow effect
-  ].join(" "),
-  transform: "translateY(-50%) scale(1.1)", // Más prominente
-});
-
-globalStyle(`${inputWrapper}:focus-within ${inputRightIcon}`, {
-  color: colors.primary[600], // Más intenso que [500]
-  filter: [
-    "drop-shadow(0 2px 4px rgba(0, 0, 0, 0.15))",
-    `drop-shadow(0 0 8px ${colors.primary[500]}40)`, // Glow effect
-  ].join(" "),
-  transform: "translateY(-50%) scale(1.1)", // Más prominente
-});
-
-// Ícono cuando el input está deshabilitado
-globalStyle(`${inputField}:disabled ~ ${inputLeftIcon}`, {
-  color: colors.neutral[400],
-  opacity: 0.6,
-});
-
-globalStyle(`${inputField}:disabled ~ ${inputRightIcon}`, {
-  color: colors.neutral[400],
-  opacity: 0.6,
-});
-
-// Ícono cuando el input tiene error
-globalStyle(`${inputFieldError} ~ ${inputLeftIcon}`, {
-  color: colors.error[500],
-});
+// Note: hover/focus/disabled/error icon rules moved into `inputWrapperRecipe`
 
 /* ============================================================================
  * LABEL
@@ -333,6 +355,13 @@ export const inputLabel = style({
 
   // Transición suave para cambios de estado
   transition: `color ${animation.duration.normal} ${animation.easing.easeInOut}`,
+  // Dark mode label color
+  // Use top-level media query for dark mode
+  "@media": {
+    "(prefers-color-scheme: dark)": {
+      color: colors.neutral[200],
+    },
+  },
 });
 
 export const inputLabelRequired = style({
@@ -358,6 +387,11 @@ export const inputHint = style({
   fontWeight: typography.fontWeight.medium, // 500
   fontFamily: typography.fontFamily.sans,
   marginTop: spacing[1.5],
+  "@media": {
+    "(prefers-color-scheme: dark)": {
+      color: colors.neutral[400],
+    },
+  },
 });
 
 export const inputErrorMessage = style({
@@ -469,23 +503,66 @@ export const inputFieldLargeWithRightIcon = style({
 });
 
 /* ============================================================================
+ * FULL WIDTH UTIL
+ * Applied to the container when Input receives fullWidth prop
+ * ============================================================================ */
+export const inputFullWidth = style({
+  width: "100%",
+});
+
+/**
+ * Transitional recipe for Input field.
+ * This recipe composes the existing fine-grained classes so we can
+ * progressively migrate the component to a recipe-driven API without
+ * removing legacy class names yet.
+ */
+export const inputRecipe = recipe({
+  base: {},
+  variants: {
+    size: {
+      sm: inputFieldSmall,
+      md: {},
+      lg: inputFieldLarge,
+    },
+    state: {
+      default: {},
+      error: inputFieldError,
+      success: inputFieldSuccess,
+      warning: inputFieldWarning,
+    },
+    icons: {
+      none: {},
+      left: inputFieldWithLeftIcon,
+      right: inputFieldWithRightIcon,
+      both: inputFieldWithBothIcons,
+    },
+    errorRight: {
+      false: {},
+      true: inputFieldWithErrorAndRightIcon,
+    },
+    fullWidth: {
+      false: {},
+      true: inputFullWidth,
+    },
+  },
+  defaultVariants: {
+    size: "md",
+    state: "default",
+    icons: "none",
+    errorRight: false,
+    fullWidth: false,
+  },
+});
+
+/* ============================================================================
  * DARK MODE SUPPORT
  * ============================================================================ */
 
-globalStyle(`${inputField} @media (prefers-color-scheme: dark)`, {
-  backgroundColor: colors.neutral[800],
-  borderColor: colors.neutral[600],
-  color: colors.white,
-});
+// Dark mode styles have been migrated into component selectors above
 
-globalStyle(`${inputField}::placeholder @media (prefers-color-scheme: dark)`, {
-  color: colors.neutral[400],
-});
-
-globalStyle(`${inputLabel} @media (prefers-color-scheme: dark)`, {
-  color: colors.neutral[200],
-});
-
-globalStyle(`${inputHint} @media (prefers-color-scheme: dark)`, {
-  color: colors.neutral[400],
+// Interaction global styles for icons (placed after all class declarations)
+// Interactive wrapper recipe: scopes hover/focus/disabled/error icon rules
+// Keep wrapper recipe as a lightweight marker class for clients
+export const inputWrapperRecipe = recipe({
+  base: {},
 });
