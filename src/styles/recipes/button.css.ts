@@ -1,6 +1,8 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { keyframes, style, createVar } from "@vanilla-extract/css";
-import { colors, effects, typography, spacing } from "../tokens";
+import { colors, effects, typography, spacing, animation } from "../tokens";
+import { transition } from "../utils/transitions.css";
+import { radius } from "../utils/shape.css";
 
 /**
  * CSS Custom Properties for Dynamic Gradients
@@ -30,11 +32,16 @@ export const button = recipe({
 
       // Borders and shape
       border: "none",
-      borderRadius: effects.borderRadius.md,
+      borderRadius: radius.lg,
       cursor: "pointer",
 
       // Transitions
-      transition: "all 200ms ease-out",
+      // Transitions via shared util (uses tokens.animation)
+      ...transition({
+        properties: ["all"],
+        duration: animation.duration.fast,
+        easing: animation.easing.easeOut,
+      }),
 
       // Focus states
       ":focus-visible": {
@@ -65,9 +72,15 @@ export const button = recipe({
     variant: {
       primary: [
         {
+          borderRadius: radius.md,
           backgroundColor: colors.primary[700],
           color: colors.white,
           boxShadow: effects.shadow.sm,
+          ...transition({
+            properties: ["all"],
+            duration: animation.duration.fast,
+            easing: animation.easing.easeOut,
+          }),
         },
         {
           selectors: {
@@ -177,40 +190,40 @@ export const button = recipe({
 
     size: {
       sm: {
-        height: "2rem",
+        height: spacing[8], // 2rem
         paddingLeft: spacing[3],
         paddingRight: spacing[3],
         fontSize: typography.fontSize.xs,
-        borderRadius: effects.borderRadius.sm,
+        borderRadius: radius.sm,
       },
 
       md: {
-        height: "2.5rem",
+        height: spacing[10], // 2.5rem
         paddingLeft: spacing[4],
         paddingRight: spacing[4],
         fontSize: typography.fontSize.sm,
       },
 
       lg: {
-        height: "3rem",
+        height: spacing[12], // 3rem
         paddingLeft: spacing[6],
         paddingRight: spacing[6],
         fontSize: typography.fontSize.base,
-        borderRadius: effects.borderRadius.lg,
+        borderRadius: radius.lg,
       },
 
       xl: {
-        height: "3.5rem",
+        height: spacing[14], // 3.5rem
         paddingLeft: spacing[8],
         paddingRight: spacing[8],
         fontSize: typography.fontSize.lg,
-        borderRadius: effects.borderRadius.lg,
+        borderRadius: radius.lg,
       },
 
       icon: {
-        width: "2.5rem",
-        height: "2.5rem",
-        padding: "0",
+        width: spacing[10],
+        height: spacing[10],
+        padding: spacing[0],
       },
     },
 
