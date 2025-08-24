@@ -112,6 +112,25 @@ export const glowEffects = {
 } as const;
 
 /**
+ * Shape / radius mapping used by component recipes to provide a canonical
+ * size -> border-radius mapping. This allows components to agree on which
+ * radius token corresponds to a semantic size (sm/md/lg/xl).
+ *
+ * Assumption: map component sizes to the radii family used by Button:
+ *  - sm -> effects.borderRadius.sm
+ *  - md -> effects.borderRadius.md
+ *  - lg -> effects.borderRadius.lg
+ *  - xl -> effects.borderRadius.lg (extra-large maps to lg to avoid overly
+ *    large radii for controls)
+ */
+export const shapeScale = {
+  sm: effects.borderRadius.sm,
+  md: effects.borderRadius.md,
+  lg: effects.borderRadius.lg,
+  xl: effects.borderRadius.lg,
+} as const;
+
+/**
  * TypeScript types for effect tokens
  */
 export type ShadowToken = keyof typeof effects.shadow;

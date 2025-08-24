@@ -12,6 +12,7 @@ import {
   componentShadows,
   animation,
   glowEffects,
+  shapeScale,
 } from "./effects.css";
 
 // Re-export individual tokens
@@ -23,6 +24,7 @@ export {
   componentShadows,
   animation,
   glowEffects,
+  shapeScale,
 } from "./effects.css";
 
 /**
@@ -36,6 +38,7 @@ export const tokens = {
   typography,
   textStyles,
   effects,
+  shapeScale,
   componentShadows,
   animation,
   glowEffects,
