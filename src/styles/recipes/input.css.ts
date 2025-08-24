@@ -94,17 +94,18 @@ export const inputField = style({
     "(max-width: 640px)": {
       fontSize: typography.fontSize.base, // 16px - prevents zoom on iOS
     },
-    // keep only responsive media queries here; dark mode is now opt-in via
-    // a data-theme attribute on the root (e.g. <html data-theme="dark">)
+    // keep only responsive media queries here; theming is provided by the
+    // global design tokens (no component-level opt-in selectors).
   },
-  // Opt-in dark theme selectors. This prevents system-level prefers-color-scheme
-  // from flipping component visuals unexpectedly (e.g. in Storybook previews).
+  // Theme-aware tokens: avoid per-component opt-in selectors. Colors are
+  // driven by the global `colors` tokens which theme authors can remap.
   selectors: {
-    [':root[data-theme="dark"] &' as any]: {
-      backgroundColor: colors.neutral[800],
-      color: colors.white,
+    // Placeholder and base text color rely on tokens so consumers can swap
+    // themes via the global theming API (no per-component opt-in selectors).
+    "&::placeholder": {
+      color: colors.neutral[500],
     },
-    [':root[data-theme="dark"] &:focus' as any]: {
+    "&:focus": {
       outline: "none",
       borderColor: colors.primary[600],
       backgroundColor: colors.white,
@@ -115,47 +116,6 @@ export const inputField = style({
         `inset 0 1px 0 ${colors.white}`,
       ].join(", "),
       transform: "translateY(-2px)",
-    },
-    [':root[data-theme="dark"] &::placeholder' as any]: {
-      color: colors.neutral[400],
-    },
-    ['body[data-theme="dark"] &' as any]: {
-      backgroundColor: colors.neutral[800],
-      color: colors.white,
-    },
-    ['body[data-theme="dark"] &:focus' as any]: {
-      outline: "none",
-      borderColor: colors.primary[600],
-      backgroundColor: colors.white,
-      boxShadow: [
-        `0 0 0 3px ${colors.primary[500]}30`,
-        `0 0 30px ${colors.primary[500]}15`,
-        `${effects.shadow.md}`,
-        `inset 0 1px 0 ${colors.white}`,
-      ].join(", "),
-      transform: "translateY(-2px)",
-    },
-    ['body[data-theme="dark"] &::placeholder' as any]: {
-      color: colors.neutral[400],
-    },
-    ['[data-theme="dark"] &' as any]: {
-      backgroundColor: colors.neutral[800],
-      color: colors.white,
-    },
-    ['[data-theme="dark"] &:focus' as any]: {
-      outline: "none",
-      borderColor: colors.primary[600],
-      backgroundColor: colors.white,
-      boxShadow: [
-        `0 0 0 3px ${colors.primary[500]}30`,
-        `0 0 30px ${colors.primary[500]}15`,
-        `${effects.shadow.md}`,
-        `inset 0 1px 0 ${colors.white}`,
-      ].join(", "),
-      transform: "translateY(-2px)",
-    },
-    ['[data-theme="dark"] &::placeholder' as any]: {
-      color: colors.neutral[400],
     },
   },
 } as any);
@@ -407,17 +367,8 @@ export const inputLabel = style({
   transition: `color ${animation.duration.normal} ${animation.easing.easeInOut}`,
   // Dark mode label color
   // Dark mode label color - opt-in via data-theme
-  selectors: {
-    [':root[data-theme="dark"] &' as any]: {
-      color: colors.neutral[200],
-    },
-    ['body[data-theme="dark"] &' as any]: {
-      color: colors.neutral[200],
-    },
-    ['[data-theme="dark"] &' as any]: {
-      color: colors.neutral[200],
-    },
-  },
+  // Labels should derive their color from tokens. Theme authors may map
+  // `colors.neutral` differently for dark mode via the global theme.
 });
 
 export const inputLabelRequired = style({
@@ -443,17 +394,7 @@ export const inputHint = style({
   fontWeight: typography.fontWeight.medium, // 500
   fontFamily: typography.fontFamily.sans,
   marginTop: spacing[1.5],
-  selectors: {
-    [':root[data-theme="dark"] &' as any]: {
-      color: colors.neutral[400],
-    },
-    ['body[data-theme="dark"] &' as any]: {
-      color: colors.neutral[400],
-    },
-    ['[data-theme="dark"] &' as any]: {
-      color: colors.neutral[400],
-    },
-  },
+  // Hints derive from token palette so dark theme mappings are global.
 });
 
 export const inputErrorMessage = style({

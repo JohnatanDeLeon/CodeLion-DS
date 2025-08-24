@@ -283,7 +283,7 @@ describe("Input", () => {
         validate: (_: string) => true,
       } as any;
 
-  const { defaultRegistry } = await import("../../masking/registry");
+      const { defaultRegistry } = await import("../../masking/registry");
       // register & cleanup
       defaultRegistry.register(noopHandler);
 

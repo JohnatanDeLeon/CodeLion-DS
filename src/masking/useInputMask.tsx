@@ -8,13 +8,11 @@ export function useInputMask(params: {
   value?: string;
   defaultValue?: string;
   onChange?: React.ChangeEventHandler<HTMLInputElement>;
-  onValueChange?: (
-    v: {
-      raw: string;
-      formatted: string;
-      meta?: Record<string, unknown>;
-    }
-  ) => void;
+  onValueChange?: (v: {
+    raw: string;
+    formatted: string;
+    meta?: Record<string, unknown>;
+  }) => void;
   inputRef?: React.Ref<HTMLInputElement>;
 }) {
   const {
@@ -70,7 +68,7 @@ export function useInputMask(params: {
     onValueChange?.({ raw: res.raw, formatted: res.formatted, meta: res.meta });
     if (internalRef.current && typeof res.caret === "number") {
       const el = internalRef.current;
-      const caret = res.caret as number;
+      const caret = res.caret;
       requestAnimationFrame(() => {
         try {
           el.setSelectionRange(caret, caret);
@@ -96,7 +94,9 @@ export function useInputMask(params: {
         if (typeof params.inputRef === "function") {
           params.inputRef(el);
         } else if (params.inputRef) {
-          (params.inputRef as React.MutableRefObject<HTMLInputElement | null>).current = el;
+          (
+            params.inputRef as React.MutableRefObject<HTMLInputElement | null>
+          ).current = el;
         }
       },
       "data-mask-id": mask?.id,

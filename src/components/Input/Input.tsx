@@ -166,7 +166,8 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         inputRecipe({
           size,
           state,
-          icons: iconVariant as any,
+          // iconVariant is one of 'none' | 'left' | 'right' | 'both'
+          icons: iconVariant,
           errorRight: Boolean(hasError && hasRightIcon),
           fullWidth: Boolean(fullWidth),
         }),

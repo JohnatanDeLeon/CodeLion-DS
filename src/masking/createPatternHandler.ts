@@ -6,7 +6,9 @@ export function createPatternHandler(patternDef: FormatPattern): MaskHandler {
   return {
     id: `pattern:${patternDef.pattern}`,
     apply(input: string, caret: number | null) {
-      const normalized = patternDef.transform ? patternDef.transform(input) : input;
+      const normalized = patternDef.transform
+        ? patternDef.transform(input)
+        : input;
       const raw = unformat(normalized, patternDef);
 
       let rawTrimmed = raw;

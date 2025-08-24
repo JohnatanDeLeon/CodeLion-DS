@@ -17,10 +17,10 @@ describe("useInputMask integration", () => {
       />,
     );
 
-    const input = screen.getByRole("textbox") as HTMLInputElement;
+    const input = screen.getByRole<HTMLInputElement>("textbox");
 
-  // initial formatted value should be present (wait for effect)
-  await waitFor(() => expect(input.value).toBe("(123) 456-7890"));
+    // initial formatted value should be present (wait for effect)
+    await waitFor(() => expect(input.value).toBe("(123) 456-7890"));
 
     // place caret after the first 3 visible digits (inside area code)
     // formatted: (123) 456-7890 -> position after '3' is index of ')' so ~4
@@ -30,11 +30,14 @@ describe("useInputMask integration", () => {
     const newRaw = "9123456789"; // we'll simulate typed value accordingly
     const newFormatted = "(912) 345-6789";
 
-    fireEvent.change(input, { target: { value: newFormatted, selectionStart: 5 } });
+    fireEvent.change(input, {
+      target: { value: newFormatted, selectionStart: 5 },
+    });
 
-  await waitFor(() => expect(onValueChange).toHaveBeenCalled());
+    await waitFor(() => expect(onValueChange).toHaveBeenCalled());
 
-  const called = onValueChange.mock.calls[onValueChange.mock.calls.length - 1][0];
+    const called =
+      onValueChange.mock.calls[onValueChange.mock.calls.length - 1][0];
     expect(called.raw).toBe(newRaw);
     expect(called.formatted).toBe(newFormatted);
 
@@ -52,11 +55,11 @@ describe("useInputMask integration", () => {
       />,
     );
 
-    const input = screen.getByRole("textbox") as HTMLInputElement;
-  // default value 12345 -> 123.45 formatted (wait for effect)
-  await waitFor(() => expect(onValueChange).toHaveBeenCalled());
-  const called = onValueChange.mock.calls[0][0];
-  expect(called.raw).toBe("12345");
-  expect(/\d+[.,]\d{2}/.test(called.formatted)).toBe(true);
+    const input = screen.getByRole<HTMLInputElement>("textbox");
+    // default value 12345 -> 123.45 formatted (wait for effect)
+    await waitFor(() => expect(onValueChange).toHaveBeenCalled());
+    const called = onValueChange.mock.calls[0][0];
+    expect(called.raw).toBe("12345");
+    expect(/\d+[.,]\d{2}/.test(called.formatted)).toBe(true);
   });
 });
