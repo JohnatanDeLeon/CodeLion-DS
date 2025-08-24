@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import { colors, effects, typography, spacing, animation } from "../tokens";
@@ -66,25 +67,19 @@ export const inputField = style({
     backgroundColor: colors.white, // Se aclara al pasar mouse
     transform: "translateY(-1px)", // Sutil elevación como en Button
   },
-
-  // FOCUS STATE - "ENCENDIDO" dramático
+  // FOCUS STATE - restore primary focus for light theme
   ":focus": {
     outline: "none",
-    borderColor: colors.primary[600], // Más intenso que [500]
-    backgroundColor: colors.white, // Completamente blanco cuando activo
-
-    // Efecto de "encendido" con glow más prominente
+    borderColor: colors.primary[600], // brand blue on focus
+    backgroundColor: colors.white,
     boxShadow: [
-      `0 0 0 3px ${colors.primary[500]}30`, // Ring más visible
-      `0 0 30px ${colors.primary[500]}15`, // Glow effect extendido
-      `${effects.shadow.md}`, // Sombra más pronunciada
-      `inset 0 1px 0 ${colors.white}`, // Highlight interior
+      `0 0 0 3px ${colors.primary[500]}30`,
+      `0 0 30px ${colors.primary[500]}15`,
+      `${effects.shadow.md}`,
+      `inset 0 1px 0 ${colors.white}`,
     ].join(", "),
-
-    transform: "translateY(-2px)", // Elevación más pronunciada que hover
+    transform: "translateY(-2px)",
   },
-
-  // DISABLED STATE - Claramente "apagado"
   ":disabled": {
     cursor: "not-allowed",
     opacity: 0.6,
@@ -99,16 +94,71 @@ export const inputField = style({
     "(max-width: 640px)": {
       fontSize: typography.fontSize.base, // 16px - prevents zoom on iOS
     },
-    "(prefers-color-scheme: dark)": {
+    // keep only responsive media queries here; dark mode is now opt-in via
+    // a data-theme attribute on the root (e.g. <html data-theme="dark">)
+  },
+  // Opt-in dark theme selectors. This prevents system-level prefers-color-scheme
+  // from flipping component visuals unexpectedly (e.g. in Storybook previews).
+  selectors: {
+    [':root[data-theme="dark"] &' as any]: {
       backgroundColor: colors.neutral[800],
-      borderColor: colors.neutral[600],
       color: colors.white,
-      "::placeholder": {
-        color: colors.neutral[400],
-      },
+    },
+    [':root[data-theme="dark"] &:focus' as any]: {
+      outline: "none",
+      borderColor: colors.primary[600],
+      backgroundColor: colors.white,
+      boxShadow: [
+        `0 0 0 3px ${colors.primary[500]}30`,
+        `0 0 30px ${colors.primary[500]}15`,
+        `${effects.shadow.md}`,
+        `inset 0 1px 0 ${colors.white}`,
+      ].join(", "),
+      transform: "translateY(-2px)",
+    },
+    [':root[data-theme="dark"] &::placeholder' as any]: {
+      color: colors.neutral[400],
+    },
+    ['body[data-theme="dark"] &' as any]: {
+      backgroundColor: colors.neutral[800],
+      color: colors.white,
+    },
+    ['body[data-theme="dark"] &:focus' as any]: {
+      outline: "none",
+      borderColor: colors.primary[600],
+      backgroundColor: colors.white,
+      boxShadow: [
+        `0 0 0 3px ${colors.primary[500]}30`,
+        `0 0 30px ${colors.primary[500]}15`,
+        `${effects.shadow.md}`,
+        `inset 0 1px 0 ${colors.white}`,
+      ].join(", "),
+      transform: "translateY(-2px)",
+    },
+    ['body[data-theme="dark"] &::placeholder' as any]: {
+      color: colors.neutral[400],
+    },
+    ['[data-theme="dark"] &' as any]: {
+      backgroundColor: colors.neutral[800],
+      color: colors.white,
+    },
+    ['[data-theme="dark"] &:focus' as any]: {
+      outline: "none",
+      borderColor: colors.primary[600],
+      backgroundColor: colors.white,
+      boxShadow: [
+        `0 0 0 3px ${colors.primary[500]}30`,
+        `0 0 30px ${colors.primary[500]}15`,
+        `${effects.shadow.md}`,
+        `inset 0 1px 0 ${colors.white}`,
+      ].join(", "),
+      transform: "translateY(-2px)",
+    },
+    ['[data-theme="dark"] &::placeholder' as any]: {
+      color: colors.neutral[400],
     },
   },
-});
+} as any);
 
 /* ============================================================================
  * CLASES PARA INPUTS CON ÍCONOS - Padding específico para evitar solapamiento
@@ -161,7 +211,7 @@ export const inputFieldError = style({
     ].join(", "),
     transform: "translateY(-2px)",
   },
-});
+} as any);
 
 export const inputFieldSuccess = style({
   // Estado base success - "Apagado" pero con indicación de éxito
@@ -356,9 +406,15 @@ export const inputLabel = style({
   // Transición suave para cambios de estado
   transition: `color ${animation.duration.normal} ${animation.easing.easeInOut}`,
   // Dark mode label color
-  // Use top-level media query for dark mode
-  "@media": {
-    "(prefers-color-scheme: dark)": {
+  // Dark mode label color - opt-in via data-theme
+  selectors: {
+    [':root[data-theme="dark"] &' as any]: {
+      color: colors.neutral[200],
+    },
+    ['body[data-theme="dark"] &' as any]: {
+      color: colors.neutral[200],
+    },
+    ['[data-theme="dark"] &' as any]: {
       color: colors.neutral[200],
     },
   },
@@ -387,8 +443,14 @@ export const inputHint = style({
   fontWeight: typography.fontWeight.medium, // 500
   fontFamily: typography.fontFamily.sans,
   marginTop: spacing[1.5],
-  "@media": {
-    "(prefers-color-scheme: dark)": {
+  selectors: {
+    [':root[data-theme="dark"] &' as any]: {
+      color: colors.neutral[400],
+    },
+    ['body[data-theme="dark"] &' as any]: {
+      color: colors.neutral[400],
+    },
+    ['[data-theme="dark"] &' as any]: {
       color: colors.neutral[400],
     },
   },

@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './',
+  // Limit Playwright to the dedicated tests folder to avoid picking up unit tests
+  // and style modules that are intended for other runners/build steps.
+  testDir: './tests',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,

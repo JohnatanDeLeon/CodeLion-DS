@@ -111,7 +111,19 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const theme = context.globals.theme || 'light';
-      
+      // Ensure the opt-in data-theme selector works for components
+      try {
+        if (typeof document !== 'undefined' && document.documentElement) {
+          if (theme === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+          } else {
+            document.documentElement.removeAttribute('data-theme');
+          }
+        }
+      } catch (e) {
+        // noop in non-browser env
+      }
+
       return (
         <div 
           className={theme}
@@ -142,4 +154,4 @@ const preview: Preview = {
   },
 };
 
-export default preview;
+export default preview as any;
