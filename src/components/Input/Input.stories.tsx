@@ -155,8 +155,8 @@ export const ImprovedIdleState: Story = {
   render: () => {
     const MailIcon = (
       <svg
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -773,8 +773,8 @@ export const WithIcons: Story = {
   render: () => {
     const SearchIcon = (
       <svg
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -789,8 +789,8 @@ export const WithIcons: Story = {
 
     const UserIcon = (
       <svg
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
@@ -805,8 +805,8 @@ export const WithIcons: Story = {
 
     const MailIcon = (
       <svg
-        width="16"
-        height="16"
+        width="100%"
+        height="100%"
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"

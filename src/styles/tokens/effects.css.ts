@@ -27,8 +27,9 @@ export const effects = createGlobalTheme(":root", {
     md: "0.5rem", // 8px
     lg: "0.75rem", // 12px
     xl: "1rem", // 16px
-    "2xl": "1.5rem", // 24px
-    "3xl": "2rem", // 32px
+    "2xl": "1.125rem", // 18px
+    "3xl": "1.5rem", // 24px
+    "4xl": "2rem", // 32px
     full: "9999px",
   },
 
@@ -120,14 +121,14 @@ export const glowEffects = {
  *  - sm -> effects.borderRadius.sm
  *  - md -> effects.borderRadius.md
  *  - lg -> effects.borderRadius.lg
- *  - xl -> effects.borderRadius.lg (extra-large maps to lg to avoid overly
- *    large radii for controls)
+  - xl -> effects.borderRadius["2xl"] (extra-large maps to the 2xl radius
+    to give a slightly larger, but still controlled, corner on large controls)
  */
 export const shapeScale = {
   sm: effects.borderRadius.sm,
   md: effects.borderRadius.md,
   lg: effects.borderRadius.lg,
-  xl: effects.borderRadius.lg,
+  xl: effects.borderRadius["2xl"],
 } as const;
 
 /**

@@ -32,7 +32,7 @@ export const button = recipe({
 
       // Borders and shape
       border: "none",
-      borderRadius: radius.lg,
+      borderRadius: radius["2xl"],
       cursor: "pointer",
 
       // Transitions
@@ -72,7 +72,7 @@ export const button = recipe({
     variant: {
       primary: [
         {
-          borderRadius: radius.md,
+          borderRadius: radius["2xl"],
           backgroundColor: colors.primary[700],
           color: colors.white,
           boxShadow: effects.shadow.sm,
@@ -194,7 +194,7 @@ export const button = recipe({
         paddingLeft: spacing[3],
         paddingRight: spacing[3],
         fontSize: typography.fontSize.xs,
-        borderRadius: radius.sm,
+        borderRadius: radius["2xl"],
       },
 
       md: {
@@ -209,7 +209,7 @@ export const button = recipe({
         paddingLeft: spacing[6],
         paddingRight: spacing[6],
         fontSize: typography.fontSize.base,
-        borderRadius: radius.lg,
+        borderRadius: radius["2xl"],
       },
 
       xl: {
@@ -217,13 +217,14 @@ export const button = recipe({
         paddingLeft: spacing[8],
         paddingRight: spacing[8],
         fontSize: typography.fontSize.lg,
-        borderRadius: radius.lg,
+        borderRadius: radius["2xl"],
       },
 
       icon: {
         width: spacing[10],
         height: spacing[10],
         padding: spacing[0],
+        borderRadius: radius["2xl"],
       },
     },
 

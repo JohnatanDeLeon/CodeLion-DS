@@ -56,7 +56,7 @@ export interface InputProps
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
-      size = "md",
+      size = "lg",
       state = "default",
       label: labelText,
       helperText: helperTextProp,
@@ -124,6 +124,25 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const displayMessage = getDisplayMessage();
 
+    // Provide ARIA attributes. If no visual label is provided, fall back to
+    // an accessible name (preferring explicit `aria-label`, otherwise the
+    // placeholder) so automated a11y checks and assistive tech can identify
+    // the control.
+    const explicitAriaLabel = (props as Record<string, unknown>)[
+      "aria-label"
+    ] as string | undefined;
+    const placeholderText = props.placeholder;
+    const nameProp = props.name;
+
+    // If a visual label is provided prefer that. Otherwise pick an accessible
+    // name from aria-label, placeholder, name/id or fall back to a conservative
+    // default so automated checks have an accessible name.
+    const fallbackAriaLabel =
+      explicitAriaLabel ??
+      (labelText
+        ? undefined
+        : (placeholderText ?? nameProp ?? id ?? "Input field"));
+
     const inputAriaAttributes = {
       ...aria.input({
         required,
@@ -131,6 +150,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         describedBy: displayMessage ? helperTextId : undefined,
       }),
       "aria-describedby": displayMessage ? helperTextId : undefined,
+      ...(fallbackAriaLabel ? { "aria-label": fallbackAriaLabel } : {}),
     } as const;
 
     // change handling delegated to mask hook (maskedInputProps) or native onChange passed via props

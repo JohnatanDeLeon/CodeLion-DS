@@ -12,6 +12,8 @@ export const fieldBase = ({ size = "md" }: { size?: string } = {}) => {
   return {
     minHeight,
     padding: `${spacing[3]} ${spacing[4]}`,
+    // Ensure predictable sizing so height + padding behave as expected
+    boxSizing: "border-box",
     fontSize: typography.fontSize.sm,
     fontWeight: typography.fontWeight.semibold,
     fontFamily: typography.fontFamily.sans,

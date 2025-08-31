@@ -8,8 +8,8 @@ export const PhoneMaskDemo: React.FC = () => {
 
   const PhoneIcon = (
     <svg
-      width="16"
-      height="16"
+      width="100%"
+      height="100%"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -22,6 +22,7 @@ export const PhoneMaskDemo: React.FC = () => {
   return (
     <div style={{ display: "grid", gap: 12, minWidth: 360 }}>
       <Input
+        id="phone-mask-input"
         label="Phone"
         placeholder="(555) 555-5555"
         icon={PhoneIcon}
@@ -47,6 +48,7 @@ export const CurrencyMaskDemo: React.FC = () => {
   return (
     <div style={{ display: "grid", gap: 12, minWidth: 360 }}>
       <Input
+        id="currency-mask-input"
         label="Amount"
         placeholder="0.00"
         mask={{ id: "currency" }}
