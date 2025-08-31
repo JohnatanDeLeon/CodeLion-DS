@@ -10,6 +10,18 @@ expect.extend({ toHaveNoViolations } as any);
 // Cleanup after each test
 afterEach(() => {
   cleanup();
+  try {
+    // Restore any mocked functions/spies to avoid cross-test pollution
+    vi.restoreAllMocks();
+  } catch (e) {
+    // ignore when vi isn't available
+  }
+});
+
+// Fail on unhandled promise rejections to catch async leaks early in CI
+process.on("unhandledRejection", (reason) => {
+  // Throwing ensures the test runner sees the failure instead of silently warning
+  throw reason as Error;
 });
 
 // Mock IntersectionObserver
