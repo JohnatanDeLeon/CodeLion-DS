@@ -1,690 +1,345 @@
 import React from "react";
 import type { Meta, StoryObj } from "@storybook/react-vite";
+import { within, userEvent } from "../../utils/storybook-testing";
 import { Button } from "./Button";
+import { gradients } from "../../styles/tokens/colors.css";
 import { useGradientPresets } from "../../hooks/useGradient";
 
-const meta = {
-  title: "Components/Basic/Button",
+const meta: Meta<typeof Button> = {
+  title: "Components/Button",
   component: Button,
-  parameters: {
-    layout: "centered",
-    docs: {
-      description: {
-        component: `
-The Button component is a versatile, accessible button with multiple variants and states.
-
-## Features
-- Multiple visual variants (primary, secondary, ghost, destructive, gradient)
-- Various sizes (sm, md, lg, xl, icon)
-- Loading states with spinner
-- Full width support
-- Keyboard navigation support
-- WCAG 2.1 AA compliant
-- TypeScript support with comprehensive prop types
-
-## Usage
-Import the Button component and use it with the desired props:
-
-\`\`\`tsx
-import { Button } from '@johnatandeleon/design-system';
-
-function MyComponent() {
-  return (
-    <Button variant="primary" size="md" onClick={() => console.log('Clicked!')}>
-      Click me
-    </Button>
-  );
-}
-\`\`\`
-        `,
-      },
-    },
-  },
   tags: ["autodocs"],
   argTypes: {
     variant: {
-      control: "select",
+      control: { type: "select" },
       options: ["primary", "secondary", "ghost", "destructive", "gradient"],
-      description: "Visual style variant of the button",
     },
     size: {
-      control: "select",
+      control: { type: "select" },
       options: ["sm", "md", "lg", "xl", "icon"],
-      description: "Size of the button",
     },
-    fullWidth: {
-      control: "boolean",
-      description: "Whether the button should take full width",
-    },
-    loading: {
-      control: "boolean",
-      description: "Shows loading spinner and disables interaction",
-    },
-    disabled: {
-      control: "boolean",
-      description: "Disables the button",
-    },
-    children: {
-      control: "text",
-      description: "Button content",
-    },
-    gradient: {
-      control: "object",
-      description:
-        "Gradient configuration object (only applies when variant='gradient')",
-      if: { arg: "variant", eq: "gradient" },
-      table: {
-        type: {
-          summary: "GradientProps",
-          detail: `Simple: { startColor: string, endColor: string }
-Advanced: { gradient: { default: GradientConfig, hover?: GradientConfig } }`,
-        },
-      },
-    },
-    onClick: {
-      action: "clicked",
-      description: "Click event handler",
-    },
+    fullWidth: { control: "boolean" },
+    loading: { control: "boolean" },
+    disabled: { control: "boolean" },
+    className: { control: "text" },
+    gradient: { control: "object" },
+    children: { control: "text" },
+    onClick: { action: "clicked" },
   },
-} satisfies Meta<typeof Button>;
-
-export default meta;
-type Story = StoryObj<typeof meta>;
-
-// Default story
-export const Default: Story = {
-  args: {
-    children: "Button",
-  },
-};
-
-// Variant stories
-export const Primary: Story = {
   args: {
     variant: "primary",
-    children: "Primary Button",
+    size: "md",
+    fullWidth: false,
+    loading: false,
+    disabled: false,
+    children: "Button",
   },
 };
 
-export const Secondary: Story = {
-  args: {
-    variant: "secondary",
-    children: "Secondary Button",
+export default meta;
+export type Story = StoryObj<typeof Button>;
+
+export const Primary: Story = {
+  args: { variant: "primary", children: "Primary" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const btn = await canvas.getByRole("button", { name: /primary/i });
+    await userEvent.click(btn);
   },
 };
 
-export const Ghost: Story = {
-  args: {
-    variant: "ghost",
-    children: "Ghost Button",
-  },
+export const Variants: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: 12 }}>
+      <Button {...args} variant="primary">
+        Primary
+      </Button>
+      <Button {...args} variant="secondary">
+        Secondary
+      </Button>
+      <Button {...args} variant="ghost">
+        Ghost
+      </Button>
+      <Button {...args} variant="destructive">
+        Destructive
+      </Button>
+      <Button {...args} variant="gradient">
+        Gradient
+      </Button>
+    </div>
+  ),
 };
 
-export const Destructive: Story = {
-  args: {
-    variant: "destructive",
-    children: "Delete Item",
-  },
-};
-
-export const Gradient: Story = {
-  args: {
-    variant: "gradient",
-    children: "Gradient Button",
-    size: "xl",
-  },
-};
-
-// Size stories
 export const Sizes: Story = {
-  args: {
-    children: "Button",
-  },
-  render: () => (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: "1rem",
-        flexWrap: "wrap",
-      }}
-    >
-      <Button size="sm">Small</Button>
-      <Button size="md">Medium</Button>
-      <Button size="lg">Large</Button>
-      <Button size="xl">Extra Large</Button>
+  render: (args) => (
+    <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+      <Button {...args} size="sm">
+        SM
+      </Button>
+      <Button {...args} size="md">
+        MD
+      </Button>
+      <Button {...args} size="lg">
+        LG
+      </Button>
+      <Button {...args} size="xl">
+        XL
+      </Button>
+      <Button {...args} size="icon" aria-label="icon-button">
+        <span aria-hidden>×</span>
+      </Button>
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: "Different button sizes available in the design system.",
-      },
-    },
-  },
 };
 
-// All variants showcase
-export const AllVariants: Story = {
-  args: {
-    children: "Button",
-  },
-  render: () => (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "1rem",
-        alignItems: "flex-start",
-      }}
-    >
-      <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-        <Button variant="primary">Primary</Button>
-        <Button variant="secondary">Secondary</Button>
-        <Button variant="ghost">Ghost</Button>
-        <Button variant="destructive">Destructive</Button>
-        <Button variant="gradient">Gradient</Button>
-      </div>
+export const LoadingAndDisabled: Story = {
+  render: (args) => (
+    <div style={{ display: "flex", gap: 12 }}>
+      <Button {...args} loading>
+        Loading
+      </Button>
+      <Button {...args} disabled>
+        Disabled
+      </Button>
     </div>
   ),
-  parameters: {
-    docs: {
-      description: {
-        story: "All available button variants side by side.",
-      },
-    },
-  },
-};
-
-// State stories
-export const Loading: Story = {
-  args: {
-    loading: true,
-    children: "Loading...",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Button in loading state with spinner animation.",
-      },
-    },
-  },
-};
-
-export const Disabled: Story = {
-  args: {
-    disabled: true,
-    children: "Disabled Button",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Disabled button state.",
-      },
-    },
-  },
 };
 
 export const FullWidth: Story = {
-  args: {
-    fullWidth: true,
-    children: "Full Width Button",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Button that takes the full width of its container.",
-      },
-    },
-  },
+  args: { fullWidth: true, children: "Full width" },
+  render: (args) => (
+    <div style={{ width: 320 }}>
+      <Button {...args} />
+    </div>
+  ),
 };
 
-// Icon button
-export const IconButton: Story = {
+export const IconOnly: Story = {
   args: {
     size: "icon",
-    variant: "ghost",
-    children: (
-      <svg
-        width="16"
-        height="16"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      >
-        <path d="M6 18L18 6M6 6l12 12" />
-      </svg>
-    ),
+    children: <span aria-hidden>×</span>,
     "aria-label": "Close",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Icon-only button. Remember to provide aria-label for accessibility.",
-      },
-    },
+  } as any,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const btn = await canvas.getByRole("button", { name: /close/i });
+    btn.focus();
   },
 };
 
-// Custom Gradient Examples using new API
-export const CustomGradientBasic: Story = {
+export const GradientCustom: Story = {
   args: {
     variant: "gradient",
-    gradient: {
-      startColor: "#ff6b6b",
-      endColor: "#ee5a52",
-    },
+    gradient: { startColor: "#ff6b6b", endColor: "#ee5a52", direction: 45 },
     children: "Custom Gradient",
   },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Basic custom gradient with auto-generated hover states using the new gradient API.",
-      },
-    },
-  },
 };
 
-export const CustomGradientWithHover: Story = {
-  args: {
-    variant: "gradient",
-    gradient: {
-      startColor: "#667eea",
-      endColor: "#764ba2",
-      hoverStartColor: "#5a67d8",
-      hoverEndColor: "#553c9a",
-    },
-    children: "Precise Control",
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Custom gradient with manually specified hover colors for precise control.",
-      },
-    },
-  },
-};
-
-// Showcase using gradient presets
-export const CustomGradientShowcase: Story = {
-  args: { children: "Button" },
-  render: () => {
+export const GradientShowcase: Story = {
+  render: (args) => {
     const { presets } = useGradientPresets();
-
     return (
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
-          gap: "1rem",
-          maxWidth: "600px",
-        }}
-      >
-        <Button variant="gradient" gradient={presets.sunset}>
-          Sunset
-        </Button>
-        <Button variant="gradient" gradient={presets.ocean}>
-          Ocean
-        </Button>
-        <Button variant="gradient" gradient={presets.forest}>
-          Forest
-        </Button>
-        <Button variant="gradient" gradient={presets.fire}>
-          Fire
-        </Button>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Showcase of different gradient presets using the new gradient system.",
-      },
-    },
-  },
-};
-
-// Interactive example
-export const Interactive: Story = {
-  args: {
-    children: "+",
-  },
-  render: () => {
-    const [count, setCount] = React.useState(0);
-
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          alignItems: "center",
-        }}
-      >
-        <div>Count: {count}</div>
-        <div style={{ display: "flex", gap: "0.5rem" }}>
-          <Button variant="secondary" onClick={() => setCount(count - 1)}>
-            -
+      <div style={{ display: "flex", gap: 16, flexDirection: "column" }}>
+        <div style={{ display: "flex", gap: 12 }}>
+          {/* Default variant gradient */}
+          <Button {...args} variant="gradient">
+            Default Gradient
           </Button>
-          <Button variant="primary" onClick={() => setCount(count + 1)}>
-            +
+
+          {/* Tokenized gradient via inline style using tokens.gradients.primary */}
+          <Button
+            {...args}
+            variant="gradient"
+            style={{ background: gradients.primary }}
+          >
+            Token Gradient
+          </Button>
+
+          {/* Preset from useGradientPresets (passed as gradient prop) */}
+          <Button {...args} variant="gradient" gradient={presets.primary}>
+            Preset Gradient
           </Button>
         </div>
-        <Button variant="ghost" onClick={() => setCount(0)}>
-          Reset
-        </Button>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story: "Interactive example showing button click handlers.",
-      },
-    },
-  },
-};
-
-// Interactive gradient color picker with new API
-export const InteractiveGradientPicker: Story = {
-  args: { children: "Button" },
-  render: () => {
-    const [startColor, setStartColor] = React.useState("#ff6b6b");
-    const [endColor, setEndColor] = React.useState("#ee5a52");
-    const [direction, setDirection] = React.useState<number>(135);
-
-    const gradientConfig = React.useMemo(
-      () => ({
-        startColor,
-        endColor,
-        direction,
-      }),
-      [startColor, endColor, direction],
-    );
-
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "1rem",
-          alignItems: "center",
-          padding: "2rem",
-          border: "1px solid #e2e8f0",
-          borderRadius: "8px",
-          backgroundColor: "#fafafa",
-        }}
-      >
-        <h4 style={{ margin: 0, color: "#334155" }}>
-          🎨 Advanced Gradient Builder
-        </h4>
-        <div
-          style={{
-            display: "flex",
-            gap: "1rem",
-            alignItems: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <label
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          >
-            Start Color:
-            <input
-              type="color"
-              value={startColor}
-              onChange={(e) => setStartColor(e.target.value)}
-            />
-          </label>
-          <label
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          >
-            End Color:
-            <input
-              type="color"
-              value={endColor}
-              onChange={(e) => setEndColor(e.target.value)}
-            />
-          </label>
-          <label
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
-          >
-            Direction:
-            <input
-              type="range"
-              min="0"
-              max="360"
-              value={direction}
-              onChange={(e) => setDirection(Number(e.target.value))}
-            />
-            <span style={{ minWidth: "40px", fontSize: "0.8rem" }}>
-              {direction}°
-            </span>
-          </label>
-        </div>
-        <Button variant="gradient" gradient={gradientConfig} size="lg">
-          Live Preview
-        </Button>
-        <div
-          style={{
-            fontFamily: "monospace",
-            fontSize: "0.8rem",
-            color: "#64748b",
-            textAlign: "center",
-            background: "#f8fafc",
-            padding: "0.5rem",
-            borderRadius: "4px",
-            border: "1px solid #e2e8f0",
-            maxWidth: "400px",
-          }}
-        >
-          <strong>New API:</strong>
-          <br />
-          gradient=&#123;&#123;
-          <br />
-          &nbsp;&nbsp;startColor: &quot;{startColor}&quot;,
-          <br />
-          &nbsp;&nbsp;endColor: &quot;{endColor}&quot;,
-          <br />
-          &nbsp;&nbsp;direction: {direction}
-          <br />
-          &#125;&#125;
-        </div>
-      </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Interactive example showing the new gradient API with real-time customization including direction control.",
-      },
-    },
-  },
-};
-
-// Advanced gradient configuration showcase
-export const AdvancedGradientConfiguration: Story = {
-  args: { children: "Button" },
-  render: () => {
-    // Example of advanced gradient with full state control
-    const advancedGradient = {
-      gradient: {
-        default: {
-          direction: 135,
-          stops: [
-            { color: "#667eea", position: 0 },
-            { color: "#764ba2", position: 100 },
-          ],
-          fallback: "#667eea",
-        },
-        hover: {
-          direction: 135,
-          stops: [
-            { color: "#5a67d8", position: 0 },
-            { color: "#553c9a", position: 100 },
-          ],
-        },
-        active: {
-          direction: 135,
-          stops: [
-            { color: "#4c51bf", position: 0 },
-            { color: "#44337a", position: 100 },
-          ],
-        },
-      },
-    };
-
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "2rem",
-          alignItems: "center",
-          padding: "2rem",
-        }}
-      >
         <div>
-          <h4 style={{ margin: "0 0 1rem 0", color: "#334155" }}>
-            ⚡ Advanced Gradient Configuration
-          </h4>
-          <Button variant="gradient" gradient={advancedGradient} size="lg">
-            Hover & Click me!
-          </Button>
+          <small>
+            Notes: default variant uses button recipe; presets come from{" "}
+            <code>useGradientPresets()</code>.
+          </small>
+        </div>
+      </div>
+    );
+  },
+};
+
+// Advanced interactive playground for gradients
+function GradientPlaygroundPanel({ args }: { args: any }) {
+  const { presets } = useGradientPresets();
+  const presetKeys = Object.keys(presets) as Array<keyof typeof presets>;
+
+  const [mode, setMode] = React.useState<"preset" | "custom">("preset");
+  const [selectedPreset, setSelectedPreset] = React.useState<string>("primary");
+  const [startColor, setStartColor] = React.useState("#ff6b6b");
+  const [endColor, setEndColor] = React.useState("#ee5a52");
+  const [direction, setDirection] = React.useState<number>(135);
+  const [hoverStart, setHoverStart] = React.useState<string | undefined>(
+    undefined,
+  );
+  const [hoverEnd, setHoverEnd] = React.useState<string | undefined>(undefined);
+
+  const gradientProp = React.useMemo(() => {
+    if (mode === "preset")
+      return presets[selectedPreset as keyof typeof presets];
+    const obj: any = { startColor, endColor, direction };
+    if (hoverStart) obj.hoverStartColor = hoverStart;
+    if (hoverEnd) obj.hoverEndColor = hoverEnd;
+    return obj;
+  }, [
+    mode,
+    selectedPreset,
+    presets,
+    startColor,
+    endColor,
+    direction,
+    hoverStart,
+    hoverEnd,
+  ]);
+
+  return (
+    <div style={{ display: "flex", gap: 18, alignItems: "flex-start" }}>
+      <div style={{ minWidth: 320 }}>
+        <h4>Gradient Playground</h4>
+        <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
+          <label style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <input
+              type="radio"
+              name="mode"
+              checked={mode === "preset"}
+              onChange={() => setMode("preset")}
+            />
+            Preset
+          </label>
+          <label style={{ display: "flex", gap: 6, alignItems: "center" }}>
+            <input
+              type="radio"
+              name="mode"
+              checked={mode === "custom"}
+              onChange={() => setMode("custom")}
+            />
+            Custom
+          </label>
         </div>
 
-        <div
-          style={{
-            fontFamily: "monospace",
-            fontSize: "0.75rem",
-            color: "#475569",
-            background: "#f8fafc",
-            padding: "1rem",
-            borderRadius: "6px",
-            border: "1px solid #e2e8f0",
-            maxWidth: "500px",
-            lineHeight: 1.5,
-          }}
-        >
-          <strong>Full Configuration Example:</strong>
-          <br />
-          <pre style={{ margin: 0, whiteSpace: "pre-wrap" }}>
-            {`gradient={{
-  gradient: {
-    default: {
-      direction: 135,
-      stops: [
-        { color: "#667eea", position: 0 },
-        { color: "#764ba2", position: 100 }
-      ]
-    },
-    hover: {
-      direction: 135,
-      stops: [
-        { color: "#5a67d8", position: 0 },
-        { color: "#553c9a", position: 100 }
-      ]
-    },
-    active: { /* custom active state */ }
-  }
-}}`}
+        {mode === "preset" ? (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <label>
+              Preset
+              <select
+                value={selectedPreset}
+                onChange={(e) => setSelectedPreset(e.target.value)}
+                style={{ width: "100%", marginTop: 6 }}
+              >
+                {presetKeys.map((k) => (
+                  <option key={k} value={k}>
+                    {k}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+            <label>
+              Start color
+              <input
+                aria-label="start-color"
+                type="color"
+                value={startColor}
+                onChange={(e) => setStartColor(e.target.value)}
+                style={{ width: "100%", height: 36, marginTop: 6 }}
+              />
+            </label>
+
+            <label>
+              End color
+              <input
+                aria-label="end-color"
+                type="color"
+                value={endColor}
+                onChange={(e) => setEndColor(e.target.value)}
+                style={{ width: "100%", height: 36, marginTop: 6 }}
+              />
+            </label>
+
+            <label>
+              Direction (deg)
+              <input
+                aria-label="direction"
+                type="number"
+                value={direction}
+                onChange={(e) => setDirection(Number(e.target.value))}
+                style={{ width: "100%", marginTop: 6 }}
+              />
+            </label>
+
+            <label>
+              Hover start color (optional)
+              <input
+                aria-label="hover-start"
+                type="color"
+                value={hoverStart || "#000000"}
+                onChange={(e) => setHoverStart(e.target.value)}
+                style={{ width: "100%", height: 36, marginTop: 6 }}
+              />
+            </label>
+
+            <label>
+              Hover end color (optional)
+              <input
+                aria-label="hover-end"
+                type="color"
+                value={hoverEnd || "#000000"}
+                onChange={(e) => setHoverEnd(e.target.value)}
+                style={{ width: "100%", height: 36, marginTop: 6 }}
+              />
+            </label>
+          </div>
+        )}
+
+        <div style={{ marginTop: 12 }}>
+          <strong>Preview props</strong>
+          <pre style={{ whiteSpace: "pre-wrap", marginTop: 6 }}>
+            {JSON.stringify(gradientProp, null, 2)}
           </pre>
         </div>
       </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Advanced gradient configuration showing full control over all interaction states with multi-stop gradients.",
-      },
-    },
-  },
-};
 
-// Gradient presets gallery
-export const GradientPresetsGallery: Story = {
-  args: { children: "Button" },
-  render: () => {
-    const { presets } = useGradientPresets();
-
-    return (
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          gap: "2rem",
-          padding: "2rem",
+          gap: 8,
+          alignItems: "flex-start",
         }}
       >
-        <h4 style={{ margin: 0, color: "#334155", textAlign: "center" }}>
-          🎨 Built-in Gradient Presets
-        </h4>
-
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))",
-            gap: "1rem",
-            maxWidth: "800px",
-            margin: "0 auto",
-          }}
-        >
-          {Object.entries(presets).map(([name, preset]) => (
-            <div key={name} style={{ textAlign: "center" }}>
-              <Button
-                variant="gradient"
-                gradient={preset}
-                size="sm"
-                style={{ marginBottom: "0.5rem" }}
-              >
-                {name}
-              </Button>
-              <div style={{ fontSize: "0.75rem", color: "#64748b" }}>
-                {name.charAt(0).toUpperCase() + name.slice(1)}
-              </div>
-            </div>
-          ))}
+        <div>
+          <Button {...args} variant="gradient" gradient={gradientProp}>
+            Live Gradient
+          </Button>
         </div>
 
-        <div
-          style={{
-            fontSize: "0.8rem",
-            color: "#64748b",
-            textAlign: "center",
-            background: "#f8fafc",
-            padding: "1rem",
-            borderRadius: "4px",
-            border: "1px solid #e2e8f0",
-            maxWidth: "600px",
-            margin: "0 auto",
-          }}
-        >
-          <strong>Usage:</strong> Import presets with{" "}
-          <code>useGradientPresets()</code> hook
-          <br />
-          <code>const &#123; presets &#125; = useGradientPresets();</code>
-          <br />
-          <code>&lt;Button gradient=&#123;presets.sunset&#125; /&gt;</code>
+        <div>
+          <small>
+            Tip: use the Preset mode to test common palettes, or Custom to craft
+            colors and direction.
+          </small>
         </div>
       </div>
-    );
-  },
-  parameters: {
-    docs: {
-      description: {
-        story:
-          "Gallery of all built-in gradient presets available in the design system.",
-      },
-    },
-  },
+    </div>
+  );
+}
+
+export const AdvancedGradientPlayground: Story = {
+  render: (args) => <GradientPlaygroundPanel args={args} />,
 };
+
+export const Playground: Story = {};
