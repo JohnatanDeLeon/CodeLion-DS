@@ -25,7 +25,7 @@ import { defaultRegistry } from "../../masking/registry";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
-  variant?: "default" | "search" | "email";
+  variant?: "search";
   size?: "sm" | "md" | "lg" | "xl";
   state?: "default" | "error" | "success" | "warning";
   fullWidth?: boolean;

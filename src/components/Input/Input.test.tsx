@@ -26,7 +26,7 @@ describe("Input", () => {
     });
 
     it("renders with different variants", () => {
-      const variants = ["default", "search", "email"] as const;
+      const variants = ["search"] as const;
 
       variants.forEach((variant) => {
         const { rerender } = render(<Input variant={variant} />);
@@ -61,9 +61,9 @@ describe("Input", () => {
 
   describe("Label and Helper Text", () => {
     it("renders with label", () => {
-      render(<Input label="Email Address" />);
+      render(<Input label="Username" />);
 
-      const label = screen.getByText("Email Address");
+      const label = screen.getByText("Username");
       const input = screen.getByRole("textbox");
 
       expect(label).toBeInTheDocument();
@@ -114,9 +114,9 @@ describe("Input", () => {
     });
 
     it("renders with success message", () => {
-      render(<Input state="success" successMessage="Valid email format" />);
+      render(<Input state="success" successMessage="Valid input format" />);
 
-      const successMessage = screen.getByText("Valid email format");
+      const successMessage = screen.getByText("Valid input format");
       expect(successMessage).toBeInTheDocument();
     });
 
@@ -124,12 +124,12 @@ describe("Input", () => {
       render(
         <Input
           state="warning"
-          warningMessage="This email domain is not commonly used"
+          warningMessage="This input value may need verification"
         />,
       );
 
       const warningMessage = screen.getByText(
-        "This email domain is not commonly used",
+        "This input value may need verification",
       );
       expect(warningMessage).toBeInTheDocument();
     });
@@ -337,7 +337,7 @@ describe("Input", () => {
 
   describe("🔴 EXPECTED FAILURES - HTML Attributes", () => {
     it("handles different input types", () => {
-      const types = ["text", "email", "password", "number", "tel", "url"];
+      const types = ["text", "password", "number", "tel", "url"];
 
       types.forEach((type) => {
         const { container, rerender } = render(<Input type={type} />);
@@ -369,9 +369,9 @@ describe("Input", () => {
     it("has no accessibility violations with error state", async () => {
       const { container } = render(
         <Input
-          label="Email"
+          label="Username"
           state="error"
-          errorMessage="Please enter a valid email"
+          errorMessage="Please enter a valid username"
           required
         />,
       );
@@ -412,13 +412,13 @@ describe("Input", () => {
     });
 
     it("properly associates label with input", () => {
-      render(<Input label="Email Address" id="email-input" />);
+      render(<Input label="Username" id="username-input" />);
 
-      const label = screen.getByText("Email Address");
+      const label = screen.getByText("Username");
       const input = screen.getByRole("textbox");
 
-      expect(label).toHaveAttribute("for", "email-input");
-      expect(input).toHaveAttribute("id", "email-input");
+      expect(label).toHaveAttribute("for", "username-input");
+      expect(input).toHaveAttribute("id", "username-input");
     });
 
     it("generates unique IDs when not provided", () => {
@@ -436,26 +436,26 @@ describe("Input", () => {
     });
   });
 
-  describe("Corporate Email Example", () => {
-    it("renders corporate email example from image", () => {
+  describe("Corporate Username Example", () => {
+    it("renders corporate username example", () => {
       render(
         <Input
-          label="Email Corporativo"
-          type="email"
-          placeholder="tu@empresa.com"
-          helperText="Usaremos tu email para enviarte actualizaciones importantes"
+          label="Usuario Corporativo"
+          type="text"
+          placeholder="tu.nombre.empresa"
+          helperText="Usaremos tu usuario para identificarte en el sistema"
         />,
       );
 
-      const label = screen.getByText("Email Corporativo");
+      const label = screen.getByText("Usuario Corporativo");
       const input = screen.getByRole("textbox");
       const helperText = screen.getByText(
-        "Usaremos tu email para enviarte actualizaciones importantes",
+        "Usaremos tu usuario para identificarte en el sistema",
       );
 
       expect(label).toBeInTheDocument();
-      expect(input).toHaveAttribute("type", "email");
-      expect(input).toHaveAttribute("placeholder", "tu@empresa.com");
+      expect(input).toHaveAttribute("type", "text");
+      expect(input).toHaveAttribute("placeholder", "tu.nombre.empresa");
       expect(helperText).toBeInTheDocument();
     });
   });
