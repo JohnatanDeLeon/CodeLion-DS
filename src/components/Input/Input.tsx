@@ -19,6 +19,7 @@ import {
   inputSearchRecipe,
   inputWrapperRecipe,
   inputSearchIcon,
+  inputSearchClearIcon,
 } from "../../styles/recipes/input.css";
 import { cn } from "../../utils";
 import { aria } from "../../utils/a11y";
@@ -116,6 +117,28 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const hasError = state === "error";
     const hasStateIcon =
       state === "error" || state === "success" || state === "warning";
+
+    // Search clear functionality
+    const currentValue = maskedInputProps.value || "";
+    const hasSearchClearIcon = variant === "search" && currentValue.length > 0;
+
+    const handleSearchClear = () => {
+      if (disabled || loading) return;
+      
+      // Clear the input value
+      const clearEvent = {
+        target: { value: "" },
+        currentTarget: { value: "" },
+      } as React.ChangeEvent<HTMLInputElement>;
+      
+      maskedInputProps.onChange?.(clearEvent);
+      
+      // Focus back to the input after clearing
+      const inputElement = document.getElementById(id) as HTMLInputElement;
+      if (inputElement) {
+        inputElement.focus();
+      }
+    };
 
     const getDisplayMessage = () => {
       switch (state) {
@@ -272,6 +295,40 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       </svg>
     );
 
+    const renderSearchClearIcon = () => (
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="button"
+        tabIndex={0}
+      >
+        <line
+          x1="18"
+          y1="6"
+          x2="6"
+          y2="18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <line
+          x1="6"
+          y1="6"
+          x2="18"
+          y2="18"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+
     const renderIcon = () => {
       if (loading) return renderLoadingSpinner();
       if (icon) return icon;
@@ -399,7 +456,26 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             onBlur={handleBlur}
           />
 
-          {hasRightIcon && !hasStateIcon && (
+          {hasSearchClearIcon && (
+            <div
+              className={inputSearchClearIcon}
+              onClick={handleSearchClear}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handleSearchClear();
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label="Clear search"
+              title="Clear search"
+            >
+              {renderSearchClearIcon()}
+            </div>
+          )}
+
+          {hasRightIcon && !hasStateIcon && !hasSearchClearIcon && (
             <div className={inputRightIcon} aria-hidden="true">
               {renderIcon()}
             </div>
