@@ -124,15 +124,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const handleSearchClear = () => {
       if (disabled || loading) return;
-      
+
       // Clear the input value
       const clearEvent = {
         target: { value: "" },
         currentTarget: { value: "" },
       } as React.ChangeEvent<HTMLInputElement>;
-      
+
       maskedInputProps.onChange?.(clearEvent);
-      
+
       // Focus back to the input after clearing
       const inputElement = document.getElementById(id) as HTMLInputElement;
       if (inputElement) {

@@ -401,7 +401,7 @@ export const ValidationShowcase: Story = {
           warningMessage="Consider using a longer password for better security"
           successMessage="Password strength is good"
         />
-        
+
         <Input
           {...args}
           type="password"
