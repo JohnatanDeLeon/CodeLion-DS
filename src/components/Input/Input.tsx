@@ -16,12 +16,16 @@ import {
   inputSpinner,
   inputFullWidth,
   inputRecipe,
+  inputSearchRecipe,
   inputWrapperRecipe,
+  inputSearchIcon,
 } from "../../styles/recipes/input.css";
 import { cn } from "../../utils";
 import { aria } from "../../utils/a11y";
 import { useInputMask } from "../../masking/useInputMask";
 import { defaultRegistry } from "../../masking/registry";
+// Ensure handlers are registered
+import "../../masking/handlers";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
@@ -56,6 +60,7 @@ export interface InputProps
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
   (
     {
+      variant,
       size = "lg",
       state = "default",
       label: labelText,
@@ -103,7 +108,10 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const maskedInputProps = maskHook.inputProps;
 
-    const hasLeftIcon = !!(iconPosition === "left" && (icon || loading));
+    // Search variant automatically shows search icon on the left
+    const hasSearchIcon = variant === "search";
+    const hasLeftIcon =
+      !!(iconPosition === "left" && (icon || loading)) || hasSearchIcon;
     const hasRightIcon = !!(iconPosition === "right" && (icon || loading));
     const hasError = state === "error";
     const hasStateIcon =
@@ -172,26 +180,38 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
     };
 
     const getInputFieldClasses = () => {
-      // Use transitional recipe that maps to existing class names.
-      const iconVariant =
-        hasLeftIcon && hasRightIcon
-          ? "both"
-          : hasLeftIcon
-            ? "left"
-            : hasRightIcon
-              ? "right"
-              : "none";
-      const classes = [
-        inputField,
-        inputRecipe({
-          size,
-          state,
-          // iconVariant is one of 'none' | 'left' | 'right' | 'both'
-          icons: iconVariant,
-          errorRight: Boolean(hasError && hasRightIcon),
-          fullWidth: Boolean(fullWidth),
-        }),
-      ];
+      const classes = [inputField];
+
+      if (variant === "search") {
+        // Para search variant, usar el recipe específico que evita conflictos
+        classes.push(
+          inputSearchRecipe({
+            size,
+            state,
+            fullWidth: Boolean(fullWidth),
+          }),
+        );
+      } else {
+        // Para variantes normales, usar el recipe estándar con íconos
+        const iconVariant =
+          hasLeftIcon && hasRightIcon
+            ? "both"
+            : hasLeftIcon
+              ? "left"
+              : hasRightIcon
+                ? "right"
+                : "none";
+
+        classes.push(
+          inputRecipe({
+            size,
+            state,
+            icons: iconVariant,
+            errorRight: Boolean(hasError && hasRightIcon),
+            fullWidth: Boolean(fullWidth),
+          }),
+        );
+      }
 
       return cn(...classes, className);
     };
@@ -223,10 +243,47 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       </svg>
     );
 
+    const renderSearchIcon = () => (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="img"
+      >
+        <circle
+          cx="11"
+          cy="11"
+          r="8"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="m21 21-4.35-4.35"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    );
+
     const renderIcon = () => {
       if (loading) return renderLoadingSpinner();
       if (icon) return icon;
       return null;
+    };
+
+    const renderLeftIcon = () => {
+      if (hasSearchIcon && iconPosition !== "left") {
+        // Search variant always shows search icon on the left (unless user explicitly set left icon)
+        return renderSearchIcon();
+      }
+      return renderIcon();
     };
 
     const renderStateIcon = () => {
@@ -320,8 +377,11 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
         <div className={cn(inputWrapper, inputWrapperRecipe)}>
           {hasLeftIcon && (
-            <div className={inputLeftIcon} aria-hidden="true">
-              {renderIcon()}
+            <div
+              className={hasSearchIcon ? inputSearchIcon : inputLeftIcon}
+              aria-hidden="true"
+            >
+              {renderLeftIcon()}
             </div>
           )}
 

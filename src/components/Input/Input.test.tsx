@@ -484,6 +484,32 @@ describe("Input", () => {
       expect(input).toHaveAttribute("placeholder", "Buscar en la librería...");
       expect(icon).toBeInTheDocument();
     });
+
+    it("applies correct CSS classes for search variant with different sizes", () => {
+      // Test md size (our fix)
+      const { rerender } = render(
+        <Input variant="search" size="md" placeholder="Search medium..." />,
+      );
+      let input = screen.getByRole("textbox");
+      expect(input.className).toContain("inputFieldSearchVariant");
+      expect(input.className).toContain("inputFieldSearchVariantMedium");
+
+      // Test sm size
+      rerender(
+        <Input variant="search" size="sm" placeholder="Search small..." />,
+      );
+      input = screen.getByRole("textbox");
+      expect(input.className).toContain("inputFieldSearchVariant");
+      expect(input.className).toContain("inputFieldSearchVariantSmall");
+
+      // Test lg size
+      rerender(
+        <Input variant="search" size="lg" placeholder="Search large..." />,
+      );
+      input = screen.getByRole("textbox");
+      expect(input.className).toContain("inputFieldSearchVariant");
+      expect(input.className).toContain("inputFieldSearchVariantLarge");
+    });
   });
 
   describe("Validation Example", () => {

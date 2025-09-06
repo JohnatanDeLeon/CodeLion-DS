@@ -10,7 +10,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: ["search"],
+      options: [undefined, "search"],
     },
     size: {
       control: { type: "select" },
@@ -44,7 +44,6 @@ const meta: Meta<typeof Input> = {
     onBlur: { action: "blurred" },
   },
   args: {
-    variant: "search",
     size: "lg",
     state: "default",
     fullWidth: false,
@@ -75,62 +74,112 @@ export const Default: Story = {
 };
 
 export const Variants: Story = {
-  render: (args) => (
+  render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <Input {...args} variant="search" label="Search Variant" />
+      <Input label="Default Input (no variant)" placeholder="Enter text..." />
+      <Input variant="search" label="Search Variant" placeholder="Search..." />
+    </div>
+  ),
+};
+
+export const SearchInputs: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <Input
+        variant="search"
+        label="Search with Default Size"
+        placeholder="Search users..."
+        size="lg"
+      />
+      <Input
+        variant="search"
+        label="Small Search Input"
+        placeholder="Search..."
+        size="sm"
+      />
+      <Input
+        variant="search"
+        label="Medium Search Input"
+        placeholder="Search products..."
+        size="md"
+      />
+      <Input
+        variant="search"
+        label="Large Search Input"
+        placeholder="Search documents..."
+        size="xl"
+      />
+      <Input
+        variant="search"
+        label="Search with Custom Right Icon"
+        placeholder="Search with filter..."
+        iconPosition="right"
+        icon={
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+          >
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+          </svg>
+        }
+      />
     </div>
   ),
 };
 
 export const Sizes: Story = {
-  render: (args) => (
+  render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <Input {...args} size="sm" label="Small (sm)" />
-      <Input {...args} size="md" label="Medium (md)" />
-      <Input {...args} size="lg" label="Large (lg)" />
-      <Input {...args} size="xl" label="Extra Large (xl)" />
+      <Input size="sm" label="Small (sm)" placeholder="Enter text..." />
+      <Input size="md" label="Medium (md)" placeholder="Enter text..." />
+      <Input size="lg" label="Large (lg)" placeholder="Enter text..." />
+      <Input size="xl" label="Extra Large (xl)" placeholder="Enter text..." />
     </div>
   ),
 };
 
 export const States: Story = {
-  render: (args) => (
+  render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Input
-        {...args}
         state="default"
         label="Default State"
         helperText="This is helper text"
+        placeholder="Enter text..."
       />
       <Input
-        {...args}
         state="error"
         label="Error State"
         errorMessage="This field has an error"
+        placeholder="Enter text..."
       />
       <Input
-        {...args}
         state="success"
         label="Success State"
         successMessage="This field is valid"
+        placeholder="Enter text..."
       />
       <Input
-        {...args}
         state="warning"
         label="Warning State"
         warningMessage="This field has a warning"
+        placeholder="Enter text..."
       />
     </div>
   ),
 };
 
 export const WithIcons: Story = {
-  render: (args) => (
+  render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
       <Input
-        {...args}
         label="Left Icon"
         iconPosition="left"
+        placeholder="Enter text..."
         icon={
           <svg
             width="16"
@@ -146,9 +195,9 @@ export const WithIcons: Story = {
         }
       />
       <Input
-        {...args}
         label="Right Icon"
         iconPosition="right"
+        placeholder="Enter text..."
         icon={
           <svg
             width="16"
@@ -168,29 +217,28 @@ export const WithIcons: Story = {
 };
 
 export const LoadingAndDisabled: Story = {
-  render: (args) => (
+  render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-      <Input {...args} loading label="Loading State" />
-      <Input {...args} disabled label="Disabled State" />
+      <Input loading label="Loading State" placeholder="Enter text..." />
+      <Input disabled label="Disabled State" placeholder="Enter text..." />
       <Input
-        {...args}
         loading
         iconPosition="left"
         label="Loading with Left Position"
+        placeholder="Enter text..."
       />
     </div>
   ),
 };
 
 export const FullWidth: Story = {
-  args: {
-    fullWidth: true,
-    label: "Full Width Input",
-    placeholder: "This input takes full width",
-  },
-  render: (args) => (
+  render: () => (
     <div style={{ width: "100%", maxWidth: 400 }}>
-      <Input {...args} />
+      <Input
+        fullWidth
+        label="Full Width Input"
+        placeholder="This input takes full width"
+      />
     </div>
   ),
 };
@@ -209,14 +257,13 @@ export const Required: Story = {
 };
 
 export const WithMasks: Story = {
-  render: (args) => {
+  render: () => {
     const [phoneValue, setPhoneValue] = React.useState("");
     const [currencyValue, setCurrencyValue] = React.useState("");
 
     return (
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         <Input
-          {...args}
           label="Phone Number"
           placeholder="Enter phone number"
           mask={{ id: "phone" }}
@@ -224,7 +271,6 @@ export const WithMasks: Story = {
           onValueChange={({ formatted }) => setPhoneValue(formatted)}
         />
         <Input
-          {...args}
           label="Currency Amount"
           placeholder="Enter amount"
           mask={{ id: "currency" }}
