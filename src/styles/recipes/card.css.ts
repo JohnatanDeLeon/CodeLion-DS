@@ -16,11 +16,6 @@ export const cardBase = style({
     boxShadow: componentShadows.cardHover,
     borderColor: colors.neutral[300],
   },
-
-  ":focus-within": {
-    borderColor: colors.primary[500],
-    boxShadow: `0 0 0 3px ${colors.primary[100]}`,
-  },
 });
 
 // Card variants using recipe
@@ -88,6 +83,16 @@ export const cardVariants = recipe({
         },
         ":active": {
           transform: "translateY(0)",
+        },
+        ":focus": {
+          outline: "none",
+          borderColor: colors.primary[500],
+          boxShadow: `0 0 0 3px ${colors.primary[100]}`,
+        },
+        ":focus-visible": {
+          outline: "none",
+          borderColor: colors.primary[500],
+          boxShadow: `0 0 0 3px ${colors.primary[100]}`,
         },
       },
       false: {},
