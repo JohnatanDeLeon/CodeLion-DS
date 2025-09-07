@@ -20,6 +20,7 @@ import {
   inputWrapperRecipe,
   inputSearchIcon,
   inputSearchClearIcon,
+  inputPasswordIcon,
 } from "../../styles/recipes/input.css";
 import { cn } from "../../utils";
 import { aria } from "../../utils/a11y";
@@ -30,7 +31,7 @@ import "../../masking/handlers";
 
 export interface InputProps
   extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "size"> {
-  variant?: "search";
+  variant?: "search" | "password";
   size?: "sm" | "md" | "lg" | "xl";
   state?: "default" | "error" | "success" | "warning";
   fullWidth?: boolean;
@@ -109,11 +110,17 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     const maskedInputProps = maskHook.inputProps;
 
+    // Password variant state for show/hide functionality
+    const [showPassword, setShowPassword] = React.useState(false);
+
     // Search variant automatically shows search icon on the left
     const hasSearchIcon = variant === "search";
+    // Password variant automatically shows eye icon on the right
+    const hasPasswordIcon = variant === "password";
     const hasLeftIcon =
       !!(iconPosition === "left" && (icon || loading)) || hasSearchIcon;
-    const hasRightIcon = !!(iconPosition === "right" && (icon || loading));
+    const hasRightIcon =
+      !!(iconPosition === "right" && (icon || loading)) || hasPasswordIcon;
     const hasError = state === "error";
     const hasStateIcon =
       state === "error" || state === "success" || state === "warning";
@@ -137,6 +144,20 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       const inputElement = document.getElementById(id) as HTMLInputElement;
       if (inputElement) {
         inputElement.focus();
+      }
+    };
+
+    // Password toggle functionality
+    const handlePasswordToggle = (
+      event?: React.MouseEvent | React.KeyboardEvent,
+    ) => {
+      if (disabled || loading) return;
+      
+      setShowPassword(!showPassword);
+      
+      // Remove focus from the button after interaction to prevent the selected state
+      if (event?.currentTarget instanceof HTMLElement) {
+        event.currentTarget.blur();
       }
     };
 
@@ -215,7 +236,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           }),
         );
       } else {
-        // Para variantes normales, usar el recipe estándar con íconos
+        // Para variantes normales (incluyendo password), usar el recipe estándar con íconos
         const iconVariant =
           hasLeftIcon && hasRightIcon
             ? "both"
@@ -326,6 +347,76 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           strokeLinecap="round"
           strokeLinejoin="round"
         />
+      </svg>
+    );
+
+    const renderPasswordIcon = () => (
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 24 24"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+        role="button"
+        tabIndex={0}
+      >
+        {showPassword ? (
+          // Eye off icon (password hidden)
+          <>
+            <path
+              d="M9.88 9.88a3 3 0 1 0 4.24 4.24"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <line
+              x1="2"
+              y1="2"
+              x2="22"
+              y2="22"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </>
+        ) : (
+          // Eye icon (password visible)
+          <>
+            <path
+              d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <circle
+              cx="12"
+              cy="12"
+              r="3"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </>
+        )}
       </svg>
     );
 
@@ -445,7 +536,13 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           <input
             /* ref/value/onChange may be provided by maskedInputProps */
             id={id}
-            type={type}
+            type={
+              variant === "password"
+                ? showPassword
+                  ? "text"
+                  : "password"
+                : type
+            }
             disabled={disabled || loading}
             className={getInputFieldClasses()}
             {...props}
@@ -475,11 +572,33 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
             </div>
           )}
 
-          {hasRightIcon && !hasStateIcon && !hasSearchClearIcon && (
-            <div className={inputRightIcon} aria-hidden="true">
-              {renderIcon()}
+          {hasPasswordIcon && (
+            <div
+              className={inputPasswordIcon}
+              onClick={handlePasswordToggle}
+              onKeyDown={(e) => {
+                if (e.key === "Enter" || e.key === " ") {
+                  e.preventDefault();
+                  handlePasswordToggle(e);
+                }
+              }}
+              role="button"
+              tabIndex={0}
+              aria-label={showPassword ? "Hide password" : "Show password"}
+              title={showPassword ? "Hide password" : "Show password"}
+            >
+              {renderPasswordIcon()}
             </div>
           )}
+
+          {hasRightIcon &&
+            !hasStateIcon &&
+            !hasSearchClearIcon &&
+            !hasPasswordIcon && (
+              <div className={inputRightIcon} aria-hidden="true">
+                {renderIcon()}
+              </div>
+            )}
 
           {hasStateIcon && renderStateIcon()}
         </div>
