@@ -324,8 +324,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
-        role="button"
-        tabIndex={0}
       >
         <line
           x1="18"
@@ -358,8 +356,6 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
-        role="button"
-        tabIndex={0}
       >
         {showPassword ? (
           // Eye off icon (password hidden)
