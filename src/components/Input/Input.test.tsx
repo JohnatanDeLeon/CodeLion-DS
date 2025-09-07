@@ -598,7 +598,7 @@ describe("Input", () => {
         const { rerender } = render(
           <Input variant="password" size={size} placeholder="Password" />,
         );
-        
+
         const input = screen.getByPlaceholderText("Password");
         const eyeButton = screen.getByRole("button", {
           name: /show password/i,
@@ -606,7 +606,7 @@ describe("Input", () => {
 
         expect(input).toBeInTheDocument();
         expect(eyeButton).toBeInTheDocument();
-        
+
         rerender(<></>); // Clean up for next iteration
       });
     });
@@ -618,7 +618,7 @@ describe("Input", () => {
         const { rerender } = render(
           <Input variant="password" state={state} placeholder="Password" />,
         );
-        
+
         const input = screen.getByPlaceholderText("Password");
         const eyeButton = screen.getByRole("button", {
           name: /show password/i,
@@ -626,7 +626,7 @@ describe("Input", () => {
 
         expect(input).toBeInTheDocument();
         expect(eyeButton).toBeInTheDocument();
-        
+
         rerender(<></>); // Clean up for next iteration
       });
     });

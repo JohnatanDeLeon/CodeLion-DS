@@ -152,9 +152,9 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       event?: React.MouseEvent | React.KeyboardEvent,
     ) => {
       if (disabled || loading) return;
-      
+
       setShowPassword(!showPassword);
-      
+
       // Remove focus from the button after interaction to prevent the selected state
       if (event?.currentTarget instanceof HTMLElement) {
         event.currentTarget.blur();
