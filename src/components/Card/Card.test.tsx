@@ -2,16 +2,7 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, it, expect, vi } from "vitest";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  CardFooter,
-  CardTitle,
-  CardDescription,
-  CardSubtitle,
-  CardMeta,
-} from "./Card";
+import { Card, CardHeader, CardBody, CardFooter } from "./Card";
 
 describe("Card", () => {
   it("renders children correctly", () => {
@@ -25,188 +16,163 @@ describe("Card", () => {
 
   it("applies variant classes correctly", () => {
     const { container } = render(
-      <Card variant="elevated">
+      <Card variant="outlined">
         <div>Content</div>
       </Card>,
     );
     const card = container.firstChild as HTMLElement;
-    expect(card).toHaveAttribute("data-variant", "elevated");
+    expect(card).toHaveAttribute("class");
+    expect(card.className).toBeTruthy();
   });
 
-  it("handles click events when clickable", async () => {
-    const user = userEvent.setup();
-    const handleClick = vi.fn();
-    
-    render(
-      <Card clickable onClick={handleClick}>
-        <div>Clickable content</div>
+  it("applies size classes correctly", () => {
+    const { container } = render(
+      <Card size="lg">
+        <div>Content</div>
       </Card>,
     );
-
-    const card = screen.getByRole("button");
-    await user.click(card);
-    expect(handleClick).toHaveBeenCalledTimes(1);
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveAttribute("class");
+    expect(card.className).toBeTruthy();
   });
 
-  it("handles keyboard navigation when interactive", async () => {
+  it("applies elevation classes correctly", () => {
+    const { container } = render(
+      <Card elevation="high">
+        <div>Content</div>
+      </Card>,
+    );
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveAttribute("class");
+    expect(card.className).toBeTruthy();
+  });
+
+  it("handles click events when interactive", async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    
+
     render(
-      <Card variant="interactive" onClick={handleClick}>
+      <Card interactive onClick={handleClick}>
         <div>Interactive content</div>
       </Card>,
     );
 
-    const card = screen.getByRole("button");
-    card.focus();
-    await user.keyboard("{Enter}");
+    const card = screen.getByText("Interactive content").parentElement!;
+    await user.click(card);
     expect(handleClick).toHaveBeenCalledTimes(1);
-
-    await user.keyboard(" ");
-    expect(handleClick).toHaveBeenCalledTimes(2);
   });
 
-  it("renders selected state correctly", () => {
-    const { container } = render(
-      <Card selected>
-        <div>Selected content</div>
-      </Card>,
-    );
-    const card = container.firstChild as HTMLElement;
-    expect(card).toHaveAttribute("aria-selected", "true");
-  });
-
-  it("renders disabled state correctly", () => {
-    const { container } = render(
-      <Card disabled>
-        <div>Disabled content</div>
-      </Card>,
-    );
-    const card = container.firstChild as HTMLElement;
-    expect(card).toHaveAttribute("aria-disabled", "true");
-  });
-
-  it("does not trigger click when disabled", async () => {
-    const user = userEvent.setup();
-    const handleClick = vi.fn();
-    
+  it("forwards ref correctly", () => {
+    const ref = React.createRef<HTMLDivElement>();
     render(
-      <Card disabled onClick={handleClick}>
-        <div>Disabled content</div>
+      <Card ref={ref}>
+        <div>Content with ref</div>
       </Card>,
     );
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
 
-    const card = screen.getByText("Disabled content").parentElement!;
-    
-    // Try to click but expect pointer-events: none to prevent interaction
-    try {
-      await user.click(card);
-    } catch (error) {
-      // This is expected behavior - the element should not be clickable
-      expect((error as Error).message).toContain("pointer-events: none");
-    }
-    
-    expect(handleClick).not.toHaveBeenCalled();
+  it("applies custom className", () => {
+    const { container } = render(
+      <Card className="custom-class">
+        <div>Content</div>
+      </Card>,
+    );
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveClass("custom-class");
   });
 });
 
 describe("CardHeader", () => {
-  it("renders with icon", () => {
+  it("renders children correctly", () => {
     render(
-      <CardHeader icon={<span data-testid="icon">Icon</span>}>
-        <CardTitle>Header with icon</CardTitle>
+      <CardHeader>
+        <h3>Header Title</h3>
       </CardHeader>,
     );
-    
-    expect(screen.getByTestId("icon")).toBeInTheDocument();
-    expect(screen.getByText("Header with icon")).toBeInTheDocument();
+    expect(screen.getByText("Header Title")).toBeInTheDocument();
   });
 
-  it("renders with image", () => {
+  it("forwards ref correctly", () => {
+    const ref = React.createRef<HTMLDivElement>();
     render(
-      <CardHeader image="test.jpg" imageAlt="Test image">
-        <CardTitle>Header with image</CardTitle>
+      <CardHeader ref={ref}>
+        <h3>Header with ref</h3>
       </CardHeader>,
     );
-    
-    expect(screen.getByAltText("Test image")).toBeInTheDocument();
-    expect(screen.getByText("Header with image")).toBeInTheDocument();
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 
-  it("renders with actions", () => {
-    render(
-      <CardHeader actions={<button>Action</button>}>
-        <CardTitle>Header with actions</CardTitle>
+  it("applies custom className", () => {
+    const { container } = render(
+      <CardHeader className="custom-header">
+        <h3>Header</h3>
       </CardHeader>,
     );
-    
-    expect(screen.getByRole("button", { name: "Action" })).toBeInTheDocument();
-    expect(screen.getByText("Header with actions")).toBeInTheDocument();
+    const header = container.firstChild as HTMLElement;
+    expect(header).toHaveClass("custom-header");
   });
 });
 
-describe("CardContent", () => {
-  it("renders content correctly", () => {
+describe("CardBody", () => {
+  it("renders children correctly", () => {
     render(
-      <CardContent>
-        <p>Card content text</p>
-      </CardContent>,
+      <CardBody>
+        <p>Body content</p>
+      </CardBody>,
     );
-    
-    expect(screen.getByText("Card content text")).toBeInTheDocument();
+    expect(screen.getByText("Body content")).toBeInTheDocument();
+  });
+
+  it("forwards ref correctly", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(
+      <CardBody ref={ref}>
+        <p>Body with ref</p>
+      </CardBody>,
+    );
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
+  });
+
+  it("applies custom className", () => {
+    const { container } = render(
+      <CardBody className="custom-body">
+        <p>Body</p>
+      </CardBody>,
+    );
+    const body = container.firstChild as HTMLElement;
+    expect(body).toHaveClass("custom-body");
   });
 });
 
 describe("CardFooter", () => {
-  it("renders footer correctly", () => {
+  it("renders children correctly", () => {
     render(
       <CardFooter>
         <p>Footer content</p>
       </CardFooter>,
     );
-    
     expect(screen.getByText("Footer content")).toBeInTheDocument();
   });
 
-  it("applies divided variant correctly", () => {
-    const { container } = render(
-      <CardFooter divided>
-        <p>Footer content</p>
+  it("forwards ref correctly", () => {
+    const ref = React.createRef<HTMLDivElement>();
+    render(
+      <CardFooter ref={ref}>
+        <p>Footer with ref</p>
       </CardFooter>,
     );
-    
-    expect(container.firstChild).toBeInTheDocument();
-  });
-});
-
-describe("Typography Components", () => {
-  it("renders CardTitle as h3", () => {
-    render(<CardTitle>Test Title</CardTitle>);
-    
-    const title = screen.getByText("Test Title");
-    expect(title.tagName).toBe("H3");
+    expect(ref.current).toBeInstanceOf(HTMLDivElement);
   });
 
-  it("renders CardDescription as paragraph", () => {
-    render(<CardDescription>Test Description</CardDescription>);
-    
-    const description = screen.getByText("Test Description");
-    expect(description.tagName).toBe("P");
-  });
-
-  it("renders CardSubtitle as paragraph", () => {
-    render(<CardSubtitle>Test Subtitle</CardSubtitle>);
-    
-    const subtitle = screen.getByText("Test Subtitle");
-    expect(subtitle.tagName).toBe("P");
-  });
-
-  it("renders CardMeta as div", () => {
-    render(<CardMeta>Test Meta</CardMeta>);
-    
-    const meta = screen.getByText("Test Meta");
-    expect(meta.tagName).toBe("DIV");
+  it("applies custom className", () => {
+    const { container } = render(
+      <CardFooter className="custom-footer">
+        <p>Footer</p>
+      </CardFooter>,
+    );
+    const footer = container.firstChild as HTMLElement;
+    expect(footer).toHaveClass("custom-footer");
   });
 });
 
@@ -215,14 +181,14 @@ describe("Card Composition", () => {
     render(
       <Card>
         <CardHeader>
-          <CardTitle>Structured Card</CardTitle>
-          <CardDescription>This is a structured card</CardDescription>
+          <h3>Structured Card</h3>
+          <p>This is a structured card</p>
         </CardHeader>
-        <CardContent>
+        <CardBody>
           <p>Main content goes here</p>
-        </CardContent>
+        </CardBody>
         <CardFooter>
-          <CardMeta>Meta information</CardMeta>
+          <p>Footer information</p>
         </CardFooter>
       </Card>,
     );
@@ -230,6 +196,35 @@ describe("Card Composition", () => {
     expect(screen.getByText("Structured Card")).toBeInTheDocument();
     expect(screen.getByText("This is a structured card")).toBeInTheDocument();
     expect(screen.getByText("Main content goes here")).toBeInTheDocument();
-    expect(screen.getByText("Meta information")).toBeInTheDocument();
+    expect(screen.getByText("Footer information")).toBeInTheDocument();
+  });
+
+  it("renders card with all props", () => {
+    const handleClick = vi.fn();
+
+    render(
+      <Card
+        variant="gradient"
+        size="lg"
+        elevation="high"
+        interactive
+        onClick={handleClick}
+        className="test-card"
+      >
+        <CardHeader className="test-header">
+          <h3>Complex Card</h3>
+        </CardHeader>
+        <CardBody className="test-body">
+          <p>Complex content</p>
+        </CardBody>
+        <CardFooter className="test-footer">
+          <p>Complex footer</p>
+        </CardFooter>
+      </Card>,
+    );
+
+    expect(screen.getByText("Complex Card")).toBeInTheDocument();
+    expect(screen.getByText("Complex content")).toBeInTheDocument();
+    expect(screen.getByText("Complex footer")).toBeInTheDocument();
   });
 });

@@ -53,7 +53,13 @@ export const Default: Story = {
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: "bold" }}>
           Card Title
         </h3>
-        <p style={{ margin: "0.5rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+        <p
+          style={{
+            margin: "0.5rem 0 0",
+            color: "#6b7280",
+            fontSize: "0.875rem",
+          }}
+        >
           This is a description of the card content. It provides context about
           what the card contains.
         </p>
@@ -89,7 +95,13 @@ export const Variants: Story = {
           <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: "600" }}>
             Default Card
           </h3>
-          <p style={{ margin: "0.25rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+          <p
+            style={{
+              margin: "0.25rem 0 0",
+              color: "#6b7280",
+              fontSize: "0.875rem",
+            }}
+          >
             Basic card with subtle shadow
           </p>
         </CardHeader>
@@ -105,7 +117,13 @@ export const Variants: Story = {
           <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: "600" }}>
             Outlined Card
           </h3>
-          <p style={{ margin: "0.25rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+          <p
+            style={{
+              margin: "0.25rem 0 0",
+              color: "#6b7280",
+              fontSize: "0.875rem",
+            }}
+          >
             Card with prominent border
           </p>
         </CardHeader>
@@ -121,7 +139,13 @@ export const Variants: Story = {
           <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: "600" }}>
             Filled Card
           </h3>
-          <p style={{ margin: "0.25rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+          <p
+            style={{
+              margin: "0.25rem 0 0",
+              color: "#6b7280",
+              fontSize: "0.875rem",
+            }}
+          >
             Card with background fill
           </p>
         </CardHeader>
@@ -137,7 +161,13 @@ export const Variants: Story = {
           <h3 style={{ margin: 0, fontSize: "1.125rem", fontWeight: "600" }}>
             Gradient Card
           </h3>
-          <p style={{ margin: "0.25rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+          <p
+            style={{
+              margin: "0.25rem 0 0",
+              color: "#6b7280",
+              fontSize: "0.875rem",
+            }}
+          >
             Card with gradient background
           </p>
         </CardHeader>
@@ -161,13 +191,21 @@ export const Interactive: Story = {
     <Card
       {...args}
       style={{ width: "320px" }}
-      onClick={() => console.log("Card clicked!")}
+      onClick={() => {
+        // Handle card click - in a real app, this would navigate or update state
+      }}
     >
       <CardHeader>
         <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: "bold" }}>
           Interactive Card
         </h3>
-        <p style={{ margin: "0.5rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+        <p
+          style={{
+            margin: "0.5rem 0 0",
+            color: "#6b7280",
+            fontSize: "0.875rem",
+          }}
+        >
           Click me to see the interaction!
         </p>
       </CardHeader>
@@ -214,7 +252,9 @@ export const Sizes: Story = {
 
       <Card size="xl" style={{ width: "320px" }}>
         <CardBody>
-          <h4 style={{ margin: "0 0 0.5rem", fontSize: "1rem" }}>Extra Large</h4>
+          <h4 style={{ margin: "0 0 0.5rem", fontSize: "1rem" }}>
+            Extra Large
+          </h4>
           <p style={{ margin: 0, fontSize: "0.875rem" }}>
             Very spacious card with extra generous padding
           </p>
@@ -284,7 +324,13 @@ export const FullExample: Story = {
             <h3 style={{ margin: 0, fontSize: "1.25rem", fontWeight: "bold" }}>
               Q4 Analytics Report
             </h3>
-            <p style={{ margin: "0.25rem 0 0", color: "#6b7280", fontSize: "0.875rem" }}>
+            <p
+              style={{
+                margin: "0.25rem 0 0",
+                color: "#6b7280",
+                fontSize: "0.875rem",
+              }}
+            >
               Performance Dashboard
             </p>
           </div>
@@ -305,10 +351,23 @@ export const FullExample: Story = {
 
       <CardBody>
         <div style={{ marginBottom: "1rem" }}>
-          <h4 style={{ margin: "0 0 0.5rem", fontSize: "0.875rem", fontWeight: "600" }}>
+          <h4
+            style={{
+              margin: "0 0 0.5rem",
+              fontSize: "0.875rem",
+              fontWeight: "600",
+            }}
+          >
             Key Highlights
           </h4>
-          <ul style={{ margin: 0, paddingLeft: "1rem", fontSize: "0.875rem", lineHeight: "1.5" }}>
+          <ul
+            style={{
+              margin: 0,
+              paddingLeft: "1rem",
+              fontSize: "0.875rem",
+              lineHeight: "1.5",
+            }}
+          >
             <li>Revenue increased by 23%</li>
             <li>User engagement up 15%</li>
             <li>New customer acquisition: 1,247</li>
@@ -328,7 +387,14 @@ export const FullExample: Story = {
       </CardBody>
 
       <CardFooter>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%" }}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
           <small style={{ color: "#9ca3af" }}>
             Generated: Dec 15, 2023 • Next update: Jan 15, 2024
           </small>

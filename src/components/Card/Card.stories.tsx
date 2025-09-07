@@ -73,7 +73,7 @@ export const Default: Story = {
         </p>
       </CardBody>
       <CardFooter>
-        <small style={{ color: "#9ca3af" }}>
+        <small style={{ color: "#6b7280" }}>
           Created: 2 hours ago • Updated: 1 hour ago
         </small>
       </CardFooter>
@@ -194,8 +194,7 @@ export const Interactive: Story = {
       {...args}
       style={{ width: "320px" }}
       onClick={() => {
-        // Handle card click
-        window.alert?.("Card clicked!");
+        // Handle card click - in a real app, this would navigate or update state
       }}
     >
       <CardHeader>
@@ -398,16 +397,16 @@ export const FullExample: Story = {
             width: "100%",
           }}
         >
-          <small style={{ color: "#9ca3af" }}>
+          <small style={{ color: "#6b7280" }}>
             Generated: Dec 15, 2023 • Next update: Jan 15, 2024
           </small>
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <button
               style={{
                 padding: "0.5rem 1rem",
-                border: "1px solid #3b82f6",
+                border: "1px solid #1d4ed8",
                 borderRadius: "0.5rem",
-                background: "#3b82f6",
+                background: "#1d4ed8",
                 color: "white",
                 cursor: "pointer",
                 fontSize: "0.875rem",
@@ -538,7 +537,7 @@ export const LoginForm: Story = {
               type="button"
               style={{
                 fontSize: "0.875rem",
-                color: "#3b82f6",
+                color: "#1d4ed8",
                 background: "none",
                 border: "none",
                 cursor: "pointer",
@@ -557,7 +556,9 @@ export const LoginForm: Story = {
               onBlur={(e) => {
                 e.currentTarget.style.textDecoration = "none";
               }}
-              onClick={() => console.log("Forgot password clicked")}
+              onClick={() => {
+                // Handle forgot password click
+              }}
             >
               ¿Olvidaste tu contraseña?
             </button>
@@ -579,7 +580,9 @@ export const LoginForm: Story = {
             size="lg"
             fullWidth
             gradient={{ startColor: "#3b82f6", endColor: "#1d4ed8" }}
-            onClick={() => console.log("Logging in...")}
+            onClick={() => {
+              // Handle login submission
+            }}
           >
             Iniciar Sesión
           </Button>
@@ -590,7 +593,7 @@ export const LoginForm: Story = {
               <button
                 type="button"
                 style={{
-                  color: "#3b82f6",
+                  color: "#1d4ed8",
                   background: "none",
                   border: "none",
                   cursor: "pointer",
@@ -611,7 +614,9 @@ export const LoginForm: Story = {
                 onBlur={(e) => {
                   e.currentTarget.style.textDecoration = "none";
                 }}
-                onClick={() => console.log("Register clicked")}
+                onClick={() => {
+                  // Handle register click
+                }}
               >
                 Regístrate aquí
               </button>
