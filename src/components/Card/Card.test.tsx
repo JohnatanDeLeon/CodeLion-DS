@@ -81,6 +81,53 @@ describe("Card", () => {
     const card = container.firstChild as HTMLElement;
     expect(card).toHaveClass("custom-class");
   });
+
+  it("non-interactive card is not focusable by default", () => {
+    const { container } = render(
+      <Card>
+        <div>Content</div>
+      </Card>,
+    );
+    const card = container.firstChild as HTMLElement;
+    expect(card).not.toHaveAttribute("tabIndex");
+    expect(card).not.toHaveAttribute("role");
+  });
+
+  it("interactive card can receive focus", () => {
+    const { container } = render(
+      <Card interactive tabIndex={0}>
+        <div>Interactive content</div>
+      </Card>,
+    );
+    const card = container.firstChild as HTMLElement;
+    expect(card).toHaveAttribute("tabIndex", "0");
+
+    // Focus the card and check if it receives focus
+    card.focus();
+    expect(card).toHaveFocus();
+  });
+
+  it("form card does not interfere with input focus", async () => {
+    const user = userEvent.setup();
+
+    render(
+      <Card>
+        <input type="text" placeholder="Test input" />
+      </Card>,
+    );
+
+    const input = screen.getByPlaceholderText("Test input");
+    const card = input.parentElement!;
+
+    // Focus the input
+    await user.click(input);
+
+    // Input should be focused
+    expect(input).toHaveFocus();
+
+    // Card should not be focused
+    expect(card).not.toHaveFocus();
+  });
 });
 
 describe("CardHeader", () => {
