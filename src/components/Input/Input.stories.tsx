@@ -10,7 +10,7 @@ const meta: Meta<typeof Input> = {
   argTypes: {
     variant: {
       control: { type: "select" },
-      options: [undefined, "search"],
+      options: [undefined, "search", "password"],
     },
     size: {
       control: { type: "select" },
@@ -416,6 +416,77 @@ export const ValidationShowcase: Story = {
       </div>
     );
   },
+};
+
+export const PasswordVariant: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <Input
+        variant="password"
+        label="Small Password Input"
+        placeholder="Enter password"
+        size="sm"
+      />
+      <Input
+        variant="password"
+        label="Medium Password Input"
+        placeholder="Enter password"
+        size="md"
+      />
+      <Input
+        variant="password"
+        label="Large Password Input"
+        placeholder="Enter password"
+        size="lg"
+      />
+      <Input
+        variant="password"
+        label="Extra Large Password Input"
+        placeholder="Enter password"
+        size="xl"
+      />
+    </div>
+  ),
+};
+
+export const PasswordStates: Story = {
+  render: () => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <Input
+        variant="password"
+        label="Default Password"
+        placeholder="Enter password"
+        state="default"
+      />
+      <Input
+        variant="password"
+        label="Error Password"
+        placeholder="Enter password"
+        state="error"
+        errorMessage="Password is required"
+      />
+      <Input
+        variant="password"
+        label="Success Password"
+        placeholder="Enter password"
+        state="success"
+        successMessage="Password is valid"
+      />
+      <Input
+        variant="password"
+        label="Warning Password"
+        placeholder="Enter password"
+        state="warning"
+        warningMessage="Consider using a stronger password"
+      />
+      <Input
+        variant="password"
+        label="Disabled Password"
+        placeholder="Enter password"
+        disabled
+      />
+    </div>
+  ),
 };
 
 export const Playground: Story = {};

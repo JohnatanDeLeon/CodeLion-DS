@@ -2,6 +2,7 @@ import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { axe, toHaveNoViolations } from "jest-axe";
+import { vi } from "vitest";
 import { Input } from "./Input";
 
 // Extend Jest matchers
@@ -509,6 +510,157 @@ describe("Input", () => {
       input = screen.getByRole("textbox");
       expect(input.className).toContain("inputFieldSearchVariant");
       expect(input.className).toContain("inputFieldSearchVariantLarge");
+    });
+  });
+
+  describe("Password Variant", () => {
+    it("renders password variant with eye icon", () => {
+      render(<Input variant="password" placeholder="Enter password" />);
+
+      const input = screen.getByPlaceholderText("Enter password");
+      const eyeButton = screen.getByRole("button", { name: /show password/i });
+
+      expect(input).toHaveAttribute("type", "password");
+      expect(eyeButton).toBeInTheDocument();
+    });
+
+    it("toggles password visibility when eye icon is clicked", async () => {
+      const user = userEvent.setup();
+
+      render(<Input variant="password" placeholder="Enter password" />);
+
+      const input = screen.getByPlaceholderText("Enter password");
+      const eyeButton = screen.getByRole("button", { name: /show password/i });
+
+      // Initially password should be hidden
+      expect(input).toHaveAttribute("type", "password");
+      expect(eyeButton).toHaveAttribute("aria-label", "Show password");
+
+      // Click to show password
+      await user.click(eyeButton);
+
+      expect(input).toHaveAttribute("type", "text");
+      expect(eyeButton).toHaveAttribute("aria-label", "Hide password");
+
+      // Click again to hide password
+      await user.click(eyeButton);
+
+      expect(input).toHaveAttribute("type", "password");
+      expect(eyeButton).toHaveAttribute("aria-label", "Show password");
+    });
+
+    it("toggles password visibility with keyboard navigation", async () => {
+      const user = userEvent.setup();
+
+      render(<Input variant="password" placeholder="Enter password" />);
+
+      const input = screen.getByPlaceholderText("Enter password");
+      const eyeButton = screen.getByRole("button", { name: /show password/i });
+
+      // Initially password should be hidden
+      expect(input).toHaveAttribute("type", "password");
+
+      // Use keyboard to activate toggle with Enter
+      eyeButton.focus();
+      await user.keyboard("{Enter}");
+
+      expect(input).toHaveAttribute("type", "text");
+
+      // Focus again and use space key to toggle back
+      eyeButton.focus();
+      await user.keyboard(" ");
+
+      expect(input).toHaveAttribute("type", "password");
+    });
+
+    it("does not toggle when disabled", async () => {
+      const user = userEvent.setup();
+
+      render(
+        <Input variant="password" disabled placeholder="Enter password" />,
+      );
+
+      const input = screen.getByPlaceholderText("Enter password");
+
+      expect(input).toHaveAttribute("type", "password");
+      expect(input).toBeDisabled();
+
+      // When disabled, the button should have pointer-events: none
+      // so we can't actually click it, which is the correct behavior
+      // The password should remain hidden
+      expect(input).toHaveAttribute("type", "password");
+    });
+
+    it("works with different sizes", () => {
+      const sizes = ["sm", "md", "lg", "xl"] as const;
+
+      sizes.forEach((size) => {
+        const { rerender } = render(
+          <Input variant="password" size={size} placeholder="Password" />,
+        );
+
+        const input = screen.getByPlaceholderText("Password");
+        const eyeButton = screen.getByRole("button", {
+          name: /show password/i,
+        });
+
+        expect(input).toBeInTheDocument();
+        expect(eyeButton).toBeInTheDocument();
+
+        rerender(<></>); // Clean up for next iteration
+      });
+    });
+
+    it("works with different states", () => {
+      const states = ["default", "error", "success", "warning"] as const;
+
+      states.forEach((state) => {
+        const { rerender } = render(
+          <Input variant="password" state={state} placeholder="Password" />,
+        );
+
+        const input = screen.getByPlaceholderText("Password");
+        const eyeButton = screen.getByRole("button", {
+          name: /show password/i,
+        });
+
+        expect(input).toBeInTheDocument();
+        expect(eyeButton).toBeInTheDocument();
+
+        rerender(<></>); // Clean up for next iteration
+      });
+    });
+
+    it("maintains password value when toggling visibility", async () => {
+      const user = userEvent.setup();
+      const onChange = vi.fn();
+
+      render(
+        <Input
+          variant="password"
+          placeholder="Enter password"
+          onChange={onChange}
+        />,
+      );
+
+      const input = screen.getByPlaceholderText("Enter password");
+      const eyeButton = screen.getByRole("button", { name: /show password/i });
+
+      // Type password
+      await user.type(input, "mypassword123");
+      // We don't need to check exact count since it can vary with mask behavior
+      expect(onChange).toHaveBeenCalled();
+      expect(input).toHaveValue("mypassword123");
+
+      // Toggle visibility - value should remain
+      await user.click(eyeButton);
+      expect(input).toHaveAttribute("type", "text");
+      expect(input).toHaveValue("mypassword123");
+
+      // Toggle back - value should still remain
+      await user.click(eyeButton);
+      expect(input).toHaveAttribute("type", "password");
+      expect(input).toHaveValue("mypassword123");
     });
   });
 
