@@ -7,3 +7,5 @@
 
 // Import all component styles
 import "./styles/recipes/button.css";
+import "./styles/recipes/card.css";
+import "./styles/recipes/input.css";
