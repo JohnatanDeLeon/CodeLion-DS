@@ -11,3 +11,4 @@ export * from "./Card";
 
 // Form Components
 export * from "./Input";
+export * from "./Select";
