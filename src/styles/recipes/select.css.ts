@@ -1,4 +1,4 @@
-import { style } from "@vanilla-extract/css";
+import { style, keyframes } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import {
   colors,
@@ -265,8 +265,8 @@ export const selectRightIcon = style({
     },
   },
 });
-
-export const selectRecipe = recipe({
+// Keep native select field recipe available for potential use cases
+export const selectNativeRecipe = recipe({
   base: [selectField],
   variants: {
     uiSize: {
@@ -291,11 +291,236 @@ export const selectRecipe = recipe({
     state: "default",
     fullWidth: false,
   },
-  // Adjust right padding for icon per size to achieve ~44px start similar to Input
   compoundVariants: [
     { variants: { uiSize: "md" }, style: { paddingRight: "2.75rem" } },
     { variants: { uiSize: "sm" }, style: { paddingRight: "2.75rem" } },
     { variants: { uiSize: "lg" }, style: { paddingRight: "2.75rem" } },
     { variants: { uiSize: "xl" }, style: { paddingRight: "2.75rem" } },
   ],
+});
+
+// =====================
+// Overlay-based Select (unified)
+// =====================
+
+// Fade/slide for the popover
+const slideDown = keyframes({
+  "0%": { opacity: 0, transform: "translateY(-4px) scale(0.98)" },
+  "100%": { opacity: 1, transform: "translateY(0) scale(1)" },
+});
+
+// Trigger button (reuses input-like styling)
+export const selectTrigger = style({
+  width: "100%",
+  ...fieldBase(),
+  borderRadius: shapeScale.xl,
+  border: `1px solid ${colors.neutral[300]}`,
+  backgroundColor: colors.neutral[25],
+  color: colors.neutral[900],
+  textAlign: "left",
+  display: "flex",
+  alignItems: "center",
+  gap: spacing[2],
+  transition: `all ${animation.duration.normal} ${animation.easing.easeInOut}`,
+  boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.neutral[200]}25`,
+  cursor: "pointer",
+  selectors: {
+    "&:hover": {
+      borderColor: colors.neutral[400],
+      backgroundColor: colors.white,
+      boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.neutral[300]}40`,
+      transform: "translateY(-1px)",
+    },
+    "&[aria-expanded='true']": {
+      borderColor: colors.primary[600],
+      backgroundColor: colors.white,
+      boxShadow: [
+        `0 0 0 3px ${colors.primary[500]}30`,
+        `0 0 30px ${colors.primary[500]}15`,
+        `${effects.shadow.md}`,
+        `inset 0 1px 0 ${colors.white}`,
+      ].join(", "),
+    },
+    "&:disabled": {
+      cursor: "not-allowed",
+      opacity: 0.6,
+      backgroundColor: colors.neutral[100],
+      borderColor: colors.neutral[200],
+      boxShadow: "none",
+      transform: "none",
+    },
+  },
+  ...focusRing(colors.primary[500], 3),
+});
+
+// Size variants (match input scale)
+const triggerSm = style({
+  minHeight: spacing[8],
+  padding: `${spacing[2]} ${spacing[3]}`,
+  fontSize: typography.fontSize.xs,
+});
+const triggerMd = style({
+  minHeight: spacing[10],
+  padding: `${spacing[3]} ${spacing[4]}`,
+  fontSize: typography.fontSize.sm,
+});
+const triggerLg = style({
+  minHeight: spacing[12],
+  padding: `${spacing[4]} ${spacing[5]}`,
+  fontSize: typography.fontSize.base,
+});
+
+const triggerStateError = style({
+  borderColor: colors.error[400],
+  backgroundColor: colors.error[50],
+  boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.error[200]}25`,
+  selectors: {
+    "&:hover": {
+      borderColor: colors.error[500],
+      backgroundColor: colors.error[50],
+      boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.error[400]}40`,
+    },
+  },
+});
+const triggerStateSuccess = style({
+  borderColor: colors.success[400],
+  backgroundColor: colors.success[50],
+  boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.success[200]}25`,
+  selectors: {
+    "&:hover": {
+      borderColor: colors.success[500],
+      backgroundColor: colors.success[50],
+      boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.success[400]}40`,
+    },
+  },
+});
+const triggerStateWarning = style({
+  borderColor: colors.warning[400],
+  backgroundColor: colors.warning[50],
+  boxShadow: `${effects.shadow.xs}, inset 0 1px 2px ${colors.warning[200]}25`,
+  selectors: {
+    "&:hover": {
+      borderColor: colors.warning[500],
+      backgroundColor: colors.warning[50],
+      boxShadow: `${effects.shadow.sm}, 0 0 0 1px ${colors.warning[400]}40`,
+    },
+  },
+});
+
+export const selectRecipe = recipe({
+  base: [selectTrigger],
+  variants: {
+    uiSize: {
+      sm: [triggerSm, { borderRadius: shapeScale.xl }],
+      md: [triggerMd, { borderRadius: shapeScale.xl }],
+      lg: [triggerLg, { borderRadius: shapeScale.xl }],
+      xl: [triggerLg, { borderRadius: shapeScale.xl }],
+    },
+    state: {
+      default: {},
+      error: triggerStateError,
+      success: triggerStateSuccess,
+      warning: triggerStateWarning,
+    },
+    fullWidth: {
+      false: {},
+      true: selectFullWidth,
+    },
+  },
+  defaultVariants: {
+    uiSize: "md",
+    state: "default",
+    fullWidth: false,
+  },
+});
+
+export const selectTriggerLabel = style({
+  flex: 1,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+});
+
+export const selectChevron = style({
+  marginInlineStart: "auto",
+  color: colors.neutral[500],
+  width: spacing[5],
+  height: spacing[5],
+  transition: `transform ${animation.duration.normal} ${animation.easing.easeInOut}, color ${animation.duration.normal} ${animation.easing.easeInOut}`,
+  selectors: {
+    [`${selectTrigger}[aria-expanded='true'] &`]: {
+      transform: "rotate(180deg)",
+      color: colors.primary[600],
+    },
+    [`${selectTrigger}:disabled &`]: {
+      color: colors.neutral[400],
+    },
+  },
+});
+
+export const selectPopover = style({
+  position: "absolute",
+  top: `calc(100% + ${spacing[1]})`,
+  left: 0,
+  width: "100%",
+  backgroundColor: colors.white,
+  border: `1px solid ${colors.neutral[200]}`,
+  borderRadius: shapeScale.lg,
+  boxShadow: `${effects.shadow.lg}, 0 8px 24px ${colors.neutral[900]}14`,
+  zIndex: 50,
+  animationName: slideDown,
+  animationDuration: animation.duration.fast,
+  animationTimingFunction: animation.easing.easeOut,
+  overflow: "hidden",
+});
+
+export const selectListbox = style({
+  maxHeight: "16rem", // 256px
+  overflowY: "auto",
+  padding: `${spacing[1]} 0`,
+});
+
+export const selectOption = recipe({
+  base: {
+    display: "flex",
+    alignItems: "center",
+    gap: spacing[2],
+    width: "100%",
+    padding: `${spacing[2.5]} ${spacing[3]}`,
+    fontSize: typography.fontSize.sm,
+    lineHeight: 1.5,
+    color: colors.neutral[800],
+    backgroundColor: "transparent",
+    cursor: "pointer",
+    userSelect: "none",
+  },
+  variants: {
+    active: {
+      false: {},
+      true: {
+        backgroundColor: colors.primary[50],
+        color: colors.primary[800],
+      },
+    },
+    selected: {
+      false: {},
+      true: {
+        backgroundColor: colors.primary[100],
+        color: colors.primary[900],
+        fontWeight: typography.fontWeight.semibold,
+      },
+    },
+    disabled: {
+      false: {},
+      true: {
+        color: colors.neutral[500],
+        cursor: "not-allowed",
+      },
+    },
+  },
+});
+
+export const selectCheck = style({
+  marginInlineStart: "auto",
+  color: colors.primary[600],
 });

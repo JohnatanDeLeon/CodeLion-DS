@@ -2,17 +2,17 @@ import React from "react";
 import { cn } from "../../utils";
 import { colors } from "../../styles/tokens";
 import {
-  selectCustomContainer,
-  selectCustomWrapper,
-  selectCustomTriggerLabel,
-  selectCustomPopover,
-  selectCustomListbox,
-  selectCustomOption,
-  selectCustomCheck,
-  selectCustomLabel,
-  selectCustomChevon,
-  selectCustomRecipe,
-} from "../../styles/recipes/select.custom.css";
+  selectContainer,
+  selectWrapper,
+  selectTriggerLabel,
+  selectPopover,
+  selectListbox,
+  selectOption,
+  selectCheck,
+  selectLabel,
+  selectChevron,
+  selectRecipe,
+} from "../../styles/recipes/select.css";
 
 export interface SelectOption {
   value: string;
@@ -253,14 +253,14 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     const isPlaceholder = !selectedOption;
 
     return (
-      <div className={cn(selectCustomContainer, containerClassName)}>
+      <div className={cn(selectContainer, containerClassName)}>
         {label && (
-          <label className={cn(selectCustomLabel, labelClassName)}>
+          <label className={cn(selectLabel, labelClassName)}>
             {label}
             {required ? " *" : null}
           </label>
         )}
-        <div className={selectCustomWrapper}>
+        <div className={selectWrapper}>
           <button
             id={id}
             ref={mergedRef}
@@ -270,7 +270,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             aria-expanded={isOpen}
             aria-controls={`${id}-listbox`}
             className={cn(
-              selectCustomRecipe({ uiSize, state, fullWidth }),
+              selectRecipe({ uiSize, state, fullWidth }),
               className,
             )}
             disabled={disabled}
@@ -281,7 +281,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             {...rest}
           >
             <span
-              className={selectCustomTriggerLabel}
+              className={selectTriggerLabel}
               data-placeholder={isPlaceholder || undefined}
               style={
                 isPlaceholder
@@ -292,7 +292,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
               {displayLabel}
             </span>
             <svg
-              className={selectCustomChevon}
+              className={selectChevron}
               viewBox="0 0 24 24"
               aria-hidden="true"
             >
@@ -307,12 +307,12 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
           </button>
 
           {isOpen && (
-            <div className={selectCustomPopover} role="presentation">
+            <div className={selectPopover} role="presentation">
               <ul
                 id={`${id}-listbox`}
                 role="listbox"
                 aria-labelledby={id}
-                className={selectCustomListbox}
+                className={selectListbox}
                 ref={listRef}
                 tabIndex={-1}
               >
@@ -327,7 +327,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                       role="option"
                       aria-selected={selected}
                       aria-disabled={opt.disabled || undefined}
-                      className={selectCustomOption({
+                      className={selectOption({
                         active,
                         selected,
                         disabled: !!opt.disabled,
@@ -348,7 +348,7 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                       <span>{opt.label}</span>
                       {selected && (
                         <svg
-                          className={selectCustomCheck}
+                          className={selectCheck}
                           width="16"
                           height="16"
                           viewBox="0 0 24 24"
