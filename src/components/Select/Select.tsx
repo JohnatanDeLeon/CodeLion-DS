@@ -7,6 +7,7 @@ import {
   selectTriggerLabel,
   selectPopover,
   selectListbox,
+  selectListboxScrollable,
   selectOption,
   selectCheck,
   selectLabel,
@@ -47,6 +48,18 @@ export interface SelectProps
   onChange?: (value: string) => void;
   open?: boolean;
   onOpenChange?: (open: boolean) => void;
+  // Enable vertical scroll when options are many. If true, adds max-height and overflow.
+  scroll?: boolean;
+  // Optional max height when scroll is enabled (e.g., "20rem" or number in px). Defaults to 16rem.
+  maxListHeight?: string | number;
+  // Customizable colors
+  focusRingColor?: string; // ring color when focused/opened
+  optionHoverBgColor?: string; // option hover background
+  optionHoverTextColor?: string; // option hover text color
+  optionTextColor?: string; // default option text color
+  checkIconColor?: string; // check icon color for selected option
+  selectedOptionBgColor?: string; // selected option background color
+  selectedOptionTextColor?: string; // selected option text color
 }
 
 export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
@@ -77,6 +90,15 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
       id: idProp,
       className,
       children,
+      scroll,
+      maxListHeight,
+      focusRingColor,
+      optionHoverBgColor,
+      optionHoverTextColor,
+      optionTextColor,
+      checkIconColor,
+      selectedOptionBgColor,
+      selectedOptionTextColor,
       ...rest
     },
     ref,
@@ -252,10 +274,30 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
     const displayLabel = selectedOption?.label ?? placeholder;
     const isPlaceholder = !selectedOption;
 
+    const labelId = `${id}-label`;
+
+    // Inline CSS variables for customizable colors
+    type CSSVarStyle = React.CSSProperties & {
+      [key: `--${string}`]: string | number;
+    };
+    const cssVars: CSSVarStyle = {} as CSSVarStyle;
+    if (focusRingColor) cssVars["--select-focus-ring-color"] = focusRingColor;
+    if (optionHoverBgColor)
+      cssVars["--select-option-hover-bg"] = optionHoverBgColor;
+    if (optionHoverTextColor)
+      cssVars["--select-option-hover-color"] = optionHoverTextColor;
+    if (optionTextColor)
+      cssVars["--select-option-text-color"] = optionTextColor;
+    if (checkIconColor) cssVars["--select-check-color"] = checkIconColor;
+    if (selectedOptionBgColor)
+      cssVars["--select-option-selected-bg"] = selectedOptionBgColor;
+    if (selectedOptionTextColor)
+      cssVars["--select-option-selected-color"] = selectedOptionTextColor;
+
     return (
-      <div className={cn(selectContainer, containerClassName)}>
+      <div className={cn(selectContainer, containerClassName)} style={cssVars}>
         {label && (
-          <label className={cn(selectLabel, labelClassName)}>
+          <label id={labelId} className={cn(selectLabel, labelClassName)}>
             {label}
             {required ? " *" : null}
           </label>
@@ -269,6 +311,8 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
             aria-haspopup="listbox"
             aria-expanded={isOpen}
             aria-controls={`${id}-listbox`}
+            aria-labelledby={label ? labelId : undefined}
+            aria-label={label || undefined}
             className={cn(
               selectRecipe({ uiSize, state, fullWidth }),
               className,
@@ -312,7 +356,18 @@ export const Select = React.forwardRef<HTMLButtonElement, SelectProps>(
                 id={`${id}-listbox`}
                 role="listbox"
                 aria-labelledby={id}
-                className={selectListbox}
+                className={cn(selectListbox, scroll && selectListboxScrollable)}
+                style={
+                  scroll && maxListHeight
+                    ? {
+                        maxHeight:
+                          typeof maxListHeight === "number"
+                            ? `${maxListHeight}px`
+                            : maxListHeight,
+                      }
+                    : undefined
+                }
+                data-scroll={scroll ? "true" : undefined}
                 ref={listRef}
                 tabIndex={-1}
               >

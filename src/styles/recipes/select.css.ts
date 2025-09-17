@@ -86,11 +86,6 @@ export const selectField = style({
     "&::-ms-expand": {
       display: "none",
     },
-    // Placeholder-like styling when empty option is selected
-    "&:has(option[value='']:checked)": {
-      color: colors.neutral[500],
-      fontWeight: typography.fontWeight.medium,
-    },
     "&[data-placeholder='true']": {
       color: colors.neutral[500],
       fontWeight: typography.fontWeight.medium,
@@ -332,14 +327,9 @@ export const selectTrigger = style({
       transform: "translateY(-1px)",
     },
     "&[aria-expanded='true']": {
-      borderColor: colors.primary[600],
+      borderColor: `var(--select-focus-ring-color, ${colors.primary[600]})`,
       backgroundColor: colors.white,
-      boxShadow: [
-        `0 0 0 3px ${colors.primary[500]}30`,
-        `0 0 30px ${colors.primary[500]}15`,
-        `${effects.shadow.md}`,
-        `inset 0 1px 0 ${colors.white}`,
-      ].join(", "),
+      // Do not apply focus ring here; keep ring only on :focus-visible to match Input behavior
     },
     "&:disabled": {
       cursor: "not-allowed",
@@ -349,8 +339,19 @@ export const selectTrigger = style({
       boxShadow: "none",
       transform: "none",
     },
+    // Match Input's layered focus ring intensities, allow color override via CSS variable
+    "&:focus-visible": {
+      outline: "2px solid transparent",
+      outlineOffset: "2px",
+      borderColor: `var(--select-focus-ring-color, ${colors.primary[600]})`,
+      boxShadow: [
+        `0 0 0 3px color-mix(in srgb, var(--select-focus-ring-color, ${colors.primary[500]}) 18.8%, transparent)`,
+        `0 0 30px color-mix(in srgb, var(--select-focus-ring-color, ${colors.primary[500]}) 8.2%, transparent)`,
+        `${effects.shadow.md}`,
+        `inset 0 1px 0 ${colors.white}`,
+      ].join(", "),
+    },
   },
-  ...focusRing(colors.primary[500], 3),
 });
 
 // Size variants (match input scale)
@@ -475,9 +476,13 @@ export const selectPopover = style({
 });
 
 export const selectListbox = style({
+  padding: `${spacing[1]} 0`,
+});
+
+// Optional scroll behavior for long lists
+export const selectListboxScrollable = style({
   maxHeight: "16rem", // 256px
   overflowY: "auto",
-  padding: `${spacing[1]} 0`,
 });
 
 export const selectOption = recipe({
@@ -489,24 +494,34 @@ export const selectOption = recipe({
     padding: `${spacing[2.5]} ${spacing[3]}`,
     fontSize: typography.fontSize.sm,
     lineHeight: 1.5,
-    color: colors.neutral[800],
+    color: `var(--select-option-text-color, ${colors.neutral[800]})`,
     backgroundColor: "transparent",
     cursor: "pointer",
     userSelect: "none",
+    selectors: {
+      "&:hover": {
+        backgroundColor: `var(--select-option-hover-bg, ${colors.primary[50]})`,
+        color: `var(--select-option-hover-color, ${colors.primary[800]})`,
+      },
+      "&[aria-disabled='true']:hover": {
+        backgroundColor: "transparent",
+        color: colors.neutral[500],
+      },
+    },
   },
   variants: {
     active: {
       false: {},
       true: {
-        backgroundColor: colors.primary[50],
-        color: colors.primary[800],
+        backgroundColor: `var(--select-option-hover-bg, ${colors.primary[50]})`,
+        color: `var(--select-option-hover-color, ${colors.primary[800]})`,
       },
     },
     selected: {
       false: {},
       true: {
-        backgroundColor: colors.primary[100],
-        color: colors.primary[900],
+        backgroundColor: `var(--select-option-selected-bg, ${colors.primary[100]})`,
+        color: `var(--select-option-selected-color, ${colors.primary[900]})`,
         fontWeight: typography.fontWeight.semibold,
       },
     },
@@ -522,5 +537,5 @@ export const selectOption = recipe({
 
 export const selectCheck = style({
   marginInlineStart: "auto",
-  color: colors.primary[600],
+  color: `var(--select-check-color, ${colors.primary[600]})`,
 });
