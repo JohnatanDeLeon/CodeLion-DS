@@ -9,3 +9,4 @@
 import "./styles/recipes/button.css";
 import "./styles/recipes/card.css";
 import "./styles/recipes/input.css";
+import "./styles/recipes/select.css";
