@@ -216,8 +216,9 @@ export const selectFieldMedium = style({
 });
 
 export const selectFieldLarge = style({
-  // Larger control without forcing line-height to equal the element height
-  minHeight: spacing[12],
+  // Force explicit height/line-height to match Input large sizing (48px)
+  height: spacing[12],
+  lineHeight: spacing[12],
   padding: `${spacing[4]} ${spacing[5]}`,
   fontSize: typography.fontSize.base,
 });
@@ -366,7 +367,9 @@ const triggerMd = style({
   fontSize: typography.fontSize.sm,
 });
 const triggerLg = style({
-  minHeight: spacing[12],
+  // Force exact control height for parity with Input large (48px)
+  height: spacing[12],
+  lineHeight: spacing[12],
   padding: `${spacing[4]} ${spacing[5]}`,
   fontSize: typography.fontSize.base,
 });
