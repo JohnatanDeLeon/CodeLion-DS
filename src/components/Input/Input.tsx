@@ -57,6 +57,8 @@ export interface InputProps
     formatted: string;
     meta?: Record<string, unknown>;
   }) => void;
+  /** Optional focus ring color override (token or CSS color). Applies only to :focus-visible indicator. */
+  focusRingColor?: string;
 }
 
 export const Input = React.forwardRef<HTMLInputElement, InputProps>(
@@ -89,6 +91,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       onValueChange,
       value: valueProp,
       defaultValue: defaultValueProp,
+      focusRingColor,
       ...props
     },
     ref,
@@ -505,6 +508,15 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       return cn(...classes, labelClassName);
     };
 
+    // Inject CSS variable for focus color if provided
+    interface InputContainerStyle extends React.CSSProperties {
+      ["--input-focus-ring-color"]?: string;
+    }
+    const containerStyle: InputContainerStyle = {};
+    if (focusRingColor) {
+      containerStyle["--input-focus-ring-color"] = focusRingColor;
+    }
+
     return (
       <div
         className={cn(
@@ -512,6 +524,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           fullWidth && inputFullWidth,
           containerClassName,
         )}
+        style={containerStyle}
       >
         {labelText && (
           <label htmlFor={id} className={getLabelClasses()}>
