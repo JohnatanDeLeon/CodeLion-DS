@@ -42,6 +42,12 @@ const meta: Meta<typeof Input> = {
     onChange: { action: "changed" },
     onFocus: { action: "focused" },
     onBlur: { action: "blurred" },
+    focusRingColor: {
+      control: { type: "color" },
+      description:
+        "Color del indicador de foco (:focus-visible). Solo cambia el color; mantiene grosor, offset y sombras.",
+      table: { type: { summary: "string" } },
+    },
   },
   args: {
     size: "lg",
@@ -490,3 +496,21 @@ export const PasswordStates: Story = {
 };
 
 export const Playground: Story = {};
+
+export const ThemingFocusDemo: Story = {
+  name: "Theming: Focus color",
+  args: {
+    label: "Themed Focus Input",
+    placeholder: "Tab here and see focus color",
+    focusRingColor: "#7c3aed", // violet-600
+  },
+  render: (args) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+      <Input {...args} />
+      <div style={{ fontSize: 12, color: "#4b5563" }}>
+        Solo se personaliza el color del foco (:focus-visible). El grosor,
+        offset, sombras y demás estilos se mantienen.
+      </div>
+    </div>
+  ),
+};
