@@ -18,16 +18,25 @@
 
 ## 🚀 Quick Start
 
-### 1. Configuración
+### 1. Instalación
 
 ```bash
-# Configurar registry
-echo "@codelion:registry=https://npm.pkg.github.com" >> .npmrc
-echo "//npm.pkg.github.com/:_authToken=\${NPM_TOKEN}" >> .npmrc
-
-# Instalar CodeLion DS
-npm install @johnatandeleon/design-system@^1.0.0
+npm install @johnatandeleon/design-system
 ```
+
+Se publica en el registry público de npm, sin configuración ni token. La misma
+versión se publica también en GitHub Packages; para instalar desde ahí hace
+falta un token con `read:packages`:
+
+```bash
+echo "@johnatandeleon:registry=https://npm.pkg.github.com" >> .npmrc
+echo "//npm.pkg.github.com/:_authToken=\${NODE_AUTH_TOKEN}" >> .npmrc
+```
+
+**Next.js (App Router):** la librería se declara módulo de cliente
+(`"use client"`), así que se importa directo desde un Server Component. Los
+estilos se cargan una vez, en el layout raíz:
+`import "@johnatandeleon/design-system/styles";`
 
 ### 2. Setup en aplicación
 
@@ -191,7 +200,8 @@ Seguimos [**Semantic Versioning**](https://semver.org/) con [**Conventional Comm
 ## 🎯 Roadmap
 
 - ✅ **Q1 2025**: Componentes base (Button, Input, Card)
-- 🚧 **Q2 2025**: Componentes de formulario y navegación
+- ✅ **Q2 2025**: Componentes de formulario (Input, Select, Textarea)
+- ✅ **2026**: Table y Alert, y soporte de Next.js App Router
 - 📋 **Q3 2025**: Componentes de visualización de datos
 - 🔮 **Q4 2025**: Temas y customización avanzada
 

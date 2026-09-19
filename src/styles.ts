@@ -10,3 +10,6 @@ import "./styles/recipes/button.css";
 import "./styles/recipes/card.css";
 import "./styles/recipes/input.css";
 import "./styles/recipes/select.css";
+import "./styles/recipes/textarea.css";
+import "./styles/recipes/table.css";
+import "./styles/recipes/alert.css";

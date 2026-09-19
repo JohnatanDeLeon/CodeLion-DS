@@ -94,8 +94,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: [test, build]
     if: github.ref == 'refs/heads/main'
+    # contents/pull-requests: changesets abre el PR de versión y crea los
+    # releases. id-token: npm Trusted Publishing, que publica en npmjs con el
+    # OIDC de este workflow en vez de un token guardado.
+    permissions:
+      contents: write
+      pull-requests: write
+      id-token: write
 
-      
     outputs:
       published: ${{ steps.changesets.outputs.published }}
       
@@ -141,6 +147,24 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
           NPM_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
           NPM_CONFIG_REGISTRY: https://npm.pkg.github.com/
+
+      # The same version also goes to the public npm registry. GitHub Packages
+      # asks for a token even to install a public package, so every consumer
+      # (CI runners, Docker builds, local machines) would need one; npmjs does
+      # not.
+      #
+      # Trusted Publishing: npm accepts this workflow's OIDC identity, so there
+      # is no token to store or rotate, and the package gets provenance. It
+      # needs npm >= 11.5.1 and the package configured on npmjs.com with this
+      # repository and workflow file. The scope registry is overridden on the
+      # command line because the repo .npmrc maps @johnatandeleon to GitHub
+      # Packages.
+      - name: Publish to npmjs
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          npm install -g npm@^11.5.1
+          npm publish --access public --provenance \
+            --@johnatandeleon:registry=https://registry.npmjs.org
 
   # =====================================
   # DEPLOY STORYBOOK (opcional)
