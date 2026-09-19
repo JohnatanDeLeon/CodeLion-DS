@@ -1,3 +1,4 @@
+import { readFile, writeFile } from 'node:fs/promises';
 import { defineConfig } from 'tsup';
 import { vanillaExtractPlugin } from '@vanilla-extract/esbuild-plugin';
 
@@ -24,8 +25,6 @@ export default defineConfig({
     'process.env': '{}',
   },
   esbuildOptions: (options) => {
-    // No banner directives to avoid warnings in output
-    options.banner = {} as any;
     // Define process for browser compatibility
     options.define = {
       ...options.define,
@@ -36,5 +35,22 @@ export default defineConfig({
       }),
     };
   },
-
+  // Every component is interactive or composes one that is (Button keeps a
+  // ref, Input keeps state), so the whole bundle is a client module. Without
+  // the directive, a React Server Component that imports the library fails to
+  // build in Next.js App Router.
+  //
+  // It is prepended after the build instead of passed as a banner: the
+  // treeshake pass runs rollup, which strips module-level directives.
+  onSuccess: async () => {
+    const entry = 'dist/index.js';
+    const code = await readFile(entry, 'utf8');
+    if (code.startsWith('"use client";')) return;
+    await writeFile(entry, `"use client";\n${code}`);
+    // One line was added on top: a leading ";" in the mappings is exactly one
+    // empty generated line, so the sourcemap keeps pointing at the right code.
+    const map = JSON.parse(await readFile(`${entry}.map`, 'utf8'));
+    map.mappings = `;${map.mappings}`;
+    await writeFile(`${entry}.map`, JSON.stringify(map));
+  },
 });

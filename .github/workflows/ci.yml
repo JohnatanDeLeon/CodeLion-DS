@@ -142,6 +142,22 @@ jobs:
           NPM_TOKEN: ${{ secrets.GH_PACKAGES_TOKEN }}
           NPM_CONFIG_REGISTRY: https://npm.pkg.github.com/
 
+      # The same version also goes to the public npm registry. GitHub Packages
+      # asks for a token even to install a public package, so every consumer
+      # (CI runners, Docker builds, local machines) would need one; npmjs does
+      # not. The scope registry is overridden on the command line because the
+      # repo .npmrc maps @johnatandeleon to GitHub Packages.
+      - name: Publish to npmjs
+        if: steps.changesets.outputs.published == 'true'
+        run: |
+          npm pkg delete publishConfig.registry
+          npm config set //registry.npmjs.org/:_authToken "${NPMJS_TOKEN}"
+          npm publish --access public \
+            --registry https://registry.npmjs.org \
+            --@johnatandeleon:registry=https://registry.npmjs.org
+        env:
+          NPMJS_TOKEN: ${{ secrets.NPMJS_TOKEN }}
+
   # =====================================
   # DEPLOY STORYBOOK (opcional)
   # =====================================
